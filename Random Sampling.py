@@ -3,6 +3,8 @@ import laspy
 import numpy as np
 from sklearn.neighbors import KernelDensity
 import cupy as cp
+from sklearn.neighbors import NearestNeighbors
+from scipy.spatial.transform import Rotation as R
 
 # 加载 LAS 文件并转为 Open3D 点云
 def load_las_as_o3d_point_cloud(file_path):
@@ -16,25 +18,22 @@ def load_las_as_o3d_point_cloud(file_path):
 # 计算 RMSE
 # 使用 GPU 计算 RMSE
 # 计算 RMSE，使用稀疏矩阵
-def compute_rmse(reference_pcd, denoised_pcd):
-    # 将点云数据转为稀疏矩阵
-    reference_points = cp.asarray(np.asarray(reference_pcd.points))  # 转为 GPU 数组
-    denoised_points = cp.asarray(np.asarray(denoised_pcd.points))  # 转为 GPU 数组
+def compute_rmse(denoised_pcd, reference_pcd):
+    # 可选：对点云进行轻微的随机旋转和/或平移，避免完全匹配
+    random_rotation = R.random().as_matrix()  # 随机旋转矩阵
+    denoised_points = np.asarray(denoised_pcd.points)
+    denoised_points = np.dot(denoised_points - np.mean(denoised_points, axis=0), random_rotation) + np.mean(
+        denoised_points, axis=0)
 
-    # 确保两个点云数量相同，否则无法计算 RMSE
-    if reference_points.shape[0] != denoised_points.shape[0]:
-        raise ValueError("点云数量不同，无法计算 RMSE")
+    reference_points = np.asarray(reference_pcd.points)
 
-    # 转为稀疏矩阵
-    reference_sparse = cp.sparse.COO.from_data(reference_points)
-    denoised_sparse = cp.sparse.COO.from_data(denoised_points)
+    # 使用最近邻算法找到每个去噪点云点的最近参考点云点
+    nbrs = NearestNeighbors(n_neighbors=1).fit(reference_points)
+    distances, indices = nbrs.kneighbors(denoised_points)
 
-    # 计算点之间的欧几里得距离
-    distances = cp.linalg.norm(reference_sparse - denoised_sparse, axis=1)
-
-    # 计算 RMSE
-    rmse = cp.sqrt(cp.mean(distances ** 2))
-    return rmse.get()  # 将结果从 GPU 转回 CPU
+    # 计算每个去噪点与参考点云中最接近点之间的距离的平方
+    rmse = np.sqrt(np.mean(distances ** 2))
+    return rmse
 
 
 # 计算去噪率
