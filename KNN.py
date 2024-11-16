@@ -3,6 +3,11 @@ import laspy
 import numpy as np
 from sklearn.neighbors import NearestNeighbors
 from scipy.spatial.transform import Rotation as R
+import random
+
+# 设置随机种子
+random.seed(42)  # 设置 Python random 模块的种子
+np.random.seed(42)  # 设置 numpy 模块的种子
 
 # ICP 配准函数
 def align_point_clouds(source_pcd, target_pcd, threshold=0.02, trans_init=np.eye(4)):
@@ -18,7 +23,8 @@ def align_point_clouds(source_pcd, target_pcd, threshold=0.02, trans_init=np.eye
     # 应用变换将点云对齐
     aligned_pcd = source_pcd.transform(reg_p2l.transformation)
     return aligned_pcd
-def knn_denoise_patch(point_cloud, k=10, distance_threshold=0.1):
+
+def knn_denoise_patch(point_cloud, k=25, distance_threshold=0.2):
     points = np.asarray(point_cloud.points)
     nbrs = NearestNeighbors(n_neighbors=k).fit(points)
     distances, indices = nbrs.kneighbors(points)
@@ -33,7 +39,7 @@ def knn_denoise_patch(point_cloud, k=10, distance_threshold=0.1):
     point_cloud_denoised.points = o3d.utility.Vector3dVector(denoised_points)
     return point_cloud_denoised
 
-def knn_denoise_manifold(point_cloud, k=10, curvature_threshold=0.1):
+def knn_denoise_manifold(point_cloud, k=25, curvature_threshold=0.2):
     points = np.asarray(point_cloud.points)
     nbrs = NearestNeighbors(n_neighbors=k).fit(points)
     distances, indices = nbrs.kneighbors(points)
@@ -54,7 +60,7 @@ def knn_denoise_manifold(point_cloud, k=10, curvature_threshold=0.1):
     return point_cloud_denoised
 
 
-def knn_denoise_voxel(point_cloud, voxel_size=0.05, k=10, distance_threshold=0.1):
+def knn_denoise_voxel(point_cloud, voxel_size=0.05, k=25, distance_threshold=0.2):
     # 下采样点云到体素网格，获取每个体素的中心点
     voxel_grid = point_cloud.voxel_down_sample(voxel_size)
     voxel_centers = np.asarray(voxel_grid.points)  # 获取体素中心点

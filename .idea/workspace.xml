@@ -5,17 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="01586aa8-02d4-4ade-a432-b174f09da4ef" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/PointCloud.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Normal.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Clip.py" beforeDir="false" afterPath="$PROJECT_DIR$/Clip_Overlap.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/KNN.py" beforeDir="false" afterPath="$PROJECT_DIR$/KNN.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Random Sampling.py" beforeDir="false" afterPath="$PROJECT_DIR$/Random Sampling.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Registration_FPFH.py" beforeDir="false" afterPath="$PROJECT_DIR$/Registration_FPFH.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Registration_ICP.py" beforeDir="false" afterPath="$PROJECT_DIR$/Registration_ICP.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,7 +50,7 @@
   "keyToString": {
     "Python.Clip.executor": "Debug",
     "Python.Clip_Overlap.executor": "Debug",
-    "Python.KNN.executor": "Debug",
+    "Python.KNN.executor": "Run",
     "Python.Normal.executor": "Debug",
     "Python.Random Sampling.executor": "Debug",
     "Python.Registration.executor": "Run",
@@ -128,7 +119,7 @@
       <workItem from="1731575974372" duration="17210000" />
       <workItem from="1731595794676" duration="4917000" />
       <workItem from="1731707914463" duration="1841000" />
-      <workItem from="1731763328051" duration="3906000" />
+      <workItem from="1731763328051" duration="6303000" />
     </task>
     <servers />
   </component>
@@ -241,27 +232,27 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/KNN.py</url>
-          <line>128</line>
+          <line>134</line>
           <option name="timeStamp" value="32" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/KNN.py</url>
-          <line>134</line>
+          <line>140</line>
           <option name="timeStamp" value="33" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/KNN.py</url>
-          <line>112</line>
+          <line>118</line>
           <option name="timeStamp" value="34" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/KNN.py</url>
-          <line>115</line>
+          <line>121</line>
           <option name="timeStamp" value="35" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/KNN.py</url>
-          <line>118</line>
+          <line>124</line>
           <option name="timeStamp" value="36" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -315,10 +306,10 @@
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/PointCloud$main.coverage" NAME="main Coverage Results" MODIFIED="1731763445309" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/PointCloud$Try.coverage" NAME="Try Coverage Results" MODIFIED="1731584019981" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/PointCloud$Random_Sampling.coverage" NAME="Random Sampling Coverage Results" MODIFIED="1731763484035" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/PointCloud$Random_Sampling.coverage" NAME="Random Sampling Coverage Results" MODIFIED="1731767552537" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/PointCloud$Clip.coverage" NAME="Clip Coverage Results" MODIFIED="1731589366121" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/PointCloud$Clip_Overlap.coverage" NAME="Clip_Overlap Coverage Results" MODIFIED="1731599993364" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/PointCloud$KNN.coverage" NAME="KNN Coverage Results" MODIFIED="1731765838256" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/PointCloud$KNN.coverage" NAME="KNN Coverage Results" MODIFIED="1731770088509" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/PointCloud$Registration_FPFH.coverage" NAME="Registration_FPFH Coverage Results" MODIFIED="1731594411093" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/PointCloud$Registration.coverage" NAME="Registration Coverage Results" MODIFIED="1731534865795" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/PointCloud$Normal.coverage" NAME="Normal Coverage Results" MODIFIED="1731766712079" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
