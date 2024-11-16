@@ -54,10 +54,22 @@ def point_filter(noisy_points, ground_truth_normals, k=20, iterations=5):
 
 def calculate_rmse(denoised_points, ground_truth_points):
     """
-    计算 RMSE（均方根误差）
+    计算 RMSE（均方根误差），通过最近邻搜索匹配点
     """
-    return np.sqrt(np.mean(np.linalg.norm(denoised_points - ground_truth_points, axis=1)**2))
+    # 使用最近邻搜索来匹配点云
+    neigh = NearestNeighbors(n_neighbors=1)
+    neigh.fit(ground_truth_points)
+    # 找到每个 denoised_points 的最近邻点
+    distances, _ = neigh.kneighbors(denoised_points)
+
+    # 计算 RMSE
+    rmse = np.sqrt(np.mean(distances**2))
+    return rmse
+
 def downsample_points(points, voxel_size):
+    """
+    对点云数据进行下采样
+    """
     pcd = o3d.geometry.PointCloud()
     pcd.points = o3d.utility.Vector3dVector(points)
     down_pcd = pcd.voxel_down_sample(voxel_size)
@@ -92,10 +104,11 @@ o3d.io.write_point_cloud("D:/E_2024_Thesis/Data/denoised_point_cloud.ply", denoi
 # 下采样
 voxel_size = 0.05  # 根据数据情况调整
 denoised_points_down = downsample_points(denoised_points, voxel_size)
-ground_truth_points_down = downsample_points(ground_truth_points, voxel_size)
+ground_truth_points_down = downsample_points(np.asarray(ground_truth_points), voxel_size)
 
+# 计算 RMSE
 print("Calculating RMSE...")
-rmse = calculate_rmse(denoised_points, ground_truth_points)
+rmse = calculate_rmse(denoised_points_down, ground_truth_points_down)
 print(f"RMSE: {rmse}")
 
 # 可视化结果
