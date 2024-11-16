@@ -87,18 +87,30 @@ mls_pcd = load_las_as_o3d_point_cloud("D:/E_2024_Thesis/Data/roof/roof_MLS.las")
 mls_denoised_ransac = ransac_denoise(mls_pcd)
 mls_denoised_bayes = bayesian_denoise(mls_pcd)
 mls_denoised_density = density_denoise(mls_pcd)
+# 绘制去噪后的点云
+o3d.visualization.draw_geometries([mls_denoised_ransac], window_name="Denoised with RANSAC")
+o3d.visualization.draw_geometries([mls_denoised_bayes], window_name="Denoised with Bayesian")
+o3d.visualization.draw_geometries([mls_denoised_density], window_name="Denoised with Density")
+# 设置输出目录
+output_dir = "D:/E_2024_Thesis/Data/Output"
 
+# 保存去噪后的点云
+o3d.io.write_point_cloud(output_dir + "mls_denoised_ransac.ply", mls_denoised_ransac)
+o3d.io.write_point_cloud(output_dir + "mls_denoised_bayes.ply", mls_denoised_bayes)
+o3d.io.write_point_cloud(output_dir + "mls_denoised_density.ply", mls_denoised_density)
+
+print("Point clouds have been saved to the output directory.")
 # 计算 RMSE
-rmse_mls_ransac = compute_rmse(tls_pcd, mls_denoised_ransac)
-rmse_mls_bayes = compute_rmse(tls_pcd, mls_denoised_bayes)
-rmse_mls_density = compute_rmse(tls_pcd, mls_denoised_density)
+#rmse_mls_ransac = compute_rmse(tls_pcd, mls_denoised_ransac)
+#rmse_mls_bayes = compute_rmse(tls_pcd, mls_denoised_bayes)
+#rmse_mls_density = compute_rmse(tls_pcd, mls_denoised_density)
 
 # 计算去噪率
-denoising_rate_ransac = compute_denoising_rate(mls_pcd, mls_denoised_ransac)
-denoising_rate_bayes = compute_denoising_rate(mls_pcd, mls_denoised_bayes)
-denoising_rate_density = compute_denoising_rate(mls_pcd, mls_denoised_density)
+# = compute_denoising_rate(mls_pcd, mls_denoised_ransac)
+#denoising_rate_bayes = compute_denoising_rate(mls_pcd, mls_denoised_bayes)
+#denoising_rate_density = compute_denoising_rate(mls_pcd, mls_denoised_density)
 
 # 打印 RMSE 和去噪率
-print(f"RANSAC去噪RMSE: {rmse_mls_ransac}, 去噪率: {denoising_rate_ransac}%")
-print(f"贝叶斯去噪RMSE: {rmse_mls_bayes}, 去噪率: {denoising_rate_bayes}%")
-print(f"密度估计去噪RMSE: {rmse_mls_density}, 去噪率: {denoising_rate_density}%")
+#print(f"RANSAC去噪RMSE: {rmse_mls_ransac}, 去噪率: {denoising_rate_ransac}%")
+#print(f"贝叶斯去噪RMSE: {rmse_mls_bayes}, 去噪率: {denoising_rate_bayes}%")
+#print(f"密度估计去噪RMSE: {rmse_mls_density}, 去噪率: {denoising_rate_density}%")
