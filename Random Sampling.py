@@ -89,16 +89,16 @@ mls_denoised_bayes = bayesian_denoise(mls_pcd)
 mls_denoised_density = density_denoise(mls_pcd)
 
 # 计算 RMSE
-#rmse_mls_ransac = compute_rmse(tls_pcd, mls_denoised_ransac)
+rmse_mls_ransac = compute_rmse(tls_pcd, mls_denoised_ransac)
 rmse_mls_bayes = compute_rmse(tls_pcd, mls_denoised_bayes)
 rmse_mls_density = compute_rmse(tls_pcd, mls_denoised_density)
 
 # 计算去噪率
-#denoising_rate_ransac = compute_denoising_rate(mls_pcd, mls_denoised_ransac)
+denoising_rate_ransac = compute_denoising_rate(mls_pcd, mls_denoised_ransac)
 denoising_rate_bayes = compute_denoising_rate(mls_pcd, mls_denoised_bayes)
 denoising_rate_density = compute_denoising_rate(mls_pcd, mls_denoised_density)
 
 # 打印 RMSE 和去噪率
-#print(f"RANSAC去噪RMSE: {rmse_mls_ransac}, 去噪率: {denoising_rate_ransac}%")
+print(f"RANSAC去噪RMSE: {rmse_mls_ransac}, 去噪率: {denoising_rate_ransac}%")
 print(f"贝叶斯去噪RMSE: {rmse_mls_bayes}, 去噪率: {denoising_rate_bayes}%")
 print(f"密度估计去噪RMSE: {rmse_mls_density}, 去噪率: {denoising_rate_density}%")
