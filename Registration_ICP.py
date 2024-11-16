@@ -1,7 +1,7 @@
 import open3d as o3d
 import laspy
 import numpy as np
-
+import cupy as cp
 
 # 使用 laspy 加载 LAS 文件并转换为 Open3D 点云
 def load_las_as_o3d_point_cloud(las_file_path):
@@ -78,10 +78,35 @@ def visualize_registration(mls_pcd, tls_pcd):
     print("Visualizing registered point clouds...")
     o3d.visualization.draw_geometries([mls_pcd, tls_pcd])
 
+def compute_rmse_gpu(source_pcd, target_pcd):
+    # 将目标点云转换为numpy数组
+    target_points = np.asarray(target_pcd.points)
+
+    # 将numpy数组转换为GPU数组（CuPy）
+    target_points_gpu = cp.array(target_points)
+
+    distances = []
+    for point in source_pcd.points:
+        # 将源点云中的点转换为GPU数组
+        source_point_gpu = cp.array(point)
+
+        # 计算源点与目标点云中所有点的距离，并取最小值
+        diff = target_points_gpu - source_point_gpu
+        dist = cp.linalg.norm(diff, axis=1)
+        distances.append(cp.min(dist))  # 取最小距离
+
+    # 将所有距离转换为GPU数组
+    distances_gpu = cp.array(distances)
+
+    # 计算RMSE
+    rmse_gpu = cp.sqrt(cp.mean(distances_gpu ** 2))
+
+    # 将结果从GPU传回CPU
+    return rmse_gpu.get()  # 获取结果
 
 # 加载点云
-tls_pcd = load_las_as_o3d_point_cloud("D:/E_2024_Thesis/Data/LiDAR_Engelseplein/Engelseplein_TLS.las")
-mls_pcd = load_las_as_o3d_point_cloud("D:/E_2024_Thesis/Data/LiDAR_Engelseplein/Engelseplein_MLS.las")
+tls_pcd = load_las_as_o3d_point_cloud("D:/E_2024_Thesis/Data/roof/roof_TLS.las")
+mls_pcd = load_las_as_o3d_point_cloud("D:/E_2024_Thesis/Data/roof/roof_MLS.las")
 
 if tls_pcd is None or mls_pcd is None:
     print("Error: One or more point clouds failed to load!")
@@ -115,5 +140,8 @@ mls_pcd.transform(icp_result.transformation)
 # 6. 可视化配准后的点云
 visualize_registration(mls_pcd, tls_pcd)
 
+rmse = compute_rmse_gpu(mls_pcd, tls_pcd)
+print(f"配准后的RMSE: {rmse}")
+
 # 7. 保存配准后的点云
-o3d.io.write_point_cloud("D:/E_2024_Thesis/Data/aligned_mls_ICP.ply", mls_pcd)
+o3d.io.write_point_cloud("D:/E_2024_Thesis/Data/Output/aligned_mls_ICP.ply", mls_pcd)

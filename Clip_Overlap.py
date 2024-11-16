@@ -1,5 +1,4 @@
 import open3d as o3d
-import laspy
 import numpy as np
 import os
 
@@ -9,12 +8,12 @@ def load_mls_point_cloud(ply_file):
     """
     return o3d.io.read_point_cloud(ply_file)
 
-def load_tls_point_cloud(las_file):
+def load_tls_point_cloud(ply_file):
     """
-    Load TLS point cloud from a LAS file.
+    Load TLS point cloud from a PLY file.
     """
-    tls_data = laspy.read(las_file)
-    tls_points = np.vstack((tls_data.x, tls_data.y, tls_data.z)).T
+    tls_cloud = o3d.io.read_point_cloud(ply_file)
+    tls_points = np.asarray(tls_cloud.points)  # Extract points from the cloud
     return tls_points
 
 def extract_overlap_region(mls_cloud, tls_points, overlap_min, overlap_max):
@@ -47,12 +46,10 @@ def save_point_clouds(mls_overlap_points, tls_overlap_points, mls_output_file, t
     mls_overlap_cloud.points = o3d.utility.Vector3dVector(mls_overlap_points)
     o3d.io.write_point_cloud(mls_output_file, mls_overlap_cloud)
 
-    # Save TLS overlap points to LAS file
-    overlap_tls = laspy.create(point_format=3, file_version="1.2")  # create a new LAS object with appropriate format
-    overlap_tls.x = tls_overlap_points[:, 0]
-    overlap_tls.y = tls_overlap_points[:, 1]
-    overlap_tls.z = tls_overlap_points[:, 2]
-    overlap_tls.write(tls_output_file)
+    # Save TLS overlap points to PLY file
+    tls_overlap_cloud = o3d.geometry.PointCloud()
+    tls_overlap_cloud.points = o3d.utility.Vector3dVector(tls_overlap_points)
+    o3d.io.write_point_cloud(tls_output_file, tls_overlap_cloud)
 
 def calculate_rmse(mls_points, tls_points):
     """
@@ -68,13 +65,13 @@ def calculate_rmse(mls_points, tls_points):
     rmse = np.sqrt(np.mean(squared_diff))
     return rmse
 
-def extract_and_save_overlap(mls_ply, tls_las, mls_output_file, tls_output_file):
+def extract_and_save_overlap(mls_ply, tls_ply, mls_output_file, tls_output_file):
     """
     Extract the overlapping region from MLS and TLS point clouds and save as new files.
     """
     # Load MLS and TLS point clouds
     mls_cloud = load_mls_point_cloud(mls_ply)
-    tls_points = load_tls_point_cloud(tls_las)
+    tls_points = load_tls_point_cloud(tls_ply)
 
     # Get bounding box for MLS point cloud
     mls_bbox = mls_cloud.get_axis_aligned_bounding_box()
@@ -96,9 +93,10 @@ def extract_and_save_overlap(mls_ply, tls_las, mls_output_file, tls_output_file)
     print(f"RMSE between MLS and TLS overlap points: {rmse:.4f}")
 
 # Example usage
-mls_ply = "D:/E_2024_Thesis/Data/aligned_mls_threshold0.5_FPFH.ply"
-tls_las = "D:/E_2024_Thesis/Data/Engelseplein_TLS.las"
-mls_output_file = "D:/E_2024_Thesis/Data/MLS_overlap.ply"
-tls_output_file = "D:/E_2024_Thesis/Data/TLS_overlap.las"
+mls_ply = "D:/E_2024_Thesis/Data/roof/roof_MLS_1.ply"
+tls_ply = "D:/E_2024_Thesis/Data/roof/roof_TLS_1.ply"
+mls_output_file = "D:/E_2024_Thesis/Data/roof/MLS_overlap.ply"
+tls_output_file = "D:/E_2024_Thesis/Data/roof/TLS_overlap.ply"
 
-extract_and_save_overlap(mls_ply, tls_las, mls_output_file, tls_output_file)
+extract_and_save_overlap(mls_ply, tls_ply, mls_output_file, tls_output_file)
+

@@ -104,9 +104,10 @@ def compute_denoising_rate(original_point_cloud, denoised_point_cloud):
     return removal_rate
 
 # 载入点云并运行去噪函数
-file_path = "D:/E_2024_Thesis/Data/roof_TLS/roof_TLS.las"
+file_path = "D:/E_2024_Thesis/Data/roof/roof_MLS.las"
 pcd = read_las_to_o3d(file_path)
-reference_pcd = pcd
+file_path_1 = "D:/E_2024_Thesis/Data/roof/roof_TLS.las"
+reference_pcd = read_las_to_o3d(file_path_1)
 
 # 这里使用前面的knn_denoise_patch函数
 pcd_denoised_patch = knn_denoise_patch(pcd)
@@ -122,11 +123,13 @@ o3d.visualization.draw_geometries([pcd_denoised_voxel])
 aligned_pcd_patch = align_point_clouds(pcd_denoised_patch, reference_pcd)
 aligned_pcd_manifold = align_point_clouds(pcd_denoised_manifold, reference_pcd)
 aligned_pcd_voxel = align_point_clouds(pcd_denoised_voxel, reference_pcd)
+aligned_pcd_origin = align_point_clouds(pcd, reference_pcd)
 
 # 计算不同方法的 RMSE
 rmse_patch = compute_rmse(np.asarray(aligned_pcd_patch.points), np.asarray(reference_pcd.points))
 rmse_manifold = compute_rmse(np.asarray(aligned_pcd_manifold.points), np.asarray(reference_pcd.points))
 rmse_voxel = compute_rmse(np.asarray(aligned_pcd_voxel.points), np.asarray(reference_pcd.points))
+original_rmse = compute_rmse(np.asarray(aligned_pcd_origin.points), np.asarray(reference_pcd.points))
 
 # 计算去噪率
 denoising_rate_patch = compute_denoising_rate(pcd, pcd_denoised_patch)
@@ -134,6 +137,7 @@ denoising_rate_manifold = compute_denoising_rate(pcd, pcd_denoised_manifold)
 denoising_rate_voxel = compute_denoising_rate(pcd, pcd_denoised_voxel)
 
 # 输出结果
+print(f"Original RMSE: {original_rmse:.4f}")
 print("KNN Patch RMSE:", rmse_patch)
 print("KNN Patch Denoising Rate:", denoising_rate_patch, "%")
 print("KNN Manifold RMSE:", rmse_manifold)

@@ -96,7 +96,7 @@ fine_reg = o3d.pipelines.registration.registration_icp(
 mls_pcd.transform(fine_reg.transformation)
 
 # 计算配准精度（RMSE）
-rmse = compute_rmse(mls_pcd, tls_pcd)
+rmse = compute_rmse_gpu(mls_pcd, tls_pcd)
 print(f"配准后的RMSE: {rmse}")
 
 # 将配准后的点云保存
