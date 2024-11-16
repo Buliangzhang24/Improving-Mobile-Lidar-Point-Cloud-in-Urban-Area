@@ -15,7 +15,9 @@ def load_las_as_o3d_point_cloud(file_path):
 
 # 计算 RMSE
 # 使用 GPU 计算 RMSE
+# 计算 RMSE，使用稀疏矩阵
 def compute_rmse(reference_pcd, denoised_pcd):
+    # 将点云数据转为稀疏矩阵
     reference_points = cp.asarray(np.asarray(reference_pcd.points))  # 转为 GPU 数组
     denoised_points = cp.asarray(np.asarray(denoised_pcd.points))  # 转为 GPU 数组
 
@@ -23,12 +25,17 @@ def compute_rmse(reference_pcd, denoised_pcd):
     if reference_points.shape[0] != denoised_points.shape[0]:
         raise ValueError("点云数量不同，无法计算 RMSE")
 
+    # 转为稀疏矩阵
+    reference_sparse = cp.sparse.COO.from_data(reference_points)
+    denoised_sparse = cp.sparse.COO.from_data(denoised_points)
+
     # 计算点之间的欧几里得距离
-    distances = cp.linalg.norm(reference_points - denoised_points, axis=1)
+    distances = cp.linalg.norm(reference_sparse - denoised_sparse, axis=1)
 
     # 计算 RMSE
-    rmse = cp.sqrt(cp.mean(distances**2))
+    rmse = cp.sqrt(cp.mean(distances ** 2))
     return rmse.get()  # 将结果从 GPU 转回 CPU
+
 
 # 计算去噪率
 def compute_denoising_rate(original_pcd, denoised_pcd):
@@ -83,16 +90,16 @@ mls_denoised_bayes = bayesian_denoise(mls_pcd)
 mls_denoised_density = density_denoise(mls_pcd)
 
 # 计算 RMSE
-rmse_mls_ransac = compute_rmse(tls_pcd, mls_denoised_ransac)
-# rmse_mls_bayes = compute_rmse(tls_pcd, mls_denoised_bayes)
-# rmse_mls_density = compute_rmse(tls_pcd, mls_denoised_density)
+#rmse_mls_ransac = compute_rmse(tls_pcd, mls_denoised_ransac)
+rmse_mls_bayes = compute_rmse(tls_pcd, mls_denoised_bayes)
+rmse_mls_density = compute_rmse(tls_pcd, mls_denoised_density)
 
 # 计算去噪率
-denoising_rate_ransac = compute_denoising_rate(mls_pcd, mls_denoised_ransac)
-#denoising_rate_bayes = compute_denoising_rate(mls_pcd, mls_denoised_bayes)
-#denoising_rate_density = compute_denoising_rate(mls_pcd, mls_denoised_density)
+#denoising_rate_ransac = compute_denoising_rate(mls_pcd, mls_denoised_ransac)
+denoising_rate_bayes = compute_denoising_rate(mls_pcd, mls_denoised_bayes)
+denoising_rate_density = compute_denoising_rate(mls_pcd, mls_denoised_density)
 
 # 打印 RMSE 和去噪率
-print(f"RANSAC去噪RMSE: {rmse_mls_ransac}, 去噪率: {denoising_rate_ransac}%")
-#print(f"贝叶斯去噪RMSE: {rmse_mls_bayes}, 去噪率: {denoising_rate_bayes}%")
-#print(f"密度估计去噪RMSE: {rmse_mls_density}, 去噪率: {denoising_rate_density}%")
+#print(f"RANSAC去噪RMSE: {rmse_mls_ransac}, 去噪率: {denoising_rate_ransac}%")
+print(f"贝叶斯去噪RMSE: {rmse_mls_bayes}, 去噪率: {denoising_rate_bayes}%")
+print(f"密度估计去噪RMSE: {rmse_mls_density}, 去噪率: {denoising_rate_density}%")
