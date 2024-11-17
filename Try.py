@@ -1,10 +1,5 @@
+
 import torch
-
-# 检查是否有可用的 GPU
-print(torch.cuda.is_available())
-
-# 获取当前设备的 ID
-print(torch.cuda.current_device())
-
-# 获取当前 GPU 的名称
-print(torch.cuda.get_device_name(torch.cuda.current_device()))
+print(torch.cuda.is_available())  # 检查是否有可用的 CUDA 设备
+print(torch.cuda.current_device())  # 获取当前使用的设备索引
+print(torch.cuda.get_device_name(0))  # 获取 GPU 设备名称

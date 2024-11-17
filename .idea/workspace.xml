@@ -5,7 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="01586aa8-02d4-4ade-a432-b174f09da4ef" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/IterativePFN.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Manifold.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Try.py" beforeDir="false" afterPath="$PROJECT_DIR$/Try.py" afterDir="false" />
     </list>
@@ -36,7 +36,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="DEPENDENCY_CHECKER_PROBLEMS_TAB" />
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
@@ -127,7 +127,8 @@
       <workItem from="1731763328051" duration="19835000" />
       <workItem from="1731789265978" duration="549000" />
       <workItem from="1731792258471" duration="76000" />
-      <workItem from="1731853615075" duration="3132000" />
+      <workItem from="1731853615075" duration="4131000" />
+      <workItem from="1731863664743" duration="643000" />
     </task>
     <servers />
   </component>
@@ -406,8 +407,8 @@
     <SUITE FILE_PATH="coverage/PointCloud$PointNet.coverage" NAME="PointNet Coverage Results" MODIFIED="1731776026716" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/PointCloud$IterativePFN.coverage" NAME="IterativePFN Coverage Results" MODIFIED="1731786791105" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/PointCloud$Registration_ICP.coverage" NAME="Registration_ICP Coverage Results" MODIFIED="1731708418936" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/PointCloud$main.coverage" NAME="main Coverage Results" MODIFIED="1731789490760" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/PointCloud$Try.coverage" NAME="Try Coverage Results" MODIFIED="1731858692768" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/PointCloud$main.coverage" NAME="main Coverage Results" MODIFIED="1731863677851" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/PointCloud$Try.coverage" NAME="Try Coverage Results" MODIFIED="1731863954884" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/PointCloud$CNN.coverage" NAME="CNN Coverage Results" MODIFIED="1731779644992" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/PointCloud$Random_Sampling.coverage" NAME="Random Sampling Coverage Results" MODIFIED="1731786179904" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/PointCloud$Registration.coverage" NAME="Registration Coverage Results" MODIFIED="1731534865795" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
