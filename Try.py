@@ -1,5 +1,9 @@
+import open3d as o3d
+import numpy as np
 
-import torch
-print(torch.cuda.is_available())  # 检查是否有可用的 CUDA 设备
-print(torch.cuda.current_device())  # 获取当前使用的设备索引
-print(torch.cuda.get_device_name(0))  # 获取 GPU 设备名称
+# Create a sample point cloud
+pcd = o3d.geometry.PointCloud()
+pcd.points = o3d.utility.Vector3dVector(np.random.rand(100, 3))
+
+# Try visualizing
+o3d.visualization.draw_geometries([pcd])

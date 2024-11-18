@@ -3,5 +3,5 @@
   <component name="Black">
     <option name="sdkName" value="Env_PointCloud" />
   </component>
-  <component name="ProjectRootManager" version="2" project-jdk-name="Env_PointCloud" project-jdk-type="Python SDK" />
+  <component name="ProjectRootManager" version="2" project-jdk-name="NoDL_PointCloud" project-jdk-type="Python SDK" />
 </project>
