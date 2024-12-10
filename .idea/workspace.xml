@@ -5,12 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="01586aa8-02d4-4ade-a432-b174f09da4ef" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CNN.py" beforeDir="false" afterPath="$PROJECT_DIR$/CNN.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Manifold.py" beforeDir="false" afterPath="$PROJECT_DIR$/Manifold.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Random Sampling.py" beforeDir="false" afterPath="$PROJECT_DIR$/Random Sampling.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -149,7 +145,7 @@
       <workItem from="1733084228414" duration="637000" />
       <workItem from="1733173872481" duration="630000" />
       <workItem from="1733338078306" duration="1726000" />
-      <workItem from="1733841413179" duration="825000" />
+      <workItem from="1733841413179" duration="7393000" />
     </task>
     <servers />
   </component>
@@ -202,17 +198,17 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Random Sampling.py</url>
-          <line>81</line>
+          <line>76</line>
           <option name="timeStamp" value="25" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Random Sampling.py</url>
-          <line>82</line>
+          <line>77</line>
           <option name="timeStamp" value="26" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Random Sampling.py</url>
-          <line>83</line>
+          <line>78</line>
           <option name="timeStamp" value="27" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -336,26 +332,6 @@
           <option name="timeStamp" value="98" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Random Sampling.py</url>
-          <line>89</line>
-          <option name="timeStamp" value="100" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Random Sampling.py</url>
-          <line>92</line>
-          <option name="timeStamp" value="101" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Random Sampling.py</url>
-          <line>93</line>
-          <option name="timeStamp" value="102" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Random Sampling.py</url>
-          <line>94</line>
-          <option name="timeStamp" value="103" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/IterativePFN.py</url>
           <line>90</line>
           <option name="timeStamp" value="104" />
@@ -432,18 +408,18 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Random Sampling.py</url>
-          <line>98</line>
-          <option name="timeStamp" value="128" />
+          <line>102</line>
+          <option name="timeStamp" value="131" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Random Sampling.py</url>
-          <line>99</line>
-          <option name="timeStamp" value="129" />
+          <line>103</line>
+          <option name="timeStamp" value="132" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Random Sampling.py</url>
-          <line>100</line>
-          <option name="timeStamp" value="130" />
+          <line>104</line>
+          <option name="timeStamp" value="133" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
@@ -465,7 +441,7 @@
     <SUITE FILE_PATH="coverage/PointCloud$PointNet.coverage" NAME="PointNet Coverage Results" MODIFIED="1731776026716" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/PointCloud$IterativePFN.coverage" NAME="IterativePFN Coverage Results" MODIFIED="1731786791105" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/PointCloud$CNN.coverage" NAME="CNN Coverage Results" MODIFIED="1731779644992" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/PointCloud_Version2$Random_Sampling.coverage" NAME="Random Sampling Coverage Results" MODIFIED="1733060343981" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/PointCloud_Version2$Random_Sampling.coverage" NAME="Random Sampling Coverage Results" MODIFIED="1733850456908" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/PointCloud$Try.coverage" NAME="Try Coverage Results" MODIFIED="1731937121559" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/PointCloud$Registration_FPFH.coverage" NAME="Registration_FPFH Coverage Results" MODIFIED="1731594411093" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/PointCloud$Registration.coverage" NAME="Registration Coverage Results" MODIFIED="1731534865795" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
