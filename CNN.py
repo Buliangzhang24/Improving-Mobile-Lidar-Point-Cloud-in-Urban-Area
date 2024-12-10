@@ -116,43 +116,106 @@ class RobustCNNMethod(nn.Module):
         return x.transpose(1, 2)
 
 
-# 加载点云文件
-tls_pcd = load_las_as_o3d_point_cloud("D:/E_2024_Thesis/Data/roof/roof_TLS.las")
-mls_pcd = load_las_as_o3d_point_cloud("D:/E_2024_Thesis/Data/roof/roof_MLS.las")
-
-# 归一化点云
-tls_pcd = normalize_point_cloud(tls_pcd)
-mls_pcd = normalize_point_cloud(mls_pcd)
-
-
-# 转换为 Tensor
+# 转换为 Tensor，并确保点云数据维度正确
 def point_cloud_to_tensor(pcd):
     points = np.asarray(pcd.points)
-    return torch.tensor(points, dtype=torch.float32)
+    # Add a batch dimension to the tensor, making it (1, num_points, 3)
+    return torch.tensor(points, dtype=torch.float32).unsqueeze(0)  # Add batch dimension
 
 
-tls_tensor = point_cloud_to_tensor(tls_pcd)
-mls_tensor = point_cloud_to_tensor(mls_pcd)
+# 定义计算RMSE函数
+def calculate_rmse(denoised_tensor, tls_tensor):
+    """
+    计算 RMSE，输入为 Tensor，形状为 (batch_size, num_points, 3)。
+    """
+    if denoised_tensor.dim() == 3:
+        denoised_points = denoised_tensor.squeeze(0)  # 移除 batch 维度
+    else:
+        denoised_points = denoised_tensor
+
+    if tls_tensor.dim() == 3:
+        tls_points = tls_tensor.squeeze(0)
+    else:
+        tls_points = tls_tensor
+
+    rmse = torch.sqrt(F.mse_loss(denoised_points, tls_points))
+    return rmse.item()
 
 
-# 定义函数来训练和评估每个模型
-def train_and_evaluate_model(model, mls_tensor, tls_tensor):
+def calculate_denoising_rate(mls_tensor, denoised_tensor):
+    """
+    计算去噪率，输入为 Tensor，形状为 (batch_size, num_points, 3)。
+    """
+    if mls_tensor.dim() == 3:
+        mls_points = mls_tensor.squeeze(0)  # 移除 batch 维度
+    else:
+        mls_points = mls_tensor
+
+    if denoised_tensor.dim() == 3:
+        denoised_points = denoised_tensor.squeeze(0)
+    else:
+        denoised_points = denoised_tensor
+
+    original_num_points = mls_points.shape[0]
+    denoised_num_points = denoised_points.shape[0]
+
+    denoising_rate = (original_num_points - denoised_num_points) / original_num_points
+    return denoising_rate
+
+
+def preprocess_tensor(tls_tensor, target_num_points, output_dim):
+    """
+    上采样 TLS 点云张量并扩展其维度。
+
+    参数:
+    tls_tensor: torch.Tensor，形状为 [1, num_points, 3]。
+    target_num_points: int，目标点数。
+    output_dim: int，目标维度，默认值为 512。
+
+    返回:
+    torch.Tensor，形状为 [1, target_num_points, output_dim]。
+    """
+    # 上采样到目标点数
+    tls_tensor_upsampled = F.interpolate(
+        tls_tensor.permute(0, 2, 1), size=target_num_points, mode='linear', align_corners=False
+    ).permute(0, 2, 1)
+
+    # 使用线性变换扩展维度
+    linear_layer = nn.Linear(3, output_dim)  # 定义线性层
+    tls_upsampled_expanded = linear_layer(
+        tls_tensor_upsampled.view(-1, 3))  # [batch_size * num_points, 3] -> [batch_size * num_points, output_dim]
+    tls_upsampled_expanded = tls_upsampled_expanded.view(1, target_num_points,
+                                                         output_dim)  # 调整为 [1, target_num_points, output_dim]
+
+    return tls_upsampled_expanded
+
+
+def train_and_evaluate_model(model, mls_tensor, tls_tensor, output_dim):
     optimizer = optim.Adam(model.parameters(), lr=0.001)
-    epochs = 500
+    epochs = 150
+    prev_loss = float('inf')  # 上一次的损失
+    tolerance = 1e-6  # 损失变化的容忍度，用于提前停止
+
     for epoch in range(epochs):
         model.train()
         optimizer.zero_grad()
 
         # 输入 MLS 点云，输出去噪后的点云
-        output = model(mls_tensor)  # 获取去噪后的点云
-
-        # 损失函数：这里使用简单的均方误差（MSE）
+        output = model(mls_tensor)
         loss = F.mse_loss(output, tls_tensor)  # 计算损失
+        print(f"Epoch {epoch} - Loss: {loss.item()}")
 
-        loss.backward()
+        # 如果损失值变化小于容忍度，则停止训练
+        if abs(prev_loss - loss.item()) < tolerance:
+            print(f"Early stopping at epoch {epoch}, Loss change is too small.")
+            break
+
+        prev_loss = loss.item()
+
+        # 反向传播和优化步骤
+        loss.backward(retain_graph=True)
         optimizer.step()
 
-        # 每100次打印一次损失值
         if epoch % 100 == 0:
             print(f"Epoch [{epoch}/{epochs}], Loss: {loss.item():.6f}")
 
@@ -161,32 +224,59 @@ def train_and_evaluate_model(model, mls_tensor, tls_tensor):
     with torch.no_grad():
         denoised_pcd = model(mls_tensor)
 
-    # 可视化去噪后的点云
-    denoised_o3d_pcd = o3d.geometry.PointCloud()
-    denoised_o3d_pcd.points = o3d.utility.Vector3dVector(denoised_pcd.numpy())
-    o3d.visualization.draw_geometries([denoised_o3d_pcd])
-
     # 计算 RMSE 和 去噪率
-    rmse = calculate_rmse(denoised_o3d_pcd, tls_pcd)
-    denoising_rate = calculate_denoising_rate(mls_pcd, denoised_o3d_pcd)
-
+    rmse = calculate_rmse(denoised_pcd, tls_tensor)
+    denoising_rate = calculate_denoising_rate(mls_tensor, denoised_pcd)
     return rmse, denoising_rate
 
 
-# 实例化三个不同的去噪模型
+# 加载点云文件
+tls_pcd = load_las_as_o3d_point_cloud("autodl-tmp/roof_TLS.las")
+mls_pcd = load_las_as_o3d_point_cloud("autodl-tmp/roof_MLS.las")
+
+# 归一化点云
+tls_pcd = normalize_point_cloud(tls_pcd)
+mls_pcd = normalize_point_cloud(mls_pcd)
+
+tls_tensor = point_cloud_to_tensor(tls_pcd)
+mls_tensor = point_cloud_to_tensor(mls_pcd)
+
+# 模型定义（请根据你的实际模型定义调整）
 point_pro_nets_model = PointProNets()
 geometric_semantic_model = GeometricSemanticFusion()
 robust_cnn_model = RobustCNNMethod()
 
-# 训练并评估三个模型
+# 针对 PointProNets 模型
+
+output_dim_1 = 512  # 设定输出维度
+processed_tls_tensor_1 = preprocess_tensor(tls_tensor, mls_tensor.size(1), output_dim_1)
 print("Training and Evaluating PointProNets Model...")
-rmse1, denoising_rate1 = train_and_evaluate_model(point_pro_nets_model, mls_tensor, tls_tensor)
+output = point_pro_nets_model(mls_tensor)  # 获取模型输出
+print(f"PointProNets output shape: {output.shape}")
+
+rmse1, denoising_rate1 = train_and_evaluate_model(point_pro_nets_model, mls_tensor, processed_tls_tensor_1,
+                                                  output_dim_1)
 print(f"PointProNets Model RMSE: {rmse1:.4f}, Denoising Rate: {denoising_rate1:.2f}%")
 
-print("\nTraining and Evaluating Geometric Semantic Fusion Model...")
-rmse2, denoising_rate2 = train_and_evaluate_model(geometric_semantic_model, mls_tensor, tls_tensor)
-print(f"Geometric Semantic Fusion Model RMSE: {rmse2:.4f}, Denoising Rate: {denoising_rate2:.2f}%")
+# 针对 GeometricSemanticFusion 模型
 
-print("\nTraining and Evaluating Robust CNN Model...")
-rmse3, denoising_rate3 = train_and_evaluate_model(robust_cnn_model, mls_tensor, tls_tensor)
-print(f"Robust CNN Model RMSE: {rmse3:.4f}, Denoising Rate: {denoising_rate3:.2f}%")
+output_dim_2 = 3
+print("Training and Evaluating GeometricSemanticFusion Model...")
+output = geometric_semantic_model(mls_tensor)
+print(f"GeometricSemanticFusion output shape: {output.shape}")
+processed_tls_tensor_2 = preprocess_tensor(tls_tensor, mls_tensor.size(1), output_dim_2)
+# 对于 GeometricSemanticFusion 模型，假设它不需要额外的上采样，直接使用 TLS 的目标
+rmse2, denoising_rate2 = train_and_evaluate_model(geometric_semantic_model, mls_tensor, processed_tls_tensor_2,
+                                                  output_dim_2)
+print(f"GeometricSemanticFusion Model RMSE: {rmse2:.4f}, Denoising Rate: {denoising_rate2:.2f}%")
+
+# 针对 RobustCNNMethod 模型
+
+output_dim_3 = 3
+print("Training and Evaluating RobustCNNMethod Model...")
+output = robust_cnn_model(mls_tensor)
+print(f"RobustCNNMethod output shape: {output.shape}")
+processed_tls_tensor_3 = preprocess_tensor(tls_tensor, mls_tensor.size(1), output_dim_3)
+# 对于 RobustCNNMethod 模型，假设它需要不同的预处理（例如，不使用 `preprocess_tensor`）
+rmse3, denoising_rate3 = train_and_evaluate_model(robust_cnn_model, mls_tensor, processed_tls_tensor_3, output_dim_1)
+print(f"RobustCNNMethod Model RMSE: {rmse3:.4f}, Denoising Rate: {denoising_rate3:.2f}%")

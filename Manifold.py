@@ -132,10 +132,13 @@ denoised_rmse_truncation = compute_rmse(denoised_mls_truncation, tls_pcd)
 denoised_rmse_fluid = compute_rmse(denoised_mls_fluid, tls_pcd)
 
 print(f"Reconstruction RMSE: {denoised_rmse_reconstruction:.4f}")
-print(f"Reconstruction Denoising Rate: {compute_denoising_rate(mls_pcd, denoised_rmse_reconstruction):.2f}%")
+#print(f"Reconstruction Denoising Rate: {compute_denoising_rate(mls_pcd, denoised_rmse_reconstruction):.2f}%")
+
 print(f"Statisical RMSE: {denoised_rmse_statistical:.4f}")
-print(f"Statisical Denoising Rate: {compute_denoising_rate(mls_pcd, denoised_rmse_statistical):.2f}%")
+#print(f"Statisical Denoising Rate: {compute_denoising_rate(mls_pcd, denoised_rmse_statistical):.2f}%")
+
 print(f"Truncation RMSE: {denoised_rmse_truncation:.4f}")
-print(f"Truncation Denoising Rate: {compute_denoising_rate(mls_pcd, denoised_rmse_truncation):.2f}%")
+#print(f"Truncation Denoising Rate: {compute_denoising_rate(mls_pcd, denoised_rmse_truncation):.2f}%")
+
 print(f"Fluid RMSE: {denoised_rmse_fluid:.4f}")
-print(f"Fluid Denoising Rate: {compute_denoising_rate(mls_pcd, denoised_rmse_fluid):.2f}%")
+#print(f"Fluid Denoising Rate: {compute_denoising_rate(mls_pcd, denoised_rmse_fluid):.2f}%")
