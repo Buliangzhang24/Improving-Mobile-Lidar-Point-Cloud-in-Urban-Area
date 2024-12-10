@@ -109,6 +109,36 @@ def compute_denoising_rate(original_point_cloud, denoised_point_cloud):
     removal_rate = (len(original_points) - len(denoised_points)) / len(original_points) * 100
     return removal_rate
 
+
+def visualize_denoising_fast(pcd_original, pcd_denoised):
+    # 获取原始点云和去噪后点云的点
+    original_points = np.asarray(pcd_original.points)
+    denoised_points = np.asarray(pcd_denoised.points)
+
+    # 构建去噪点云的 k-d 树以加速查找
+    kdtree = o3d.geometry.KDTreeFlann(pcd_denoised)
+
+    # 初始化保留的掩码
+    retained_mask = np.zeros(len(original_points), dtype=bool)
+
+    # 在 k-d 树中查找每个点是否存在
+    for i, point in enumerate(original_points):
+        [_, idx, _] = kdtree.search_knn_vector_3d(point, 1)  # 查找最近邻点
+        if len(idx) > 0 and np.linalg.norm(denoised_points[idx[0]] - point) <= 1e-6:
+            retained_mask[i] = True
+
+    # 创建一个颜色数组
+    colors = np.zeros_like(original_points)
+    colors[~retained_mask] = [1, 0, 0]  # 去掉的点为红色
+    colors[retained_mask] = [0, 0, 1]  # 保留的点为蓝色
+
+    # 将颜色添加到点云
+    pcd_original.colors = o3d.utility.Vector3dVector(colors)
+
+    # 显示结果
+    o3d.visualization.draw_geometries([pcd_original], window_name="Denoising Visualization")
+
+
 # 载入点云并运行去噪函数
 file_path = "D:/E_2024_Thesis/Data/roof/roof_MLS.las"
 pcd = read_las_to_o3d(file_path)
@@ -124,6 +154,9 @@ o3d.visualization.draw_geometries([pcd_denoised_manifold])
 
 pcd_denoised_voxel = knn_denoise_voxel(pcd)
 o3d.visualization.draw_geometries([pcd_denoised_voxel])
+
+# 使用去噪后的点云调用可视化函数
+#visualize_denoising_fast(pcd, pcd_denoised_voxel)
 
 # 对齐每个去噪后的点云到参考点云
 aligned_pcd_patch = align_point_clouds(pcd_denoised_patch, reference_pcd)
