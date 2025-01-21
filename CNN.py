@@ -230,6 +230,33 @@ def train_and_evaluate_model(model, mls_tensor, tls_tensor, output_dim):
     return rmse, denoising_rate
 
 
+# 可视化去噪结果的函数
+def visualize_denoising(original_pcd, denoised_pcd):
+    """
+    将去噪去掉的点标记为红色，未去掉的点标记为蓝色。
+
+    :param original_pcd: 原始点云数据 (o3d.geometry.PointCloud)
+    :param denoised_pcd: 去噪后的点云数据 (o3d.geometry.PointCloud)
+    """
+    # 转换点云为 numpy 数组
+    original_points = np.asarray(original_pcd.points)
+    denoised_points = np.asarray(denoised_pcd.points)
+
+    # 创建一个布尔掩码，用于检查哪些点被保留
+    mask = np.isin(original_points, denoised_points).all(axis=1)
+
+    # 设置颜色：蓝色表示保留的点，红色表示去掉的点
+    colors = np.zeros_like(original_points)  # 初始化颜色数组
+    colors[mask] = [0, 0, 1]  # 蓝色
+    colors[~mask] = [1, 0, 0]  # 红色
+
+    # 应用颜色到原始点云
+    original_pcd.colors = o3d.utility.Vector3dVector(colors)
+
+    # 可视化
+    o3d.visualization.draw_geometries([original_pcd])
+
+
 # 加载点云文件
 tls_pcd = load_las_as_o3d_point_cloud("autodl-tmp/roof_TLS.las")
 mls_pcd = load_las_as_o3d_point_cloud("autodl-tmp/roof_MLS.las")
@@ -254,29 +281,30 @@ print("Training and Evaluating PointProNets Model...")
 output = point_pro_nets_model(mls_tensor)  # 获取模型输出
 print(f"PointProNets output shape: {output.shape}")
 
-rmse1, denoising_rate1 = train_and_evaluate_model(point_pro_nets_model, mls_tensor, processed_tls_tensor_1,
-                                                  output_dim_1)
-print(f"PointProNets Model RMSE: {rmse1:.4f}, Denoising Rate: {denoising_rate1:.2f}%")
+# rmse1, denoising_rate1 = train_and_evaluate_model(point_pro_nets_model, mls_tensor, processed_tls_tensor_1, output_dim_1)
+# print(f"PointProNets Model RMSE: {rmse1:.4f}, Denoising Rate: {denoising_rate1:.2f}%")
+
 
 # 针对 GeometricSemanticFusion 模型
 
 output_dim_2 = 3
 print("Training and Evaluating GeometricSemanticFusion Model...")
-output = geometric_semantic_model(mls_tensor)
-print(f"GeometricSemanticFusion output shape: {output.shape}")
+output1 = geometric_semantic_model(mls_tensor)
+print(f"GeometricSemanticFusion output shape: {output1.shape}")
 processed_tls_tensor_2 = preprocess_tensor(tls_tensor, mls_tensor.size(1), output_dim_2)
 # 对于 GeometricSemanticFusion 模型，假设它不需要额外的上采样，直接使用 TLS 的目标
-rmse2, denoising_rate2 = train_and_evaluate_model(geometric_semantic_model, mls_tensor, processed_tls_tensor_2,
-                                                  output_dim_2)
-print(f"GeometricSemanticFusion Model RMSE: {rmse2:.4f}, Denoising Rate: {denoising_rate2:.2f}%")
+# rmse2, denoising_rate2 = train_and_evaluate_model(geometric_semantic_model, mls_tensor, processed_tls_tensor_2, output_dim_2)
+# print(f"GeometricSemanticFusion Model RMSE: {rmse2:.4f}, Denoising Rate: {denoising_rate2:.2f}%")
 
 # 针对 RobustCNNMethod 模型
 
 output_dim_3 = 3
 print("Training and Evaluating RobustCNNMethod Model...")
-output = robust_cnn_model(mls_tensor)
-print(f"RobustCNNMethod output shape: {output.shape}")
+output2 = robust_cnn_model(mls_tensor)
+print(f"RobustCNNMethod output shape: {output2.shape}")
 processed_tls_tensor_3 = preprocess_tensor(tls_tensor, mls_tensor.size(1), output_dim_3)
 # 对于 RobustCNNMethod 模型，假设它需要不同的预处理（例如，不使用 `preprocess_tensor`）
-rmse3, denoising_rate3 = train_and_evaluate_model(robust_cnn_model, mls_tensor, processed_tls_tensor_3, output_dim_1)
-print(f"RobustCNNMethod Model RMSE: {rmse3:.4f}, Denoising Rate: {denoising_rate3:.2f}%")
+# rmse3, denoising_rate3 = train_and_evaluate_model(robust_cnn_model, mls_tensor, processed_tls_tensor_3, output_dim_1)
+# print(f"RobustCNNMethod Model RMSE: {rmse3:.4f}, Denoising Rate: {denoising_rate3:.2f}%")
+
+

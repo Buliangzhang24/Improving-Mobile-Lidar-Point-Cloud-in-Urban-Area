@@ -147,17 +147,18 @@ reference_pcd = read_las_to_o3d(file_path_1)
 
 # 这里使用前面的knn_denoise_patch函数
 pcd_denoised_patch = knn_denoise_patch(pcd)
-o3d.visualization.draw_geometries([pcd_denoised_patch])
+#o3d.visualization.draw_geometries([pcd_denoised_patch])
 
 pcd_denoised_manifold = knn_denoise_manifold(pcd)
-o3d.visualization.draw_geometries([pcd_denoised_manifold])
+#o3d.visualization.draw_geometries([pcd_denoised_manifold])
 
 pcd_denoised_voxel = knn_denoise_voxel(pcd)
-o3d.visualization.draw_geometries([pcd_denoised_voxel])
+#o3d.visualization.draw_geometries([pcd_denoised_voxel])
 
 # 使用去噪后的点云调用可视化函数
-#visualize_denoising_fast(pcd, pcd_denoised_voxel)
-
+visualize_denoising_fast(pcd, pcd_denoised_voxel)
+visualize_denoising_fast(pcd, pcd_denoised_manifold)
+visualize_denoising_fast(pcd, pcd_denoised_patch)
 # 对齐每个去噪后的点云到参考点云
 aligned_pcd_patch = align_point_clouds(pcd_denoised_patch, reference_pcd)
 aligned_pcd_manifold = align_point_clouds(pcd_denoised_manifold, reference_pcd)

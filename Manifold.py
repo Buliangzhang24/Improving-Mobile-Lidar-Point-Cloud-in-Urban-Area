@@ -115,16 +115,48 @@ def compute_denoising_rate(original_pcd, denoised_pcd):
     removal_rate = (len(original_points) - len(denoised_points)) / len(original_points) * 100
     return removal_rate
 
+def visualize_denoising_fast(pcd_original, pcd_denoised):
+    # 获取原始点云和去噪后点云的点
+    original_points = np.asarray(pcd_original.points)
+    denoised_points = np.asarray(pcd_denoised.points)
+
+    # 构建去噪点云的 k-d 树以加速查找
+    kdtree = o3d.geometry.KDTreeFlann(pcd_denoised)
+
+    # 初始化保留的掩码
+    retained_mask = np.zeros(len(original_points), dtype=bool)
+
+    # 在 k-d 树中查找每个点是否存在
+    for i, point in enumerate(original_points):
+        [_, idx, _] = kdtree.search_knn_vector_3d(point, 1)  # 查找最近邻点
+        if len(idx) > 0 and np.linalg.norm(denoised_points[idx[0]] - point) <= 1e-6:
+            retained_mask[i] = True
+
+    # 创建一个颜色数组
+    colors = np.zeros_like(original_points)
+    colors[~retained_mask] = [1, 0, 0]  # 去掉的点为红色
+    colors[retained_mask] = [0, 0, 1]  # 保留的点为蓝色
+
+    # 将颜色添加到点云
+    pcd_original.colors = o3d.utility.Vector3dVector(colors)
+
+    # 显示结果
+    o3d.visualization.draw_geometries([pcd_original], window_name="Denoising Visualization")
+
+
 # 载入数据
-tls_pcd = load_las_as_o3d_point_cloud("D:/E_2024_Thesis/Data/roof/roof_TLS.las")
-mls_pcd = load_las_as_o3d_point_cloud("D:/E_2024_Thesis/Data/roof/roof_MLS.las")
+tls_pcd = load_las_as_o3d_point_cloud("D:/E_2024_Thesis/Data/data/Roof_TLS.las")
+mls_pcd = load_las_as_o3d_point_cloud("D:/E_2024_Thesis/Data/data/Roof_MLS.las")
 
 # 选择去噪方法并应用
 denoised_mls_reconstruction = manifold_reconstruction_denoising(mls_pcd)
+#visualize_denoising_fast(mls_pcd, denoised_mls_reconstruction)
 denoised_mls_statistical = kmeans_statistical_manifold_denoising(mls_pcd)
+#visualize_denoising_fast(mls_pcd, denoised_mls_statistical)
 denoised_mls_truncation = manifold_distance_truncation_denoising(mls_pcd)
+#visualize_denoising_fast(mls_pcd, denoised_mls_truncation)
 denoised_mls_fluid = fluid_inspired_denoising(mls_pcd)
-
+#visualize_denoising_fast(mls_pcd, denoised_mls_fluid)
 
 denoised_rmse_reconstruction = compute_rmse(denoised_mls_reconstruction, tls_pcd)
 denoised_rmse_statistical = compute_rmse(denoised_mls_statistical, tls_pcd)
@@ -132,13 +164,13 @@ denoised_rmse_truncation = compute_rmse(denoised_mls_truncation, tls_pcd)
 denoised_rmse_fluid = compute_rmse(denoised_mls_fluid, tls_pcd)
 
 print(f"Reconstruction RMSE: {denoised_rmse_reconstruction:.4f}")
-#print(f"Reconstruction Denoising Rate: {compute_denoising_rate(mls_pcd, denoised_rmse_reconstruction):.2f}%")
+#print(f"Reconstruction Denoising Rate: {compute_denoising_rate(mls_pcd, denoised_mls_reconstruction):.2f}%")
 
 print(f"Statisical RMSE: {denoised_rmse_statistical:.4f}")
-#print(f"Statisical Denoising Rate: {compute_denoising_rate(mls_pcd, denoised_rmse_statistical):.2f}%")
+#print(f"Statisical Denoising Rate: {compute_denoising_rate(mls_pcd, denoised_mls_statistical):.2f}%")
 
 print(f"Truncation RMSE: {denoised_rmse_truncation:.4f}")
-#print(f"Truncation Denoising Rate: {compute_denoising_rate(mls_pcd, denoised_rmse_truncation):.2f}%")
+#print(f"Truncation Denoising Rate: {compute_denoising_rate(mls_pcd, denoised_mls_truncation):.2f}%")
 
 print(f"Fluid RMSE: {denoised_rmse_fluid:.4f}")
-#print(f"Fluid Denoising Rate: {compute_denoising_rate(mls_pcd, denoised_rmse_fluid):.2f}%")
+#print(f"Fluid Denoising Rate: {compute_denoising_rate(mls_pcd, denoised_mls_fluid):.2f}%")

@@ -115,6 +115,50 @@ def tensor_to_o3d_point_cloud(tensor):
     pcd.points = o3d.utility.Vector3dVector(points)
     return pcd
 
+def visualize_denoising_fast(pcd_original, pcd_denoised):
+    # 获取原始点云和去噪后点云的点
+    original_points = np.asarray(pcd_original.points)
+    denoised_points = np.asarray(pcd_denoised.points)
+
+    # 构建去噪点云的 k-d 树以加速查找
+    kdtree = o3d.geometry.KDTreeFlann(pcd_denoised)
+
+    # 初始化保留的掩码
+    retained_mask = np.zeros(len(original_points), dtype=bool)
+
+    # 在 k-d 树中查找每个点是否存在
+    for i, point in enumerate(original_points):
+        [_, idx, _] = kdtree.search_knn_vector_3d(point, 1)  # 查找最近邻点
+        if len(idx) > 0 and np.linalg.norm(denoised_points[idx[0]] - point) <= 1e-6:
+            retained_mask[i] = True
+
+    # 创建一个颜色数组
+    colors = np.zeros_like(original_points)
+    colors[~retained_mask] = [0, 0, 1]  # 去掉的点为红色
+    colors[retained_mask] = [1, 0, 0]  # 保留的点为蓝色
+
+    # 将颜色添加到点云
+    pcd_original.colors = o3d.utility.Vector3dVector(colors)
+
+    # 显示结果
+    o3d.visualization.draw_geometries([pcd_original], window_name="Denoising Visualization")
+
+def tensor_to_pointcloud(tensor):
+    if not isinstance(tensor, np.ndarray):
+        tensor = tensor.numpy()
+    pointcloud = o3d.geometry.PointCloud()
+    pointcloud.points = o3d.utility.Vector3dVector(tensor)
+    return pointcloud
+
+def compute_denoising_rate(original_pcd, denoised_pcd):
+    if isinstance(original_pcd, o3d.geometry.PointCloud) and isinstance(denoised_pcd, o3d.geometry.PointCloud):
+        original_points = np.asarray(original_pcd.points)
+        denoised_points = np.asarray(denoised_pcd.points)
+        removal_rate = (len(original_points) - len(denoised_points)) / len(original_points) * 100
+        return removal_rate
+    else:
+        raise TypeError("Both inputs must be Open3D PointCloud objects.")
+
 # 加载点云文件
 tls_pcd = load_las_as_o3d_point_cloud("D:/E_2024_Thesis/Data/roof/roof_TLS.las")
 mls_pcd = load_las_as_o3d_point_cloud("D:/E_2024_Thesis/Data/roof/roof_MLS.las")
@@ -162,14 +206,23 @@ with torch.no_grad():
 # 转换为 Open3D 点云对象
 denoised_o3d_pcd = tensor_to_o3d_point_cloud(denoised_pcd)
 
+visualize_denoising_fast(mls_pcd, denoised_o3d_pcd)
+
 # 计算 RMSE
 tls_tensor_downsampled, mls_tensor_downsampled = adjust_point_cloud_size(tls_tensor_downsampled, mls_tensor_downsampled)
 
 # 计算 RMSE
 rmse = calculate_rmse(denoised_pcd, tls_tensor_downsampled)
 
+original_pcd = tensor_to_pointcloud(mls_tensor_downsampled)
+denoised_pcd = tensor_to_pointcloud(denoised_pcd)
+denoise_rate = compute_denoising_rate(original_pcd, denoised_pcd)
+print(f"Denoise rate: {denoise_rate}%")
+
+#denoise_rate = compute_denoising_rate(denoised_o3d_pcd, tls_tensor_downsampled)
 # 打印RMSE结果
 print(f"RMSE: {rmse.item():.6f}")
 
+#print(f"Denoise Rate: {denoise_rate:.6f}")
 # 可视化去噪后的点云
-o3d.visualization.draw_geometries([denoised_o3d_pcd])
+#o3d.visualization.draw_geometries([denoised_o3d_pcd])

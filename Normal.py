@@ -108,9 +108,38 @@ def compute_denoising_rate(original_pcd, denoised_pcd):
     return removal_rate
 
 
+def visualize_denoising_fast(pcd_original, pcd_denoised):
+    # 获取原始点云和去噪后点云的点
+    original_points = np.asarray(pcd_original.points)
+    denoised_points = np.asarray(pcd_denoised.points)
+
+    # 构建去噪点云的 k-d 树以加速查找
+    kdtree = o3d.geometry.KDTreeFlann(pcd_denoised)
+
+    # 初始化保留的掩码
+    retained_mask = np.zeros(len(original_points), dtype=bool)
+
+    # 在 k-d 树中查找每个点是否存在
+    for i, point in enumerate(original_points):
+        [_, idx, _] = kdtree.search_knn_vector_3d(point, 1)  # 查找最近邻点
+        if len(idx) > 0 and np.linalg.norm(denoised_points[idx[0]] - point) <= 1e-6:
+            retained_mask[i] = True
+
+    # 创建一个颜色数组
+    colors = np.zeros_like(original_points)
+    colors[~retained_mask] = [1, 0, 0]  # 去掉的点为红色
+    colors[retained_mask] = [0, 0, 1]  # 保留的点为蓝色
+
+    # 将颜色添加到点云
+    pcd_original.colors = o3d.utility.Vector3dVector(colors)
+
+    # 显示结果
+    o3d.visualization.draw_geometries([pcd_original], window_name="Denoising Visualization")
+
+
 # 加载点云文件
-tls_pcd = load_las_as_o3d_point_cloud("D:/E_2024_Thesis/Data/roof/roof_TLS.las")
-mls_pcd = load_las_as_o3d_point_cloud("D:/E_2024_Thesis/Data/roof/roof_MLS.las")
+tls_pcd = load_las_as_o3d_point_cloud("D:/E_2024_Thesis/Data/data/Roof_TLS.las")
+mls_pcd = load_las_as_o3d_point_cloud("D:/E_2024_Thesis/Data/data/Roof_MLS.las")
 
 # 估算法向量
 tls_pcd.estimate_normals(search_param=o3d.geometry.KDTreeSearchParamKNN(knn=30))
@@ -122,12 +151,16 @@ print(f"Original RMSE: {original_rmse:.4f}")
 
 # 使用基于导向滤波的去噪方法
 denoised_pcd_guided = guided_filtering(mls_pcd)
+visualize_denoising_fast(mls_pcd, denoised_pcd_guided)
+
 denoised_rmse_guided = compute_rmse(denoised_pcd_guided, tls_pcd)
 print(f"Guided Filtering RMSE: {denoised_rmse_guided:.4f}")
 print(f"Guided Filtering Denoising Rate: {compute_denoising_rate(mls_pcd, denoised_pcd_guided):.2f}%")
 
 # 使用双边滤波迭代方法
 denoised_pcd_bilateral = bilateral_filtering(mls_pcd)
+visualize_denoising_fast(mls_pcd, denoised_pcd_bilateral)
+
 denoised_rmse_bilateral = compute_rmse(denoised_pcd_bilateral, tls_pcd)
 print(f"Bilateral Filtering RMSE: {denoised_rmse_bilateral:.4f}")
 print(f"Bilateral Filtering Denoising Rate: {compute_denoising_rate(mls_pcd, denoised_pcd_bilateral):.2f}%")

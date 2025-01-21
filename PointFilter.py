@@ -75,10 +75,26 @@ def downsample_points(points, voxel_size):
     down_pcd = pcd.voxel_down_sample(voxel_size)
     return np.asarray(down_pcd.points)
 
+def calculate_noise_removal_rate(original_points, denoised_points):
+    """
+    Calculate noise removal rate as the percentage of points removed during denoising.
+
+    Parameters:
+    original_points (np.ndarray): Original noisy point cloud points.
+    denoised_points (np.ndarray): Denoised point cloud points.
+
+    Returns:
+    float: Noise removal rate in percentage.
+    """
+    original_count = len(original_points)
+    denoised_count = len(denoised_points)
+    removed_points = original_count - denoised_count
+    noise_removal_rate = (removed_points / original_count) * 100
+    return noise_removal_rate
 # 加载点云数据
 print("Loading LAS point cloud data...")
-file_path_mls = "D:/E_2024_Thesis/Data/roof/roof_MLS.las"
-file_path_tls = "D:/E_2024_Thesis/Data/roof/roof_TLS.las"
+file_path_mls = "D:/E_2024_Thesis/Data/data/Street/MLS_Street.las"
+file_path_tls = "D:/E_2024_Thesis/Data/data/Street/TLS_Street.las"
 
 noisy_pcd = read_las_to_o3d(file_path_mls)
 ground_truth_pcd = read_las_to_o3d(file_path_tls)
@@ -98,7 +114,8 @@ denoised_points = point_filter(noisy_points, ground_truth_normals)
 print("Saving denoised point cloud...")
 denoised_pcd = o3d.geometry.PointCloud()
 denoised_pcd.points = o3d.utility.Vector3dVector(denoised_points)
-o3d.io.write_point_cloud("D:/E_2024_Thesis/Data/denoised_point_cloud.ply", denoised_pcd)
+o3d.io.write_point_cloud("D:/E_2024_Thesis/Output/Street_Denoised_PointFilter.ply", denoised_pcd)
+#o3d.io.write_point_cloud("D:/E_2024_Thesis/Output/Roof_Denoised_HighRes.pcd", denoised_pcd)
 
 # Step 4: 计算 RMSE
 # 下采样
@@ -114,6 +131,16 @@ print(f"RMSE: {rmse}")
 # 可视化结果
 print("Visualizing point clouds...")
 noisy_pcd.paint_uniform_color([1, 0, 0])  # 红色表示有噪声的点云
-denoised_pcd.paint_uniform_color([0, 1, 0])  # 绿色表示去噪点云
+denoised_pcd.paint_uniform_color([0, 0, 1])  # 绿色表示去噪点云
 ground_truth_pcd.paint_uniform_color([0, 0, 1])  # 蓝色表示 Ground Truth 点云
-o3d.visualization.draw_geometries([noisy_pcd, denoised_pcd, ground_truth_pcd])
+o3d.visualization.draw_geometries([noisy_pcd, denoised_pcd])
+
+# Step 6: Calculate and display denoising rate
+# Function to calculate denoising rate based on noise removal
+
+# Step: Calculate and display noise removal rate
+print("Calculating noise removal rate...")
+noise_removal_rate = calculate_noise_removal_rate(noisy_points, denoised_points)
+
+# Display results
+print(f"Noise Removal Rate: {noise_removal_rate:.2f}%")
