@@ -18,7 +18,7 @@ def interpolate_point_cloud(point_cloud, voxel_size=0.1):
         interpolated_point = np.mean(neighbors, axis=0)
         interpolated_points.append(interpolated_point)
 
-        # 将插值点与原始点合并
+    # 将插值点与原始点合并
     all_points = np.vstack((points, np.array(interpolated_points)))
     interpolated_pcd = o3d.geometry.PointCloud()
     interpolated_pcd.points = o3d.utility.Vector3dVector(all_points)
@@ -29,6 +29,7 @@ def reconstruct_surface_with_alpha_shape(point_cloud, alpha=0.05):
     # 使用 Alpha Shape 进行表面重建
     mesh = o3d.geometry.TriangleMesh.create_from_point_cloud_alpha_shape(point_cloud, alpha)
     return mesh
+
 
 def calculate_normal_consistency(pcd, radius=0.1):
     """
@@ -65,13 +66,9 @@ def calculate_normal_consistency(pcd, radius=0.1):
 
 
 # 加载点云
-#input_ply = "D:/E_2024_Thesis/Output/Roof_Denoised_PointFilter1.ply"
-#input_ply = "D:/E_2024_Thesis/Data/roof/roof_MLS.ply"
-#input_ply = "D:/E_2024_Thesis/Data/roof/roof_TLS.ply"
-input_ply = "D:/E_2024_Thesis/Output/Road_After/Road_PointFilter.ply"
-interpolated_output_ply = "D:/E_2024_Thesis/Output/Roof_Interpolated_PointCloud.ply"
-#final_mesh_output = "D:/E_2024_Thesis/Output/Mesh/BeforeMLS_0.05.ply"
-final_mesh_output = "D:/E_2024_Thesis/Output/Road_After/Road_PointFiler_0.5.ply"
+input_ply = "D:/E_2024_Thesis/Data/Output/roof_PointFilter2.ply"
+interpolated_output_ply = "D:/E_2024_Thesis/Data/Output/Roof_Interpolated_PointCloud2.ply"
+final_mesh_output = "D:/E_2024_Thesis/Data/Output/Roof_PointFiler3D.ply"
 
 point_cloud = o3d.io.read_point_cloud(input_ply)
 
@@ -83,25 +80,40 @@ print(f"点云加载成功，包含 {len(point_cloud.points)} 个点")
 # Step 1: 插值补全点云
 print("正在进行点云插值...")
 interpolated_pcd = interpolate_point_cloud(point_cloud)
+print(f"插值点云中包含 {len(interpolated_pcd.points)} 个点")
+if not interpolated_pcd.has_points():
+    raise ValueError("插值点云为空，无法进行表面重建。")
 o3d.io.write_point_cloud(interpolated_output_ply, interpolated_pcd)
 print(f"插值补全后的点云已保存至: {interpolated_output_ply}")
 
 # Step 2: 使用 Alpha Shape 进行 3D 重建
 print("正在进行 3D 表面重建...")
-alpha = 0.5  # 调整 alpha 参数控制表面平滑度
-mesh = reconstruct_surface_with_alpha_shape(interpolated_pcd, alpha)
+alpha_values = [0.01, 0.05, 0.1, 0.2]  # 尝试不同的 alpha 参数
+mesh = None
 
-# 保存重建的模型
-o3d.io.write_triangle_mesh(final_mesh_output, mesh)
-print(f"3D 重建的模型已保存至: {final_mesh_output}")
+for alpha in alpha_values:
+    try:
+        print(f"尝试使用 alpha = {alpha} 进行表面重建...")
+        mesh = reconstruct_surface_with_alpha_shape(interpolated_pcd, alpha)
+        if len(mesh.vertices) == 0:
+            print(f"Alpha = {alpha} 时生成的网格为空。")
+            continue
+        print(f"成功生成网格，顶点数: {len(mesh.vertices)}")
+        o3d.io.write_triangle_mesh(final_mesh_output, mesh)
+        print(f"网格已保存至: {final_mesh_output}")
+        break
+    except Exception as e:
+        print(f"Alpha = {alpha} 重建失败: {e}")
 
-# 提取网格的顶点并创建点云对象
+if mesh is None or len(mesh.vertices) == 0:
+    raise RuntimeError("所有 alpha 参数均无法生成有效网格，请检查点云数据或调整参数。")
+
+# Step 3: 计算表面平滑度
 pcd_from_mesh = o3d.geometry.PointCloud()
 pcd_from_mesh.points = mesh.vertices
-# 计算表面平滑度
 smoothness = calculate_normal_consistency(pcd_from_mesh)
 print(f"Average normal angle difference (surface smoothness): {smoothness:.4f} radians")
+
 # 可视化最终结果
 print("可视化插值点云和重建结果...")
-# o3d.visualization.draw_geometries([interpolated_pcd], window_name="Interpolated Point Cloud")
 o3d.visualization.draw_geometries([mesh], mesh_show_back_face=True, window_name="Alpha Shape Reconstruction")

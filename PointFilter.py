@@ -93,8 +93,8 @@ def calculate_noise_removal_rate(original_points, denoised_points):
     return noise_removal_rate
 # 加载点云数据
 print("Loading LAS point cloud data...")
-file_path_mls = "D:/E_2024_Thesis/Data/data/Street/MLS_Street.las"
-file_path_tls = "D:/E_2024_Thesis/Data/data/Street/TLS_Street.las"
+file_path_mls = "D:/E_2024_Thesis/Data/Input/roof/Roof_MLS.las"
+file_path_tls = "D:/E_2024_Thesis/Data/Input/roof/Roof_TLS.las"
 
 noisy_pcd = read_las_to_o3d(file_path_mls)
 ground_truth_pcd = read_las_to_o3d(file_path_tls)
@@ -114,7 +114,7 @@ denoised_points = point_filter(noisy_points, ground_truth_normals)
 print("Saving denoised point cloud...")
 denoised_pcd = o3d.geometry.PointCloud()
 denoised_pcd.points = o3d.utility.Vector3dVector(denoised_points)
-o3d.io.write_point_cloud("D:/E_2024_Thesis/Output/Street_Denoised_PointFilter.ply", denoised_pcd)
+o3d.io.write_point_cloud("D:/E_2024_Thesis/Data/Output/roof_PointFilter2.ply", denoised_pcd)
 #o3d.io.write_point_cloud("D:/E_2024_Thesis/Output/Roof_Denoised_HighRes.pcd", denoised_pcd)
 
 # Step 4: 计算 RMSE
@@ -140,7 +140,7 @@ o3d.visualization.draw_geometries([noisy_pcd, denoised_pcd])
 
 # Step: Calculate and display noise removal rate
 print("Calculating noise removal rate...")
-noise_removal_rate = calculate_noise_removal_rate(noisy_points, denoised_points)
+#noise_removal_rate = calculate_noise_removal_rate(noisy_points, denoised_points)
 
 # Display results
-print(f"Noise Removal Rate: {noise_removal_rate:.2f}%")
+#print(f"Noise Removal Rate: {noise_removal_rate:.2f}%")
