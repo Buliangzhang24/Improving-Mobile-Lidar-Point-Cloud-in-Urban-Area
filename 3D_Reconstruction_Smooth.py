@@ -66,9 +66,9 @@ def calculate_normal_consistency(pcd, radius=0.1):
 
 
 # 加载点云
-input_ply = "D:/E_2024_Thesis/Data/Output/roof_PointFilter2.ply"
+input_ply = "D:/E_2024_Thesis/Data/Input/roof/Roof_MLS.ply"
 interpolated_output_ply = "D:/E_2024_Thesis/Data/Output/Roof_Interpolated_PointCloud2.ply"
-final_mesh_output = "D:/E_2024_Thesis/Data/Output/Roof_PointFiler3D.ply"
+final_mesh_output = "D:/E_2024_Thesis/Data/Output/1Origianl_Roof_PointFiler3D.ply"
 
 point_cloud = o3d.io.read_point_cloud(input_ply)
 
@@ -83,12 +83,14 @@ interpolated_pcd = interpolate_point_cloud(point_cloud)
 print(f"插值点云中包含 {len(interpolated_pcd.points)} 个点")
 if not interpolated_pcd.has_points():
     raise ValueError("插值点云为空，无法进行表面重建。")
-o3d.io.write_point_cloud(interpolated_output_ply, interpolated_pcd)
-print(f"插值补全后的点云已保存至: {interpolated_output_ply}")
+
+interpolated_pcd.remove_non_finite_points()
+interpolated_pcd.remove_duplicated_points()
+o3d.visualization.draw_geometries([interpolated_pcd])
 
 # Step 2: 使用 Alpha Shape 进行 3D 重建
 print("正在进行 3D 表面重建...")
-alpha_values = [0.01, 0.05, 0.1, 0.2]  # 尝试不同的 alpha 参数
+alpha_values = [0.05, 0.1, 0.5, 2]  # 尝试不同的 alpha 参数
 mesh = None
 
 for alpha in alpha_values:

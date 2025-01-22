@@ -106,8 +106,8 @@ mls_pcd = load_las_as_o3d_point_cloud("D:/E_2024_Thesis/Data/Input/roof/Roof_MLS
 mls_denoised_density = density_denoise(mls_pcd)
 
 #visualize_denoising_fast(mls_pcd, mls_denoised_ransac)
-# visualize_denoising_fast(mls_pcd, mls_denoised_bayes)
-#visualize_denoising_fast(mls_pcd, mls_denoised_density)
+#visualize_denoising_fast(mls_pcd, mls_denoised_bayes)
+visualize_denoising_fast(mls_pcd, mls_denoised_density)
 # 设置输出目录
 output_dir = "D:/E_2024_Thesis/Data/Output/Roof/"
 #if not os.path.exists(output_dir):

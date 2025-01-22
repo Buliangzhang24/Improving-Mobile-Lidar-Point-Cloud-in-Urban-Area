@@ -5,13 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="01586aa8-02d4-4ade-a432-b174f09da4ef" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/3D_BPA.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/3D_Reconstruction.py" beforeDir="false" afterPath="$PROJECT_DIR$/3D_Reconstruction.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/3D_Reconstruction.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/3D_Reconstruction_Smooth.py" beforeDir="false" afterPath="$PROJECT_DIR$/3D_Reconstruction_Smooth.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PointFilter.py" beforeDir="false" afterPath="$PROJECT_DIR$/PointFilter.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Random Sampling.py" beforeDir="false" afterPath="$PROJECT_DIR$/Random Sampling.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Try.py" beforeDir="false" afterPath="$PROJECT_DIR$/Try.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fromlastoply.py" beforeDir="false" afterPath="$PROJECT_DIR$/fromlastoply.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,6 +37,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Random Sampling.py" root0="FORCE_HIGHLIGHTING" />
+  </component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
@@ -51,44 +52,68 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.3D_HD.executor": "Run",
-    "Python.3D_Parametric Representation Modeling.executor": "Run",
-    "Python.3D_Reconstruction.executor": "Run",
-    "Python.3D_Reconstruction_Smooth.executor": "Run",
-    "Python.CNN.executor": "Debug",
-    "Python.Clip.executor": "Debug",
-    "Python.Clip_Overlap.executor": "Debug",
-    "Python.IterativePFN.executor": "Debug",
-    "Python.KNN.executor": "Debug",
-    "Python.Manifold.executor": "Debug",
-    "Python.Normal.executor": "Debug",
-    "Python.PointFilter.executor": "Run",
-    "Python.PointNet.executor": "Debug",
-    "Python.Random Sampling.executor": "Debug",
-    "Python.Registration.executor": "Run",
-    "Python.Registration_FPFH.executor": "Debug",
-    "Python.Registration_ICP.executor": "Run",
-    "Python.Try.executor": "Run",
-    "Python.fromlastoply.executor": "Run",
-    "Python.main.executor": "Debug",
-    "Python.ply.executor": "Run",
-    "Python.tyr.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "master",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.3D_HD.executor&quot;: &quot;Run&quot;,
+    &quot;Python.3D_Parametric Representation Modeling.executor&quot;: &quot;Run&quot;,
+    &quot;Python.3D_Reconstruction.executor&quot;: &quot;Run&quot;,
+    &quot;Python.3D_Reconstruction_Smooth.executor&quot;: &quot;Run&quot;,
+    &quot;Python.CNN.executor&quot;: &quot;Debug&quot;,
+    &quot;Python.Clip.executor&quot;: &quot;Debug&quot;,
+    &quot;Python.Clip_Overlap.executor&quot;: &quot;Debug&quot;,
+    &quot;Python.IterativePFN.executor&quot;: &quot;Debug&quot;,
+    &quot;Python.KNN.executor&quot;: &quot;Debug&quot;,
+    &quot;Python.Manifold.executor&quot;: &quot;Debug&quot;,
+    &quot;Python.Normal.executor&quot;: &quot;Debug&quot;,
+    &quot;Python.PointFilter.executor&quot;: &quot;Run&quot;,
+    &quot;Python.PointNet.executor&quot;: &quot;Debug&quot;,
+    &quot;Python.Random Sampling.executor&quot;: &quot;Debug&quot;,
+    &quot;Python.Registration.executor&quot;: &quot;Run&quot;,
+    &quot;Python.Registration_FPFH.executor&quot;: &quot;Debug&quot;,
+    &quot;Python.Registration_ICP.executor&quot;: &quot;Run&quot;,
+    &quot;Python.Try.executor&quot;: &quot;Run&quot;,
+    &quot;Python.fromlastoply.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Debug&quot;,
+    &quot;Python.ply.executor&quot;: &quot;Run&quot;,
+    &quot;Python.tyr.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
+    <configuration name="Random Sampling" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="SDK_NAME" value="D:\E_2024_Thesis\Code\PC_V3\myenv" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Random Sampling.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="PointCloud" />
       <option name="ENV_FILES" value="" />
@@ -173,7 +198,11 @@
       <workItem from="1737363568163" duration="916000" />
       <workItem from="1737369266748" duration="17893000" />
       <workItem from="1737481907085" duration="6082000" />
-      <workItem from="1737549237606" duration="8930000" />
+      <workItem from="1737549237606" duration="9222000" />
+      <workItem from="1737561458308" duration="23000" />
+      <workItem from="1737561488997" duration="713000" />
+      <workItem from="1737562430003" duration="1043000" />
+      <workItem from="1737563669758" duration="8291000" />
     </task>
     <servers />
   </component>
@@ -482,17 +511,12 @@
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Random Sampling.py</url>
           <line>99</line>
-          <option name="timeStamp" value="215" />
+          <option name="timeStamp" value="219" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Random Sampling.py</url>
-          <line>103</line>
-          <option name="timeStamp" value="216" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Random Sampling.py</url>
-          <line>116</line>
-          <option name="timeStamp" value="218" />
+          <line>105</line>
+          <option name="timeStamp" value="224" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
@@ -527,13 +551,13 @@
     <SUITE FILE_PATH="coverage/PointCloud_Version2$KNN.coverage" NAME="KNN Coverage Results" MODIFIED="1735178394446" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/PointCloud_Version2$3D_HD.coverage" NAME="3D_HD Coverage Results" MODIFIED="1737397024540" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/PointCloud_Version2$ply.coverage" NAME="ply Coverage Results" MODIFIED="1736963334087" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/PointCloud_Version2$Random_Sampling.coverage" NAME="Random Sampling Coverage Results" MODIFIED="1737560482149" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/PointCloud_Version2$3D_Reconstruction_Smooth.coverage" NAME="3D_Reconstruction_Smooth Coverage Results" MODIFIED="1737551430227" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/PointCloud_Version2$Random_Sampling.coverage" NAME="Random Sampling Coverage Results" MODIFIED="1737564162391" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/PointCloud_Version2$3D_Reconstruction_Smooth.coverage" NAME="3D_Reconstruction_Smooth Coverage Results" MODIFIED="1737574511055" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/PointCloud$Registration.coverage" NAME="Registration Coverage Results" MODIFIED="1731534865795" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/PointCloud_Version2$tyr.coverage" NAME="tyr Coverage Results" MODIFIED="1735177082099" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/PointCloud_Version2$PointNet.coverage" NAME="PointNet Coverage Results" MODIFIED="1735179461647" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/PointCloud_Version2$fromlastoply.coverage" NAME="fromlastoply Coverage Results" MODIFIED="1737554603731" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/PointCloud_Version2$3D_Reconstruction.coverage" NAME="3D_Reconstruction Coverage Results" MODIFIED="1737554623789" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/PointCloud_Version2$3D_Reconstruction.coverage" NAME="3D_Reconstruction Coverage Results" MODIFIED="1737574176237" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/PointCloud_Version2$Try.coverage" NAME="Try Coverage Results" MODIFIED="1737551551035" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
