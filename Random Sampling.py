@@ -101,21 +101,21 @@ tls_pcd = load_las_as_o3d_point_cloud("D:/E_2024_Thesis/Data/Input/roof/Roof_TLS
 mls_pcd = load_las_as_o3d_point_cloud("D:/E_2024_Thesis/Data/Input/roof/Roof_MLS.las")
 
 # 对 MLS 点云进行去噪
-#mls_denoised_ransac = ransac_denoise(mls_pcd)
-#mls_denoised_bayes = bayesian_denoise(mls_pcd)
+mls_denoised_ransac = ransac_denoise(mls_pcd)
+mls_denoised_bayes = bayesian_denoise(mls_pcd)
 mls_denoised_density = density_denoise(mls_pcd)
 
 #visualize_denoising_fast(mls_pcd, mls_denoised_ransac)
 #visualize_denoising_fast(mls_pcd, mls_denoised_bayes)
-visualize_denoising_fast(mls_pcd, mls_denoised_density)
+#visualize_denoising_fast(mls_pcd, mls_denoised_density)
 # 设置输出目录
-output_dir = "D:/E_2024_Thesis/Data/Output/Roof/"
+output_dir = "D:/E_2024_Thesis/Data/Output/Roof/PointCloud/"
 #if not os.path.exists(output_dir):
 #    os.makedirs(output_dir)
 
 # 保存去噪后的点云
-#o3d.io.write_point_cloud(output_dir + "mls_denoised_ransac.ply", mls_denoised_ransac)
-#o3d.io.write_point_cloud(output_dir + "mls_denoised_bayes.ply", mls_denoised_bayes)
+o3d.io.write_point_cloud(output_dir + "mls_denoised_ransac.ply", mls_denoised_ransac)
+o3d.io.write_point_cloud(output_dir + "mls_denoised_bayes.ply", mls_denoised_bayes)
 o3d.io.write_point_cloud(output_dir + "mls_denoised_density.ply", mls_denoised_density)
 
 print("Point clouds have been saved to the output directory.")

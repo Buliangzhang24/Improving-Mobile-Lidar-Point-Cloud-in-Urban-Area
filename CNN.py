@@ -258,8 +258,8 @@ def visualize_denoising(original_pcd, denoised_pcd):
 
 
 # 加载点云文件
-tls_pcd = load_las_as_o3d_point_cloud("autodl-tmp/roof_TLS.las")
-mls_pcd = load_las_as_o3d_point_cloud("autodl-tmp/roof_MLS.las")
+tls_pcd = load_las_as_o3d_point_cloud("autodl-tmp/Roof_TLS.las")
+mls_pcd = load_las_as_o3d_point_cloud("autodl-tmp/Roof_MLS.las")
 
 # 归一化点云
 tls_pcd = normalize_point_cloud(tls_pcd)

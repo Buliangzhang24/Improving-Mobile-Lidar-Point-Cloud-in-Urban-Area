@@ -145,8 +145,8 @@ def visualize_denoising_fast(pcd_original, pcd_denoised):
 
 
 # 载入数据
-tls_pcd = load_las_as_o3d_point_cloud("D:/E_2024_Thesis/Data/data/Roof_TLS.las")
-mls_pcd = load_las_as_o3d_point_cloud("D:/E_2024_Thesis/Data/data/Roof_MLS.las")
+tls_pcd = load_las_as_o3d_point_cloud("D:/E_2024_Thesis/Data/Input/roof/Roof_TLS.las")
+mls_pcd = load_las_as_o3d_point_cloud("D:/E_2024_Thesis/Data/Input/roof/Roof_MLS.las")
 
 # 选择去噪方法并应用
 denoised_mls_reconstruction = manifold_reconstruction_denoising(mls_pcd)
@@ -158,19 +158,30 @@ denoised_mls_truncation = manifold_distance_truncation_denoising(mls_pcd)
 denoised_mls_fluid = fluid_inspired_denoising(mls_pcd)
 #visualize_denoising_fast(mls_pcd, denoised_mls_fluid)
 
-denoised_rmse_reconstruction = compute_rmse(denoised_mls_reconstruction, tls_pcd)
-denoised_rmse_statistical = compute_rmse(denoised_mls_statistical, tls_pcd)
-denoised_rmse_truncation = compute_rmse(denoised_mls_truncation, tls_pcd)
-denoised_rmse_fluid = compute_rmse(denoised_mls_fluid, tls_pcd)
+output_dir = "D:/E_2024_Thesis/Data/Output/Roof/PointCloud/"
+#if not os.path.exists(output_dir):
+#    os.makedirs(output_dir)
+# 保存去噪后的点云
+o3d.io.write_point_cloud(output_dir + "mls_reconstruction.ply", denoised_mls_reconstruction)
+o3d.io.write_point_cloud(output_dir + "mls_statistical.ply", denoised_mls_statistical)
+o3d.io.write_point_cloud(output_dir + "mls_truncation.ply", denoised_mls_truncation)
+o3d.io.write_point_cloud(output_dir + "mls_fluid.ply", denoised_mls_fluid)
 
-print(f"Reconstruction RMSE: {denoised_rmse_reconstruction:.4f}")
+
+
+#denoised_rmse_reconstruction = compute_rmse(denoised_mls_reconstruction, tls_pcd)
+#denoised_rmse_statistical = compute_rmse(denoised_mls_statistical, tls_pcd)
+#denoised_rmse_truncation = compute_rmse(denoised_mls_truncation, tls_pcd)
+#denoised_rmse_fluid = compute_rmse(denoised_mls_fluid, tls_pcd)
+
+#print(f"Reconstruction RMSE: {denoised_rmse_reconstruction:.4f}")
 #print(f"Reconstruction Denoising Rate: {compute_denoising_rate(mls_pcd, denoised_mls_reconstruction):.2f}%")
 
-print(f"Statisical RMSE: {denoised_rmse_statistical:.4f}")
+#print(f"Statisical RMSE: {denoised_rmse_statistical:.4f}")
 #print(f"Statisical Denoising Rate: {compute_denoising_rate(mls_pcd, denoised_mls_statistical):.2f}%")
 
-print(f"Truncation RMSE: {denoised_rmse_truncation:.4f}")
+#print(f"Truncation RMSE: {denoised_rmse_truncation:.4f}")
 #print(f"Truncation Denoising Rate: {compute_denoising_rate(mls_pcd, denoised_mls_truncation):.2f}%")
 
-print(f"Fluid RMSE: {denoised_rmse_fluid:.4f}")
+#print(f"Fluid RMSE: {denoised_rmse_fluid:.4f}")
 #print(f"Fluid Denoising Rate: {compute_denoising_rate(mls_pcd, denoised_mls_fluid):.2f}%")

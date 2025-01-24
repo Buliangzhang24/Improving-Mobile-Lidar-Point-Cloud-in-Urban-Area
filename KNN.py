@@ -140,9 +140,9 @@ def visualize_denoising_fast(pcd_original, pcd_denoised):
 
 
 # 载入点云并运行去噪函数
-file_path = "D:/E_2024_Thesis/Data/roof/roof_MLS.las"
+file_path = "D:/E_2024_Thesis/Data/Input/roof/Roof_MLS.las"
 pcd = read_las_to_o3d(file_path)
-file_path_1 = "D:/E_2024_Thesis/Data/roof/roof_TLS.las"
+file_path_1 = "D:/E_2024_Thesis/Data/Input/roof/Roof_TLS.las"
 reference_pcd = read_las_to_o3d(file_path_1)
 
 # 这里使用前面的knn_denoise_patch函数
@@ -155,32 +155,44 @@ pcd_denoised_manifold = knn_denoise_manifold(pcd)
 pcd_denoised_voxel = knn_denoise_voxel(pcd)
 #o3d.visualization.draw_geometries([pcd_denoised_voxel])
 
+output_dir = "D:/E_2024_Thesis/Data/Output/Roof/PointCloud/"
+#if not os.path.exists(output_dir):
+#    os.makedirs(output_dir)
+
+# 保存去噪后的点云
+o3d.io.write_point_cloud(output_dir + "pcd_denoised_patch.ply", pcd_denoised_patch)
+o3d.io.write_point_cloud(output_dir + "pcd_denoised_manifold.ply", pcd_denoised_manifold)
+o3d.io.write_point_cloud(output_dir + "pcd_denoised_voxel.ply", pcd_denoised_voxel)
+
+print("Point clouds have been saved to the output directory.")
+
 # 使用去噪后的点云调用可视化函数
-visualize_denoising_fast(pcd, pcd_denoised_voxel)
-visualize_denoising_fast(pcd, pcd_denoised_manifold)
-visualize_denoising_fast(pcd, pcd_denoised_patch)
+#visualize_denoising_fast(pcd, pcd_denoised_voxel)
+#visualize_denoising_fast(pcd, pcd_denoised_manifold)
+#visualize_denoising_fast(pcd, pcd_denoised_patch)
+
 # 对齐每个去噪后的点云到参考点云
-aligned_pcd_patch = align_point_clouds(pcd_denoised_patch, reference_pcd)
-aligned_pcd_manifold = align_point_clouds(pcd_denoised_manifold, reference_pcd)
-aligned_pcd_voxel = align_point_clouds(pcd_denoised_voxel, reference_pcd)
-aligned_pcd_origin = align_point_clouds(pcd, reference_pcd)
+#aligned_pcd_patch = align_point_clouds(pcd_denoised_patch, reference_pcd)
+#aligned_pcd_manifold = align_point_clouds(pcd_denoised_manifold, reference_pcd)
+#aligned_pcd_voxel = align_point_clouds(pcd_denoised_voxel, reference_pcd)
+#aligned_pcd_origin = align_point_clouds(pcd, reference_pcd)
 
 # 计算不同方法的 RMSE
-rmse_patch = compute_rmse(np.asarray(aligned_pcd_patch.points), np.asarray(reference_pcd.points))
-rmse_manifold = compute_rmse(np.asarray(aligned_pcd_manifold.points), np.asarray(reference_pcd.points))
-rmse_voxel = compute_rmse(np.asarray(aligned_pcd_voxel.points), np.asarray(reference_pcd.points))
-original_rmse = compute_rmse(np.asarray(aligned_pcd_origin.points), np.asarray(reference_pcd.points))
+#rmse_patch = compute_rmse(np.asarray(aligned_pcd_patch.points), np.asarray(reference_pcd.points))
+#rmse_manifold = compute_rmse(np.asarray(aligned_pcd_manifold.points), np.asarray(reference_pcd.points))
+#rmse_voxel = compute_rmse(np.asarray(aligned_pcd_voxel.points), np.asarray(reference_pcd.points))
+#original_rmse = compute_rmse(np.asarray(aligned_pcd_origin.points), np.asarray(reference_pcd.points))
 
 # 计算去噪率
-denoising_rate_patch = compute_denoising_rate(pcd, pcd_denoised_patch)
-denoising_rate_manifold = compute_denoising_rate(pcd, pcd_denoised_manifold)
-denoising_rate_voxel = compute_denoising_rate(pcd, pcd_denoised_voxel)
+#denoising_rate_patch = compute_denoising_rate(pcd, pcd_denoised_patch)
+#denoising_rate_manifold = compute_denoising_rate(pcd, pcd_denoised_manifold)
+#denoising_rate_voxel = compute_denoising_rate(pcd, pcd_denoised_voxel)
 
 # 输出结果
-print(f"Original RMSE: {original_rmse:.4f}")
-print("KNN Patch RMSE:", rmse_patch)
-print("KNN Patch Denoising Rate:", denoising_rate_patch, "%")
-print("KNN Manifold RMSE:", rmse_manifold)
-print("KNN Manifold Denoising Rate:", denoising_rate_manifold, "%")
-print("KNN Voxel RMSE:", rmse_voxel)
-print("KNN Voxel Denoising Rate:", denoising_rate_voxel, "%")
+#print(f"Original RMSE: {original_rmse:.4f}")
+#print("KNN Patch RMSE:", rmse_patch)
+#print("KNN Patch Denoising Rate:", denoising_rate_patch, "%")
+#print("KNN Manifold RMSE:", rmse_manifold)
+#print("KNN Manifold Denoising Rate:", denoising_rate_manifold, "%")
+#print("KNN Voxel RMSE:", rmse_voxel)
+#print("KNN Voxel Denoising Rate:", denoising_rate_voxel, "%")

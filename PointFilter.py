@@ -114,26 +114,26 @@ denoised_points = point_filter(noisy_points, ground_truth_normals)
 print("Saving denoised point cloud...")
 denoised_pcd = o3d.geometry.PointCloud()
 denoised_pcd.points = o3d.utility.Vector3dVector(denoised_points)
-o3d.io.write_point_cloud("D:/E_2024_Thesis/Data/Output/roof_PointFilter2.ply", denoised_pcd)
+o3d.io.write_point_cloud("D:/E_2024_Thesis/Data/Output/Roof/PointCloud/roof_PointFilter.ply", denoised_pcd)
 #o3d.io.write_point_cloud("D:/E_2024_Thesis/Output/Roof_Denoised_HighRes.pcd", denoised_pcd)
 
 # Step 4: 计算 RMSE
 # 下采样
-voxel_size = 0.05  # 根据数据情况调整
-denoised_points_down = downsample_points(denoised_points, voxel_size)
-ground_truth_points_down = downsample_points(np.asarray(ground_truth_points), voxel_size)
+#voxel_size = 0.05  # 根据数据情况调整
+#denoised_points_down = downsample_points(denoised_points, voxel_size)
+#ground_truth_points_down = downsample_points(np.asarray(ground_truth_points), voxel_size)
 
 # 计算 RMSE
-print("Calculating RMSE...")
-rmse = calculate_rmse(denoised_points_down, ground_truth_points_down)
-print(f"RMSE: {rmse}")
+#print("Calculating RMSE...")
+#rmse = calculate_rmse(denoised_points_down, ground_truth_points_down)
+#print(f"RMSE: {rmse}")
 
 # 可视化结果
-print("Visualizing point clouds...")
-noisy_pcd.paint_uniform_color([1, 0, 0])  # 红色表示有噪声的点云
-denoised_pcd.paint_uniform_color([0, 0, 1])  # 绿色表示去噪点云
-ground_truth_pcd.paint_uniform_color([0, 0, 1])  # 蓝色表示 Ground Truth 点云
-o3d.visualization.draw_geometries([noisy_pcd, denoised_pcd])
+#print("Visualizing point clouds...")
+#noisy_pcd.paint_uniform_color([1, 0, 0])  # 红色表示有噪声的点云
+#denoised_pcd.paint_uniform_color([0, 0, 1])  # 绿色表示去噪点云
+#ground_truth_pcd.paint_uniform_color([0, 0, 1])  # 蓝色表示 Ground Truth 点云
+#o3d.visualization.draw_geometries([noisy_pcd, denoised_pcd])
 
 # Step 6: Calculate and display denoising rate
 # Function to calculate denoising rate based on noise removal
