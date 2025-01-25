@@ -66,9 +66,9 @@ def calculate_normal_consistency(pcd, radius=0.1):
 
 
 # 加载点云
-input_ply = "D:/E_2024_Thesis/Data/Input/roof/Roof_MLS.ply"
-interpolated_output_ply = "D:/E_2024_Thesis/Data/Output/Roof_Interpolated_PointCloud2.ply"
-final_mesh_output = "D:/E_2024_Thesis/Data/Output/1Origianl_Roof_PointFiler3D.ply"
+input_ply = "D:/E_2024_Thesis/Data/Output/Roof/PointCloud/TOP3/mls_patch.ply"
+interpolated_output_ply = "D:/E_2024_Thesis/Data/Output/Roof/Mesh/111mesh_density.ply"
+final_mesh_output = "D:/E_2024_Thesis/Data/Output/Roof/Mesh/mesh_density.ply"
 
 point_cloud = o3d.io.read_point_cloud(input_ply)
 

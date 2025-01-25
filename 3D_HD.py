@@ -47,8 +47,8 @@ def load_point_cloud(pcd_file_path):
     return pcd_points
 
 # 文件路径
-reference_pcd_file = "D:/E_2024_Thesis/Output/Mesh/TLS_0.05.ply"  # 替换为你的参考点云文件路径
-mesh_file = "D:/E_2024_Thesis/Output/Mesh/BeforeMLS_0.5.ply"  # 替换为网格文件路径
+reference_pcd_file = "D:/E_2024_Thesis/Data/Input/roof/Roof_TLS.ply"  # 替换为你的参考点云文件路径
+mesh_file = "D:/E_2024_Thesis/Data/Output/Roof/PointCloud/Random Sample/mls_denoised_density.ply"   # 替换为网格文件路径
 
 # 加载参考点云和网格数据
 pcd = o3d.io.read_point_cloud(reference_pcd_file)

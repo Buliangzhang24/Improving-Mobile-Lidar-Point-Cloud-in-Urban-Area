@@ -1,8 +1,9 @@
 import open3d as o3d
 
 # 输入和输出路径
-input_ply = "D:/E_2024_Thesis/Data/Output/Roof/PointCloud/roof_denoised_density.ply"
-final_mesh_output = "D:/E_2024_Thesis/Data/Output/3D_Roof_Density.ply"
+input_ply = "D:/E_2024_Thesis/Data/Output/Roof/PointCloud/TOP3/mls_patch.ply"
+final_mesh_output = "D:/E_2024_Thesis/Data/Output/Roof/Mesh/mesh_density.ply"
+
 
 # 加载点云数据
 print("加载点云...")

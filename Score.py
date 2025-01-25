@@ -2,6 +2,9 @@ import numpy as np
 import open3d as o3d
 from sklearn.metrics import mean_squared_error
 from scipy.spatial import cKDTree
+from sklearn.neighbors import NearestNeighbors
+from scipy.spatial.transform import Rotation as R
+from scipy.spatial.distance import directed_hausdorff
 
 def load_point_cloud(pcd_path):
     """
@@ -21,20 +24,20 @@ def downsample_points(points, voxel_size):
     return np.asarray(down_pcd.points)
 
 
-def compute_rmse(tls_points, mls_points):
-    """
-    计算RMSE
-    """
-    # 使用KDTree寻找最近的点
-    tree_tls = cKDTree(tls_points)
-    dist, _ = tree_tls.query(mls_points)
+def compute_rmse(mls_points, tls_points):
+    # 不引入随机旋转
+    denoised_points = mls_points  # 使用传入的 mls_points
+    reference_points = tls_points  # 使用传入的 tls_points
 
-    # 计算RMSE
-    rmse = np.sqrt(np.mean(dist ** 2))
+    # 使用最近邻算法找到每个去噪点云点的最近参考点云点
+    nbrs = NearestNeighbors(n_neighbors=1).fit(reference_points)
+    distances, indices = nbrs.kneighbors(denoised_points)
+
+    # 计算每个去噪点与参考点云中最接近点之间的距离的平方
+    rmse = np.sqrt(np.mean(distances ** 2))
     return rmse
 
-
-def compute_normal_consistency(tls_normals, mls_normals, threshold=0.9):
+def compute_normal_consistency(tls_normals, mls_normals, threshold=1):
     """
     计算法向一致性，基于法向量之间的夹角余弦相似度。
 
@@ -82,8 +85,8 @@ def compute_score(rmse, normal_consistency, completeness, rmse_weight=0.4, norma
     """
     综合评估得分
     """
-    score = (rmse_weight * rmse) + (normal_consistency_weight * normal_consistency) + (
-            completeness_weight * completeness)
+    score = (rmse_weight * (1 / rmse)) + (normal_consistency_weight * normal_consistency) + (
+                completeness_weight * completeness)
     return score
 
 
@@ -121,14 +124,14 @@ def evaluate_point_cloud(tls_pcd_path, mls_pcd_path, voxel_size=0.01):
     mls_points = np.asarray(mls_pcd.points)
 
     # 对点云进行下采样及法向量估算
-    tls_points, tls_normals = downsample_points_and_normals(tls_points, voxel_size)
-    mls_points, mls_normals = downsample_points_and_normals(mls_points, voxel_size)
+    tls_points1, tls_normals = downsample_points_and_normals(tls_points, voxel_size)
+    mls_points1, mls_normals = downsample_points_and_normals(mls_points, voxel_size)
 
-    print(f"Downsampled TLS Points: {tls_points.shape}")
-    print(f"Downsampled MLS Points: {mls_points.shape}")
+    ##print(f"Downsampled TLS Points: {tls_points.shape}")
+    #print(f"Downsampled MLS Points: {mls_points.shape}")
 
     # 计算 RMSE
-    rmse = compute_rmse(tls_points, mls_points)  # 正确传递下采样后的点云
+    rmse = compute_rmse(mls_points, tls_points)  # 正确传递下采样后的点云
 
     # 计算法向一致性（只传递法向量）
     normal_consistency = compute_normal_consistency(tls_normals, mls_normals)
@@ -144,10 +147,16 @@ def evaluate_point_cloud(tls_pcd_path, mls_pcd_path, voxel_size=0.01):
 
 # 路径
 tls_pcd_path = "D:/E_2024_Thesis/Data/Input/roof/Roof_TLS.ply"  # TLS点云路径
-mls_pcd_path = "D:/E_2024_Thesis/Data/Output/Roof/PointCloud/roof_denoised_PointFilter.ply"  # 已去噪的MLS点云路径
+mls_pcd_path = "D:/E_2024_Thesis/Data/Output/Roof/PointCloud/Random Sample/mls_denoised_density.ply"   # 已去噪的MLS点云路径
+
 
 # 调用评估函数
 rmse, normal_consistency, completeness, score = evaluate_point_cloud(tls_pcd_path, mls_pcd_path)
+
+#tls_points1 = load_point_cloud(tls_pcd_path)
+#mls_points1 = load_point_cloud(mls_pcd_path)
+#print(f"TLS Points Shape: {tls_points1.shape}, Range: {tls_points1.min()} - {tls_points1.max()}")
+#print(f"Denoised MLS Points Shape: {mls_points1 .shape}, Range: {mls_points1 .min()} - {mls_points1 .max()}")
 
 # 输出结果
 print(f"RMSE: {rmse}")

@@ -281,8 +281,8 @@ print("Training and Evaluating PointProNets Model...")
 output = point_pro_nets_model(mls_tensor)  # 获取模型输出
 print(f"PointProNets output shape: {output.shape}")
 
-# rmse1, denoising_rate1 = train_and_evaluate_model(point_pro_nets_model, mls_tensor, processed_tls_tensor_1, output_dim_1)
-# print(f"PointProNets Model RMSE: {rmse1:.4f}, Denoising Rate: {denoising_rate1:.2f}%")
+rmse1, denoising_rate1 = train_and_evaluate_model(point_pro_nets_model, mls_tensor, processed_tls_tensor_1, output_dim_1)
+print(f"PointProNets Model RMSE: {rmse1:.4f}, Denoising Rate: {denoising_rate1:.2f}%")
 
 
 # 针对 GeometricSemanticFusion 模型

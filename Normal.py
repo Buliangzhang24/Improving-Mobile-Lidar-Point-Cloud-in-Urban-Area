@@ -152,10 +152,10 @@ mls_pcd.estimate_normals(search_param=o3d.geometry.KDTreeSearchParamKNN(knn=30))
 # 使用基于导向滤波的去噪方法
 denoised_pcd_guided = guided_filtering(mls_pcd)
 visualize_denoising_fast(mls_pcd, denoised_pcd_guided)
-o3d.io.write_point_cloud(output_dir + "mls_guided.ply", denoised_pcd_guided)
+#o3d.io.write_point_cloud(output_dir + "mls_guided.ply", denoised_pcd_guided)
 
-#denoised_rmse_guided = compute_rmse(denoised_pcd_guided, tls_pcd)
-#print(f"Guided Filtering RMSE: {denoised_rmse_guided:.4f}")
+denoised_rmse_guided = compute_rmse(denoised_pcd_guided, tls_pcd)
+print(f"Guided Filtering RMSE: {denoised_rmse_guided:.4f}")
 #print(f"Guided Filtering Denoising Rate: {compute_denoising_rate(mls_pcd, denoised_pcd_guided):.2f}%")
 
 # 使用双边滤波迭代方法
