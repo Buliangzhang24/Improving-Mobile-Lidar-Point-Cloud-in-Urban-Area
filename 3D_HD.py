@@ -1,74 +1,96 @@
 import open3d as o3d
 import numpy as np
-from scipy.spatial import cKDTree
 
-def downsample_point_cloud(pcd, voxel_size):
+
+def interpolate_point_cloud(point_cloud, voxel_size=0.1):
+    # 对点云进行体素降采样
+    downsampled_pcd = point_cloud.voxel_down_sample(voxel_size)
+    points = np.asarray(downsampled_pcd.points)
+
+    # 创建 KD 树用于最近邻查找
+    kd_tree = o3d.geometry.KDTreeFlann(downsampled_pcd)
+
+    # 插值生成新点
+    interpolated_points = []
+    for point in points:
+        [_, idx, _] = kd_tree.search_knn_vector_3d(point, 10)  # 最近邻数量
+        neighbors = points[idx]
+        interpolated_point = np.mean(neighbors, axis=0)
+        interpolated_points.append(interpolated_point)
+
+    # 将插值点与原始点合并
+    all_points = np.vstack((points, np.array(interpolated_points)))
+    interpolated_pcd = o3d.geometry.PointCloud()
+    interpolated_pcd.points = o3d.utility.Vector3dVector(all_points)
+    return interpolated_pcd
+
+
+def reconstruct_surface_with_poisson(point_cloud, depth=8):
+    # 使用泊松重建进行表面重建
+    point_cloud.estimate_normals(search_param=o3d.geometry.KDTreeSearchParamHybrid(radius=0.1, max_nn=30))
+    mesh, densities = o3d.geometry.TriangleMesh.create_from_point_cloud_poisson(point_cloud, depth=depth)
+    return mesh, densities
+
+
+def calculate_hausdorff_distance(ref_pcd, target_pcd):
     """
-    对点云进行下采样
+    计算参考点云和目标点云之间的 Hausdorff 距离。
+
+    参数：
+    - ref_pcd: 参考点云
+    - target_pcd: 目标点云
+
+    返回：
+    - Hausdorff 距离
     """
-    return pcd.voxel_down_sample(voxel_size)
+    # 使用 open3d 的点到点距离计算工具
+    distances = ref_pcd.compute_point_cloud_distance(target_pcd)
+    hausdorff_distance = np.max(distances)
+    return hausdorff_distance
 
-def downsample_mesh(mesh, target_ratio):
-    """
-    对网格进行简化，减少三角形数目
-    """
-    mesh = mesh.simplify_quadric_decimation(target_number_of_triangles=int(len(mesh.triangles) * target_ratio))
-    return mesh
 
-def hausdorff_distance_kdtree(pcd_points, mesh_points):
-    """
-    计算点云与网格之间的Hausdorff距离，使用KDTree优化计算
-    """
-    # 创建KDTree
-    pcd_tree = cKDTree(pcd_points)
-    mesh_tree = cKDTree(mesh_points)
+# 加载点云
+input_ply = "D:/E_2024_Thesis/Data/Output/Roof/PointCloud/TOP3/mls_patch.ply"
+final_mesh_output = "D:/E_2024_Thesis/Data/Output/Roof/Mesh/poisson_mesh.ply"
 
-    # 对于点云中的每个点，找到离它最近的网格点
-    dist_pcd_to_mesh, _ = pcd_tree.query(mesh_points)
-    dist_mesh_to_pcd, _ = mesh_tree.query(pcd_points)
+point_cloud = o3d.io.read_point_cloud(input_ply)
 
-    # 返回最大最小距离
-    return max(np.max(dist_pcd_to_mesh), np.max(dist_mesh_to_pcd))
+# 检查点云是否成功加载
+if not point_cloud.has_points():
+    raise ValueError(f"点云加载失败或为空: {input_ply}")
+print(f"点云加载成功，包含 {len(point_cloud.points)} 个点")
 
-def load_ply(file_path):
-    """
-    加载PLY文件，返回网格的点
-    """
-    mesh = o3d.io.read_triangle_mesh(file_path)
-    mesh_points = np.asarray(mesh.vertices)
-    return mesh
+# Step 1: 插值补全点云
+print("正在进行点云插值...")
+interpolated_pcd = interpolate_point_cloud(point_cloud)
+print(f"插值点云中包含 {len(interpolated_pcd.points)} 个点")
+if not interpolated_pcd.has_points():
+    raise ValueError("插值点云为空，无法进行表面重建。")
 
-def load_point_cloud(pcd_file_path):
-    """
-    加载点云文件，返回点云的点
-    """
-    pcd = o3d.io.read_point_cloud(pcd_file_path)
-    pcd_points = np.asarray(pcd.points)
-    return pcd_points
+interpolated_pcd.remove_non_finite_points()
+interpolated_pcd.remove_duplicated_points()
+o3d.visualization.draw_geometries([interpolated_pcd])
 
-# 文件路径
-reference_pcd_file = "D:/E_2024_Thesis/Data/Input/roof/Roof_TLS.ply"  # 替换为你的参考点云文件路径
-mesh_file = "D:/E_2024_Thesis/Data/Output/Roof/PointCloud/Random Sample/mls_denoised_density.ply"   # 替换为网格文件路径
+# Step 2: 使用泊松进行 3D 重建
+print("正在进行泊松表面重建...")
+mesh, densities = reconstruct_surface_with_poisson(interpolated_pcd, depth=8)
 
-# 加载参考点云和网格数据
-pcd = o3d.io.read_point_cloud(reference_pcd_file)
-mesh = o3d.io.read_triangle_mesh(mesh_file)
+if not mesh.vertices:
+    raise RuntimeError("泊松重建生成的网格为空，请检查点云数据或调整参数。")
 
-# 对点云和网格进行下采样
-voxel_size = 0.05  # 设置点云下采样的体素大小
-target_ratio = 0.1  # 设置网格简化的目标比例
+# 保存重建结果
+o3d.io.write_triangle_mesh(final_mesh_output, mesh)
+print(f"泊松网格已保存至: {final_mesh_output}")
 
-downsampled_pcd = downsample_point_cloud(pcd, voxel_size)
-downsampled_mesh = downsample_mesh(mesh, target_ratio)
+# Step 3: 计算 Hausdorff 距离
+print("正在计算 Hausdorff 距离...")
+mesh_sampled_pcd = mesh.sample_points_uniformly(number_of_points=10000)  # 从网格中采样点
+hausdorff_distance = calculate_hausdorff_distance(interpolated_pcd, mesh_sampled_pcd)
+print(f"Hausdorff 距离: {hausdorff_distance:.4f}")
 
-# 获取下采样后的点
-pcd_points = np.asarray(downsampled_pcd.points)
-mesh_points = np.asarray(downsampled_mesh.vertices)
-
-# 计算Hausdorff距离
-hd_value = hausdorff_distance_kdtree(pcd_points, mesh_points)
-
-print(f"Hausdorff Distance between reference point cloud and surface mesh: {hd_value}")
+# 可视化最终结果
+print("可视化插值点云和泊松重建结果...")
+o3d.visualization.draw_geometries([mesh], mesh_show_back_face=True, window_name="Poisson Reconstruction")
 
 
 

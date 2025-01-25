@@ -68,7 +68,7 @@ def calculate_normal_consistency(pcd, radius=0.1):
 # 加载点云
 input_ply = "D:/E_2024_Thesis/Data/Output/Roof/PointCloud/TOP3/mls_patch.ply"
 interpolated_output_ply = "D:/E_2024_Thesis/Data/Output/Roof/Mesh/111mesh_density.ply"
-final_mesh_output = "D:/E_2024_Thesis/Data/Output/Roof/Mesh/mesh_density.ply"
+final_mesh_output = "D:/E_2024_Thesis/Data/Output/Roof/Mesh/mesh_patch.ply"
 
 point_cloud = o3d.io.read_point_cloud(input_ply)
 
@@ -90,7 +90,7 @@ o3d.visualization.draw_geometries([interpolated_pcd])
 
 # Step 2: 使用 Alpha Shape 进行 3D 重建
 print("正在进行 3D 表面重建...")
-alpha_values = [0.05, 0.1, 0.5, 2]  # 尝试不同的 alpha 参数
+alpha_values = [1, 2, 3, 5]  # 尝试不同的 alpha 参数
 mesh = None
 
 for alpha in alpha_values:
