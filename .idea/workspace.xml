@@ -5,16 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="01586aa8-02d4-4ade-a432-b174f09da4ef" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/3D.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/HD.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/3D_BPA.py" beforeDir="false" afterPath="$PROJECT_DIR$/3D_BPA.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/3D_Reconstruction_Smooth.py" beforeDir="false" afterPath="$PROJECT_DIR$/3D_Reconstruction_Smooth.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Align.py" beforeDir="false" afterPath="$PROJECT_DIR$/Align.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Normal.py" beforeDir="false" afterPath="$PROJECT_DIR$/Normal.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PointNet.py" beforeDir="false" afterPath="$PROJECT_DIR$/PointNet.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Poisson.py" beforeDir="false" afterPath="$PROJECT_DIR$/Poisson.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Score.py" beforeDir="false" afterPath="$PROJECT_DIR$/Score.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Try.py" beforeDir="false" afterPath="$PROJECT_DIR$/Try.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/3D_Ball Pivoting.py" beforeDir="false" afterPath="$PROJECT_DIR$/3D_Ball Pivoting.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,6 +54,7 @@
   "keyToString": {
     "Python.3D.executor": "Debug",
     "Python.3D_BPA.executor": "Run",
+    "Python.3D_Ball Pivoting.executor": "Run",
     "Python.3D_HD.executor": "Run",
     "Python.3D_Parametric Representation Modeling.executor": "Run",
     "Python.3D_Reconstruction.executor": "Run",
@@ -69,6 +63,7 @@
     "Python.CNN.executor": "Debug",
     "Python.Clip.executor": "Debug",
     "Python.Clip_Overlap.executor": "Debug",
+    "Python.HD.executor": "Run",
     "Python.IterativePFN.executor": "Debug",
     "Python.KNN.executor": "Debug",
     "Python.Manifold.executor": "Debug",
@@ -217,7 +212,8 @@
       <workItem from="1737726777960" duration="26194000" />
       <workItem from="1737813327811" duration="4257000" />
       <workItem from="1737829771500" duration="11039000" />
-      <workItem from="1737977272590" duration="18721000" />
+      <workItem from="1737977272590" duration="19812000" />
+      <workItem from="1738057818965" duration="11707000" />
     </task>
     <servers />
   </component>
@@ -600,8 +596,10 @@
     <SUITE FILE_PATH="coverage/PointCloud_Version2$Align.coverage" NAME="Align Coverage Results" MODIFIED="1737832727324" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/PointCloud_Version2$Manifold.coverage" NAME="Manifold Coverage Results" MODIFIED="1737641160816" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/PointCloud$PointFilter.coverage" NAME="PointFilter Coverage Results" MODIFIED="1731785065455" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/PointCloud_Version2$3D_Ball_Pivoting.coverage" NAME="3D_Ball Pivoting Coverage Results" MODIFIED="1738073937718" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/PointCloud$Manifold.coverage" NAME="Manifold Coverage Results" MODIFIED="1731937338342" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/PointCloud$KNN.coverage" NAME="KNN Coverage Results" MODIFIED="1731770088509" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/PointCloud_Version2$HD.coverage" NAME="HD Coverage Results" MODIFIED="1738073130358" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/PointCloud_Version2$KNN.coverage" NAME="KNN Coverage Results" MODIFIED="1737642558444" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/PointCloud_Version2$Score.coverage" NAME="Score Coverage Results" MODIFIED="1737840250094" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/PointCloud_Version2$3D_HD.coverage" NAME="3D_HD Coverage Results" MODIFIED="1737813933250" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
