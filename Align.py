@@ -64,8 +64,8 @@ def align_and_evaluate(tls_pcd_path, mls_pcd_path, output_path):
 
 # 输入路径
 tls_pcd_path = "D:/E_2024_Thesis/Data/Input/roof/Roof_TLS.ply"
-mls_pcd_path = "D:/E_2024_Thesis/Data/Output/Roof/PointCloud/CNN/PointRobust.ply"
-output_path = "D:/E_2024_Thesis/Data/Output/Roof/PointCloud/Align/aligned_mls_Robust.ply"
+mls_pcd_path = "D:/E_2024_Thesis/Data/Output/Roof/PointCloud/KNN/pcd_denoised_patch.ply"
+output_path = "D:/E_2024_Thesis/Data/Output/Roof/PointCloud/Align/aligned_mls_patch.ply"
 
 # 调用对齐和验证函数
 rmse = align_and_evaluate(tls_pcd_path, mls_pcd_path, output_path)

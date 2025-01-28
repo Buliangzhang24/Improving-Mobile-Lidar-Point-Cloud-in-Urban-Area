@@ -24,10 +24,26 @@ def downsample_points(points, voxel_size):
     return np.asarray(down_pcd.points)
 
 
-def compute_rmse(mls_points, tls_points):
-    # 不引入随机旋转
-    denoised_points = mls_points  # 使用传入的 mls_points
-    reference_points = tls_points  # 使用传入的 tls_points
+def compute_rmse(mls_points, tls_points, random_seed=42):
+    # 固定随机种子
+    np.random.seed(random_seed)
+
+    # 生成固定的随机旋转矩阵
+    random_rotation = R.random(random_seed).as_matrix()  # 使用固定种子生成旋转矩阵
+
+    # 直接使用传入的 MLS 点云数据
+    denoised_points = np.asarray(mls_points)  # 使用传入的 mls_points
+    denoised_points = np.dot(denoised_points - np.mean(denoised_points, axis=0), random_rotation) + np.mean(
+        denoised_points, axis=0)
+
+    reference_points = np.asarray(tls_points)  # 使用传入的 tls_points
+
+    # 确保点云数据是二维数组 (n_samples, n_features)
+    if denoised_points.ndim == 3:
+        denoised_points = denoised_points.reshape(-1, denoised_points.shape[-1])
+
+    if reference_points.ndim == 3:
+        reference_points = reference_points.reshape(-1, reference_points.shape[-1])
 
     # 使用最近邻算法找到每个去噪点云点的最近参考点云点
     nbrs = NearestNeighbors(n_neighbors=1).fit(reference_points)
@@ -147,7 +163,7 @@ def evaluate_point_cloud(tls_pcd_path, mls_pcd_path, voxel_size=0.01):
 
 # 路径
 tls_pcd_path = "D:/E_2024_Thesis/Data/Input/roof/Roof_TLS.ply"  # TLS点云路径
-mls_pcd_path = "D:/E_2024_Thesis/Data/Output/Roof/PointCloud/Random Sample/mls_denoised_density.ply"   # 已去噪的MLS点云路径
+mls_pcd_path = "D:/E_2024_Thesis/Data/Output/Roof/PointCloud/Align/aligned_mls_Geo.ply"    # 已去噪的MLS点云路径
 
 
 # 调用评估函数

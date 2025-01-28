@@ -209,27 +209,27 @@ denoised_o3d_pcd = tensor_to_o3d_point_cloud(denoised_pcd)
 visualize_denoising_fast(mls_pcd, denoised_o3d_pcd)
 
 # 计算 RMSE
-#tls_tensor_downsampled, mls_tensor_downsampled = adjust_point_cloud_size(tls_tensor_downsampled, mls_tensor_downsampled)
-
-# 计算 RMSE
-#rmse = calculate_rmse(denoised_pcd, tls_tensor_downsampled)
+tls_tensor_downsampled, mls_tensor_downsampled = adjust_point_cloud_size(tls_tensor_downsampled, mls_tensor_downsampled)
+rmse = calculate_rmse(denoised_pcd, tls_tensor_downsampled)
+# 打印RMSE结果
+print(f"RMSE: {rmse.item():.6f}")
 
 original_pcd = tensor_to_pointcloud(mls_tensor_downsampled)
 denoised_pcd = tensor_to_pointcloud(denoised_pcd)
-#denoise_rate = compute_denoising_rate(original_pcd, denoised_pcd)
-#print(f"Denoise rate: {denoise_rate}%")
+
+denoise_rate = compute_denoising_rate(original_pcd, denoised_pcd)
 
 #denoise_rate = compute_denoising_rate(denoised_o3d_pcd, tls_tensor_downsampled)
-# 打印RMSE结果
-#print(f"RMSE: {rmse.item():.6f}")
+
+print(f"Denoise rate: {denoise_rate}%")
 
 #print(f"Denoise Rate: {denoise_rate:.6f}")
 # 可视化去噪后的点云
 #o3d.visualization.draw_geometries([denoised_o3d_pcd])
 
-output_dir = "D:/E_2024_Thesis/Data/Output/Roof/PointCloud/"
+#output_dir = "D:/E_2024_Thesis/Data/Output/Roof/PointCloud/"
 #if not os.path.exists(output_dir):
 #    os.makedirs(output_dir)
 
 # 保存去噪后的点云
-o3d.io.write_point_cloud(output_dir + "mls_pointnet.ply", denoised_pcd)
+#o3d.io.write_point_cloud(output_dir + "mls_pointnet.ply", denoised_pcd)

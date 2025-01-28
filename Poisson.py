@@ -2,7 +2,7 @@ import open3d as o3d
 import numpy as np
 
 
-def interpolate_point_cloud(point_cloud, voxel_size=0.1):
+def interpolate_point_cloud(point_cloud, voxel_size=0.3):
     # 对点云进行体素降采样
     downsampled_pcd = point_cloud.voxel_down_sample(voxel_size)
     points = np.asarray(downsampled_pcd.points)
@@ -50,8 +50,8 @@ def calculate_hausdorff_distance(ref_pcd, target_pcd):
 
 
 # 加载点云
-input_ply = "D:/E_2024_Thesis/Data/Output/Roof/PointCloud/TOP3/mls_patch.ply"
-final_mesh_output = "D:/E_2024_Thesis/Data/Output/Roof/Mesh/poisson_mesh.ply"
+input_ply = "D:/E_2024_Thesis/Data/Input/roof/Roof_MLS.ply"
+final_mesh_output = "D:/E_2024_Thesis/Data/Input/roof/Roof_Mesh.ply"
 
 point_cloud = o3d.io.read_point_cloud(input_ply)
 
@@ -73,7 +73,7 @@ o3d.visualization.draw_geometries([interpolated_pcd])
 
 # Step 2: 使用泊松进行 3D 重建
 print("正在进行泊松表面重建...")
-mesh, densities = reconstruct_surface_with_poisson(interpolated_pcd, depth=8)
+mesh, densities = reconstruct_surface_with_poisson(interpolated_pcd, depth=9)
 
 if not mesh.vertices:
     raise RuntimeError("泊松重建生成的网格为空，请检查点云数据或调整参数。")

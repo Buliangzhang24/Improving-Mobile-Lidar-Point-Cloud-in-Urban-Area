@@ -36,6 +36,31 @@ def guided_filtering(pcd, iterations=5, filter_strength=0.1):
     return pcd
 
 
+def guided_filtering_with_gaussian_pyramid(pcd, iterations=5, filter_strength=0.1, num_levels=3):
+    # 创建 KDTree 用于邻域搜索
+    pcd_tree = o3d.geometry.KDTreeFlann(pcd)
+    normals = np.asarray(pcd.normals)
+
+    # 高斯金字塔处理
+    for level in range(num_levels):
+        scale_factor = 2 ** level
+        for _ in range(iterations):
+            filtered_normals = normals.copy()
+            for i in range(len(normals)):
+                # 按比例缩小邻域大小
+                neighbor_count = int(10 / scale_factor) + 1
+                [_, neighbors, _] = pcd_tree.search_knn_vector_3d(pcd.points[i], neighbor_count)
+
+                # 计算邻域平均法向量
+                avg_normal = np.mean(normals[neighbors], axis=0)
+
+                # 根据滤波强度进行调整
+                filtered_normals[i] = (1 - filter_strength) * normals[i] + filter_strength * avg_normal
+            normals = filtered_normals
+    pcd.normals = o3d.utility.Vector3dVector(normals)
+    return pcd
+
+
 # 双边滤波迭代方法 (Hurtado et al., 2023)
 def bilateral_filtering(pcd, iterations=5, spatial_sigma=0.5, normal_sigma=0.1):
     # 创建 KDTree 用于邻域搜索
@@ -56,6 +81,35 @@ def bilateral_filtering(pcd, iterations=5, spatial_sigma=0.5, normal_sigma=0.1):
             weights = weights_spatial * weights_normal
             filtered_normals[i] = np.sum(weights[:, None] * neighbor_normals, axis=0) / np.sum(weights)
         normals = filtered_normals
+    pcd.normals = o3d.utility.Vector3dVector(normals)
+    return pcd
+
+
+def anisotropic_diffusion_with_curvature(pcd, iterations=5, diffusion_factor=0.1):
+    # 创建 KDTree 用于邻域搜索
+    pcd_tree = o3d.geometry.KDTreeFlann(pcd)
+    normals = np.asarray(pcd.normals)
+    points = np.asarray(pcd.points)
+
+    for _ in range(iterations):
+        updated_normals = normals.copy()
+        for i in range(len(normals)):
+            [_, neighbors, _] = pcd_tree.search_knn_vector_3d(points[i], 10)  # 搜索10个最近邻
+
+            # 计算曲率驱动扩散因子
+            neighbor_points = points[neighbors]
+            diff_vectors = neighbor_points - points[i]
+            curvatures = np.linalg.norm(diff_vectors, axis=1)  # 局部曲率估计
+            curvature_factor = np.exp(-curvatures ** 2)  # 基于曲率的权重
+
+            for j, neighbor_idx in enumerate(neighbors):
+                diff = normals[neighbor_idx] - normals[i]
+                weight = curvature_factor[j] * np.exp(-np.linalg.norm(points[neighbor_idx] - points[i]) ** 2)
+                updated_normals[i] += diffusion_factor * weight * diff
+
+            # 单位化法向量
+            updated_normals[i] = updated_normals[i] / np.linalg.norm(updated_normals[i])
+        normals = updated_normals
     pcd.normals = o3d.utility.Vector3dVector(normals)
     return pcd
 
@@ -82,7 +136,10 @@ def anisotropic_diffusion(pcd, iterations=5, diffusion_factor=0.1):
 
 
 # 计算 RMSE
-def compute_rmse(denoised_pcd, reference_pcd):
+def compute_rmse(denoised_pcd, reference_pcd, random_seed=42):
+    # 固定随机种子
+    np.random.seed(random_seed)
+
     # 可选：对点云进行轻微的随机旋转和/或平移，避免完全匹配
     random_rotation = R.random().as_matrix()  # 随机旋转矩阵
     denoised_points = np.asarray(denoised_pcd.points)
@@ -98,7 +155,6 @@ def compute_rmse(denoised_pcd, reference_pcd):
     # 计算每个去噪点与参考点云中最接近点之间的距离的平方
     rmse = np.sqrt(np.mean(distances ** 2))
     return rmse
-
 
 # 计算去噪率
 def compute_denoising_rate(original_pcd, denoised_pcd):
@@ -146,33 +202,35 @@ tls_pcd.estimate_normals(search_param=o3d.geometry.KDTreeSearchParamKNN(knn=30))
 mls_pcd.estimate_normals(search_param=o3d.geometry.KDTreeSearchParamKNN(knn=30))
 
 # 计算原始 RMSE
-#original_rmse = compute_rmse(mls_pcd, tls_pcd)
-#print(f"Original RMSE: {original_rmse:.4f}")
+original_rmse = compute_rmse(mls_pcd, tls_pcd)
+print(f"Original RMSE: {original_rmse:.4f}")
 
 # 使用基于导向滤波的去噪方法
-denoised_pcd_guided = guided_filtering(mls_pcd)
-visualize_denoising_fast(mls_pcd, denoised_pcd_guided)
+#denoised_pcd_guided = guided_filtering(mls_pcd)
+denoised_pcd_guided = guided_filtering_with_gaussian_pyramid(mls_pcd)
+#visualize_denoising_fast(mls_pcd, denoised_pcd_guided)
 #o3d.io.write_point_cloud(output_dir + "mls_guided.ply", denoised_pcd_guided)
 
 denoised_rmse_guided = compute_rmse(denoised_pcd_guided, tls_pcd)
 print(f"Guided Filtering RMSE: {denoised_rmse_guided:.4f}")
-#print(f"Guided Filtering Denoising Rate: {compute_denoising_rate(mls_pcd, denoised_pcd_guided):.2f}%")
+print(f"Guided Filtering Denoising Rate: {compute_denoising_rate(mls_pcd, denoised_pcd_guided):.2f}%")
 
 # 使用双边滤波迭代方法
 denoised_pcd_bilateral = bilateral_filtering(mls_pcd)
-visualize_denoising_fast(mls_pcd, denoised_pcd_bilateral)
-o3d.io.write_point_cloud(output_dir + "mls_bilateral.ply", denoised_pcd_bilateral)
+#visualize_denoising_fast(mls_pcd, denoised_pcd_bilateral)
+#o3d.io.write_point_cloud(output_dir + "mls_bilateral.ply", denoised_pcd_bilateral)
 
-#denoised_rmse_bilateral = compute_rmse(denoised_pcd_bilateral, tls_pcd)
-#print(f"Bilateral Filtering RMSE: {denoised_rmse_bilateral:.4f}")
-#print(f"Bilateral Filtering Denoising Rate: {compute_denoising_rate(mls_pcd, denoised_pcd_bilateral):.2f}%")
+denoised_rmse_bilateral = compute_rmse(denoised_pcd_bilateral, tls_pcd)
+print(f"Bilateral Filtering RMSE: {denoised_rmse_bilateral:.4f}")
+print(f"Bilateral Filtering Denoising Rate: {compute_denoising_rate(mls_pcd, denoised_pcd_bilateral):.2f}%")
 
 # 使用各向异性扩散方法
-denoised_pcd_anisotropic = anisotropic_diffusion(mls_pcd)
-visualize_denoising_fast(mls_pcd, denoised_pcd_anisotropic)
-o3d.io.write_point_cloud(output_dir + "mls_anisotropic.ply", denoised_pcd_anisotropic)
+#denoised_pcd_anisotropic = anisotropic_diffusion(mls_pcd)
+denoised_pcd_anisotropic = anisotropic_diffusion_with_curvature(mls_pcd)
+#visualize_denoising_fast(mls_pcd, denoised_pcd_anisotropic)
+#o3d.io.write_point_cloud(output_dir + "mls_anisotropic.ply", denoised_pcd_anisotropic)
 
 
-#denoised_rmse_anisotropic = compute_rmse(denoised_pcd_anisotropic, tls_pcd)
-#print(f"Anisotropic Diffusion RMSE: {denoised_rmse_anisotropic:.4f}")
-#print(f"Anisotropic Diffusion Denoising Rate: {compute_denoising_rate(mls_pcd, denoised_pcd_anisotropic):.2f}%")
+denoised_rmse_anisotropic = compute_rmse(denoised_pcd_anisotropic, tls_pcd)
+print(f"Anisotropic Diffusion RMSE: {denoised_rmse_anisotropic:.4f}")
+print(f"Anisotropic Diffusion Denoising Rate: {compute_denoising_rate(mls_pcd, denoised_pcd_anisotropic):.2f}%")

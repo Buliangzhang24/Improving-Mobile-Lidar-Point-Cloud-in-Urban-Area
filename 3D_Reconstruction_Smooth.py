@@ -1,6 +1,7 @@
-import open3d as o3d
 import numpy as np
-
+import open3d as o3d
+import alphashape
+from shapely.geometry import MultiPoint
 
 def interpolate_point_cloud(point_cloud, voxel_size=0.1):
     # 对点云进行体素降采样
@@ -25,11 +26,41 @@ def interpolate_point_cloud(point_cloud, voxel_size=0.1):
     return interpolated_pcd
 
 
-def reconstruct_surface_with_alpha_shape(point_cloud, alpha=0.05):
-    # 使用 Alpha Shape 进行表面重建
-    mesh = o3d.geometry.TriangleMesh.create_from_point_cloud_alpha_shape(point_cloud, alpha)
-    return mesh
+def reconstruct_surface_with_alpha_shape_3d(point_cloud, alpha=0.05):
+    """
+    使用 pyalpha 库进行 3D Alpha Shape 表面重建。
 
+    :param point_cloud: 输入的点云数据（open3d.geometry.PointCloud）
+    :param alpha: alpha 参数，控制表面的精度
+    :return: 重建的网格（open3d.geometry.TriangleMesh）
+    """
+    # 将 Open3D 点云转换为 NumPy 数组
+    points = np.asarray(point_cloud.points)
+
+    # 检查点云是否为空
+    if points.size == 0:
+        print("点云数据为空，无法进行 Alpha Shape 3D 重建。")
+        return None
+
+    # 尝试使用 pyalpha 库生成 3D Alpha Shape
+    try:
+        # 使用 alpha 参数生成 3D Alpha Shape
+        alpha_shape = pyalpha.alpha_shape_3d(points, alpha)
+    except Exception as e:
+        print(f"生成 3D Alpha Shape 时发生错误：{e}")
+        return None
+
+    # 如果生成的 alpha shape 是有效的网格，转换为 Open3D 的网格
+    if alpha_shape is not None:
+        mesh = o3d.geometry.TriangleMesh()
+        # 将 alpha shape 的顶点和面数据赋值给 Open3D 网格
+        mesh.vertices = o3d.utility.Vector3dVector(alpha_shape.vertices)
+        mesh.triangles = o3d.utility.Vector3iVector(alpha_shape.faces)
+
+        return mesh
+    else:
+        print("无法生成有效的 3D Alpha Shape，请调整 alpha 参数。")
+        return None
 
 def calculate_normal_consistency(pcd, radius=0.1):
     """
@@ -66,7 +97,7 @@ def calculate_normal_consistency(pcd, radius=0.1):
 
 
 # 加载点云
-input_ply = "D:/E_2024_Thesis/Data/Output/Roof/PointCloud/TOP3/mls_patch.ply"
+input_ply = "D:/E_2024_Thesis/Data/Output/Roof/PointCloud/TOP3/mls_bilateral.ply"
 interpolated_output_ply = "D:/E_2024_Thesis/Data/Output/Roof/Mesh/111mesh_density.ply"
 final_mesh_output = "D:/E_2024_Thesis/Data/Output/Roof/Mesh/mesh_patch.ply"
 
@@ -96,7 +127,7 @@ mesh = None
 for alpha in alpha_values:
     try:
         print(f"尝试使用 alpha = {alpha} 进行表面重建...")
-        mesh = reconstruct_surface_with_alpha_shape(interpolated_pcd, alpha)
+        mesh = reconstruct_surface_with_alpha_shape_3d(interpolated_pcd, alpha)
         if len(mesh.vertices) == 0:
             print(f"Alpha = {alpha} 时生成的网格为空。")
             continue
