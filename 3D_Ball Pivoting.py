@@ -1,7 +1,7 @@
 import open3d as o3d
 
 # 加载点云
-pcd = o3d.io.read_point_cloud("D:/E_2024_Thesis/Data/Output/Roof/Mesh/3D_BP/MLS/Roof_MLS - Cloud.ply")
+pcd = o3d.io.read_point_cloud("D:/E_2024_Thesis/Data/Output/Roof/PointCloud/Align/aligned_mls_pointnet.ply")
 
 # 检查点云是否有法线
 if not pcd.has_normals():
@@ -46,7 +46,7 @@ for i, radii in enumerate(radii_list):
             continue
 
         # 保存网格到文件
-        output_path = f"D:/E_2024_Thesis/Data/Output/Roof/Mesh/3D_BP/MLS/mesh_{i + 1}.ply"
+        output_path = f"D:/E_2024_Thesis/Data/Output/Roof/Mesh/pointnet_mesh_{i + 1}.ply"
         o3d.io.write_triangle_mesh(output_path, mesh)
         print(f"网格已保存到: {output_path}")
     except Exception as e:
