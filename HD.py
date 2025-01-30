@@ -18,8 +18,8 @@ def hausdorff_distance(mesh1, mesh2):
     return max(hd1, hd2)  # 取两个方向的最大值
 
 # 加载点云或网格文件
-mesh_tls = o3d.io.read_triangle_mesh("D:/E_2024_Thesis/Data/Output/Roof/Mesh/3D_BP/TLS/mesh_3.ply")
-mesh_mls = o3d.io.read_triangle_mesh("D:/E_2024_Thesis/Data/Output/Roof/Mesh/pointnet_mesh_3.ply")
+mesh_tls = o3d.io.read_triangle_mesh("D:/E_2024_Thesis/Data/Output/Roof/Mesh/3D_CloudCompare/Roof_TLS - Cloud.ply")
+mesh_mls = o3d.io.read_triangle_mesh("D:/E_2024_Thesis/Data/Output/Roof/Mesh/3D_BP/mesh_density/mesh_5.ply")
 
 # 计算 Hausdorff 距离
 hd_value = hausdorff_distance(mesh_tls, mesh_mls)
