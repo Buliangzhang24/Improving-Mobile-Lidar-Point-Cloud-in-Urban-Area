@@ -51,9 +51,20 @@ def apply_triangulation_to_3d(triangles, points_3d, plane_params):
         triangles_3d.append(pts_3d)
     return triangles_3d
 
+def filter_large_edges(points_2d, delaunay_result, max_edge_length):
+    """
+    过滤掉包含大边的三角形
+    """
+    filtered_triangles = []
+    for tri in delaunay_result:
+        # 计算三角形的三条边
+        edges = [np.linalg.norm(points_2d[tri[i]] - points_2d[tri[(i + 1) % 3]]) for i in range(3)]
+        if all(edge <= max_edge_length for edge in edges):
+            filtered_triangles.append(tri)
+    return filtered_triangles
 
 # 读取点云数据
-pcd = o3d.io.read_point_cloud("D:/E_2024_Thesis/Data/Output/Roof/PointCloud/TOP5/mls_guided.ply")
+pcd = o3d.io.read_point_cloud("D:/E_2024_Thesis/Data/Output/Roof/PointCloud/TOP5/mls_bilateral.ply")
 points = np.asarray(pcd.points)
 
 # 步骤1: 拟合最佳平面
@@ -62,19 +73,29 @@ plane_params = fit_best_plane(points)
 # 步骤2: 投影到平面
 projected_points = project_to_plane(points, plane_params)
 
+# 设置最大边长
+max_edge_length = 2
+
 # 步骤3: 进行Delaunay三角化（2D）
 delaunay_result = delaunay_triangulation_2d(projected_points[:, :2])
 
-# 步骤4: 将Delaunay三角化结果应用到3D点云
-triangles_3d = apply_triangulation_to_3d(delaunay_result, points, plane_params)
+# 步骤3.1: 过滤掉包含大边的三角形
+filtered_delaunay_result = filter_large_edges(projected_points[:, :2], delaunay_result, max_edge_length)
 
-# 创建Mesh对象
-mesh = o3d.geometry.TriangleMesh()
-mesh.vertices = o3d.utility.Vector3dVector(points)
-mesh.triangles = o3d.utility.Vector3iVector(delaunay_result)
+# 步骤4: 将Delaunay三角化结果应用到3D点云
+triangles_3d = apply_triangulation_to_3d(filtered_delaunay_result, points, plane_params)
+
+# 确保过滤后的三角形数据不为空
+if len(filtered_delaunay_result) == 0:
+    print("Warning: No triangles after filtering. Try adjusting the max_edge_length or increasing the sampling.")
+else:
+    # 创建Mesh对象
+    mesh = o3d.geometry.TriangleMesh()
+    mesh.vertices = o3d.utility.Vector3dVector(points)
+    mesh.triangles = o3d.utility.Vector3iVector(filtered_delaunay_result)
 
 # 保存Mesh
-output_path = "D:/E_2024_Thesis/Data/Output/Roof/Mesh/M2.ply"
+output_path = "D:/E_2024_Thesis/Data/Output/Roof/Mesh/3D_Delaunay/bilateral.ply"
 o3d.io.write_triangle_mesh(output_path, mesh)
 
 # 可视化
