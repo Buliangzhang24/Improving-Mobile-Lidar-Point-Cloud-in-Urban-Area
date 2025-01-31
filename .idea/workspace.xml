@@ -4,17 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="01586aa8-02d4-4ade-a432-b174f09da4ef" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Delaunay.py" beforeDir="false" afterPath="$PROJECT_DIR$/Delaunay.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HD.py" beforeDir="false" afterPath="$PROJECT_DIR$/HD.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/KNN.py" beforeDir="false" afterPath="$PROJECT_DIR$/B01RQ2_a02Denoise_KNN.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Manifold.py" beforeDir="false" afterPath="$PROJECT_DIR$/B01RQ2_a02Denoise_Manifold.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Normal.py" beforeDir="false" afterPath="$PROJECT_DIR$/B01RQ2_a02Denoise_Normal.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PointFilter.py" beforeDir="false" afterPath="$PROJECT_DIR$/B01RQ2_a02Denoise_PointFilter.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PointNet.py" beforeDir="false" afterPath="$PROJECT_DIR$/B01RQ2_a02Denoise_PointNet.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Score.py" beforeDir="false" afterPath="$PROJECT_DIR$/Score.py" afterDir="false" />
-    </list>
+    <list default="true" id="01586aa8-02d4-4ade-a432-b174f09da4ef" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -103,7 +93,7 @@
   }
 }</component>
   <component name="RunManager">
-    <configuration name="Random Sampling" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+    <configuration name="B01RQ2_a02Denoise_Random Sampling" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -118,7 +108,7 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Random Sampling.py" />
+      <option name="SCRIPT_NAME" value="D:\E_2024_Thesis\Code\PointCloud_Version2\B01RQ2_a02Denoise_Random Sampling.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -226,7 +216,7 @@
       <workItem from="1738140473264" duration="789000" />
       <workItem from="1738145275886" duration="1285000" />
       <workItem from="1738229420138" duration="25602000" />
-      <workItem from="1738325182585" duration="1908000" />
+      <workItem from="1738325182585" duration="2553000" />
     </task>
     <servers />
   </component>
@@ -248,42 +238,42 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Registration_FPFH.py</url>
+          <url>file://$PROJECT_DIR$/B01RQ2_a00Registration_FPFH.py</url>
           <line>63</line>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Registration_FPFH.py</url>
+          <url>file://$PROJECT_DIR$/B01RQ2_a00Registration_FPFH.py</url>
           <line>68</line>
           <option name="timeStamp" value="5" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Registration_FPFH.py</url>
+          <url>file://$PROJECT_DIR$/B01RQ2_a00Registration_FPFH.py</url>
           <line>72</line>
           <option name="timeStamp" value="6" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Registration_FPFH.py</url>
+          <url>file://$PROJECT_DIR$/B01RQ2_a00Registration_FPFH.py</url>
           <line>76</line>
           <option name="timeStamp" value="7" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Registration_ICP.py</url>
+          <url>file://$PROJECT_DIR$/B01RQ2_a00Registration_ICP.py</url>
           <line>127</line>
           <option name="timeStamp" value="13" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Clip_Overlap.py</url>
+          <url>file://$PROJECT_DIR$/B01RQ2_a01Clip_Clip_Overlap.py</url>
           <line>94</line>
           <option name="timeStamp" value="23" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Registration_ICP.py</url>
+          <url>file://$PROJECT_DIR$/B01RQ2_a00Registration_ICP.py</url>
           <line>115</line>
           <option name="timeStamp" value="30" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Registration_ICP.py</url>
+          <url>file://$PROJECT_DIR$/B01RQ2_a00Registration_ICP.py</url>
           <line>119</line>
           <option name="timeStamp" value="31" />
         </line-breakpoint>
@@ -303,27 +293,27 @@
           <option name="timeStamp" value="36" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Registration_FPFH.py</url>
+          <url>file://$PROJECT_DIR$/B01RQ2_a00Registration_FPFH.py</url>
           <line>88</line>
           <option name="timeStamp" value="37" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Registration_FPFH.py</url>
+          <url>file://$PROJECT_DIR$/B01RQ2_a00Registration_FPFH.py</url>
           <line>95</line>
           <option name="timeStamp" value="38" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Registration_FPFH.py</url>
+          <url>file://$PROJECT_DIR$/B01RQ2_a00Registration_FPFH.py</url>
           <line>98</line>
           <option name="timeStamp" value="39" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Registration_FPFH.py</url>
+          <url>file://$PROJECT_DIR$/B01RQ2_a00Registration_FPFH.py</url>
           <line>110</line>
           <option name="timeStamp" value="40" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Clip_Overlap.py</url>
+          <url>file://$PROJECT_DIR$/B01RQ2_a01Clip_Clip_Overlap.py</url>
           <line>23</line>
           <option name="timeStamp" value="42" />
         </line-breakpoint>
@@ -348,32 +338,32 @@
           <option name="timeStamp" value="94" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/IterativePFN.py</url>
+          <url>file://$PROJECT_DIR$/B01RQ2_a00Registration_IterativePFN.py</url>
           <line>90</line>
           <option name="timeStamp" value="104" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/IterativePFN.py</url>
+          <url>file://$PROJECT_DIR$/B01RQ2_a00Registration_IterativePFN.py</url>
           <line>93</line>
           <option name="timeStamp" value="105" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/IterativePFN.py</url>
+          <url>file://$PROJECT_DIR$/B01RQ2_a00Registration_IterativePFN.py</url>
           <line>105</line>
           <option name="timeStamp" value="106" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/IterativePFN.py</url>
+          <url>file://$PROJECT_DIR$/B01RQ2_a00Registration_IterativePFN.py</url>
           <line>108</line>
           <option name="timeStamp" value="107" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/IterativePFN.py</url>
+          <url>file://$PROJECT_DIR$/B01RQ2_a00Registration_IterativePFN.py</url>
           <line>112</line>
           <option name="timeStamp" value="108" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/IterativePFN.py</url>
+          <url>file://$PROJECT_DIR$/B01RQ2_a00Registration_IterativePFN.py</url>
           <line>116</line>
           <option name="timeStamp" value="109" />
         </line-breakpoint>
@@ -403,37 +393,37 @@
           <option name="timeStamp" value="205" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Random Sampling.py</url>
+          <url>file://$PROJECT_DIR$/B01RQ2_a02Denoise_Random Sampling.py</url>
           <line>99</line>
           <option name="timeStamp" value="219" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Random Sampling.py</url>
+          <url>file://$PROJECT_DIR$/B01RQ2_a02Denoise_Random Sampling.py</url>
           <line>105</line>
           <option name="timeStamp" value="224" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Random Sampling.py</url>
+          <url>file://$PROJECT_DIR$/B01RQ2_a02Denoise_Random Sampling.py</url>
           <line>104</line>
           <option name="timeStamp" value="234" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Random Sampling.py</url>
+          <url>file://$PROJECT_DIR$/B01RQ2_a02Denoise_Random Sampling.py</url>
           <line>103</line>
           <option name="timeStamp" value="235" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Random Sampling.py</url>
+          <url>file://$PROJECT_DIR$/B01RQ2_a02Denoise_Random Sampling.py</url>
           <line>116</line>
           <option name="timeStamp" value="236" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Random Sampling.py</url>
+          <url>file://$PROJECT_DIR$/B01RQ2_a02Denoise_Random Sampling.py</url>
           <line>117</line>
           <option name="timeStamp" value="237" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Random Sampling.py</url>
+          <url>file://$PROJECT_DIR$/B01RQ2_a02Denoise_Random Sampling.py</url>
           <line>118</line>
           <option name="timeStamp" value="238" />
         </line-breakpoint>
@@ -558,17 +548,17 @@
           <option name="timeStamp" value="282" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/HD.py</url>
+          <url>file://$PROJECT_DIR$/B01RQ2_b02EvaluationModel_HD.py</url>
           <line>20</line>
           <option name="timeStamp" value="283" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/HD.py</url>
+          <url>file://$PROJECT_DIR$/B01RQ2_b02EvaluationModel_HD.py</url>
           <line>21</line>
           <option name="timeStamp" value="284" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/HD.py</url>
+          <url>file://$PROJECT_DIR$/B01RQ2_b02EvaluationModel_HD.py</url>
           <line>24</line>
           <option name="timeStamp" value="285" />
         </line-breakpoint>
