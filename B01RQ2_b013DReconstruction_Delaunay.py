@@ -64,7 +64,7 @@ def filter_large_edges(points_2d, delaunay_result, max_edge_length):
     return filtered_triangles
 
 # 读取点云数据
-pcd = o3d.io.read_point_cloud("D:/E_2024_Thesis/Data/Output/Roof/PointCloud/TOP5/mls_bilateral.ply")
+pcd = o3d.io.read_point_cloud("D:/E_2024_Thesis/Data/Output/Roof/PointCloud/TOP5/pcd_denoised_patch.ply")
 points = np.asarray(pcd.points)
 
 # 步骤1: 拟合最佳平面
@@ -95,7 +95,7 @@ else:
     mesh.triangles = o3d.utility.Vector3iVector(filtered_delaunay_result)
 
 # 保存Mesh
-output_path = "D:/E_2024_Thesis/Data/Output/Roof/Mesh/3D_Delaunay/bilateral.ply"
+output_path = "D:/E_2024_Thesis/Data/Output/Roof/Mesh/3D_Delaunay/Patch.ply"
 o3d.io.write_triangle_mesh(output_path, mesh)
 
 # 可视化

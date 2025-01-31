@@ -6,10 +6,14 @@
   <component name="ChangeListManager">
     <list default="true" id="01586aa8-02d4-4ade-a432-b174f09da4ef" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Delaunay.py" beforeDir="false" afterPath="$PROJECT_DIR$/Delaunay.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/HD.py" beforeDir="false" afterPath="$PROJECT_DIR$/HD.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PointNet.py" beforeDir="false" afterPath="$PROJECT_DIR$/PointNet.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Random Sampling.py" beforeDir="false" afterPath="$PROJECT_DIR$/Random Sampling.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fromlastoply.py" beforeDir="false" afterPath="$PROJECT_DIR$/fromlastoply.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/KNN.py" beforeDir="false" afterPath="$PROJECT_DIR$/B01RQ2_a02Denoise_KNN.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Manifold.py" beforeDir="false" afterPath="$PROJECT_DIR$/B01RQ2_a02Denoise_Manifold.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Normal.py" beforeDir="false" afterPath="$PROJECT_DIR$/B01RQ2_a02Denoise_Normal.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PointFilter.py" beforeDir="false" afterPath="$PROJECT_DIR$/B01RQ2_a02Denoise_PointFilter.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PointNet.py" beforeDir="false" afterPath="$PROJECT_DIR$/B01RQ2_a02Denoise_PointNet.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Score.py" beforeDir="false" afterPath="$PROJECT_DIR$/Score.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -98,7 +102,7 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
-  <component name="RunManager" selected="Python.main">
+  <component name="RunManager">
     <configuration name="Random Sampling" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -222,6 +226,7 @@
       <workItem from="1738140473264" duration="789000" />
       <workItem from="1738145275886" duration="1285000" />
       <workItem from="1738229420138" duration="25602000" />
+      <workItem from="1738325182585" duration="1908000" />
     </task>
     <servers />
   </component>
@@ -283,17 +288,17 @@
           <option name="timeStamp" value="31" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/KNN.py</url>
+          <url>file://$PROJECT_DIR$/B01RQ2_a02Denoise_KNN.py</url>
           <line>148</line>
           <option name="timeStamp" value="34" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/KNN.py</url>
+          <url>file://$PROJECT_DIR$/B01RQ2_a02Denoise_KNN.py</url>
           <line>151</line>
           <option name="timeStamp" value="35" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/KNN.py</url>
+          <url>file://$PROJECT_DIR$/B01RQ2_a02Denoise_KNN.py</url>
           <line>154</line>
           <option name="timeStamp" value="36" />
         </line-breakpoint>
@@ -323,22 +328,22 @@
           <option name="timeStamp" value="42" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/PointFilter.py</url>
+          <url>file://$PROJECT_DIR$/B01RQ2_a02Denoise_PointFilter.py</url>
           <line>98</line>
           <option name="timeStamp" value="91" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/PointFilter.py</url>
+          <url>file://$PROJECT_DIR$/B01RQ2_a02Denoise_PointFilter.py</url>
           <line>101</line>
           <option name="timeStamp" value="92" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/PointFilter.py</url>
+          <url>file://$PROJECT_DIR$/B01RQ2_a02Denoise_PointFilter.py</url>
           <line>106</line>
           <option name="timeStamp" value="93" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/PointFilter.py</url>
+          <url>file://$PROJECT_DIR$/B01RQ2_a02Denoise_PointFilter.py</url>
           <line>110</line>
           <option name="timeStamp" value="94" />
         </line-breakpoint>
@@ -373,27 +378,27 @@
           <option name="timeStamp" value="109" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Manifold.py</url>
+          <url>file://$PROJECT_DIR$/B01RQ2_a02Denoise_Manifold.py</url>
           <line>147</line>
           <option name="timeStamp" value="178" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Normal.py</url>
+          <url>file://$PROJECT_DIR$/B01RQ2_a02Denoise_Normal.py</url>
           <line>196</line>
           <option name="timeStamp" value="189" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Normal.py</url>
+          <url>file://$PROJECT_DIR$/B01RQ2_a02Denoise_Normal.py</url>
           <line>200</line>
           <option name="timeStamp" value="190" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/PointNet.py</url>
+          <url>file://$PROJECT_DIR$/B01RQ2_a02Denoise_PointNet.py</url>
           <line>191</line>
           <option name="timeStamp" value="201" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/PointFilter.py</url>
+          <url>file://$PROJECT_DIR$/B01RQ2_a02Denoise_PointFilter.py</url>
           <line>116</line>
           <option name="timeStamp" value="205" />
         </line-breakpoint>
@@ -433,97 +438,97 @@
           <option name="timeStamp" value="238" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Manifold.py</url>
+          <url>file://$PROJECT_DIR$/B01RQ2_a02Denoise_Manifold.py</url>
           <line>164</line>
           <option name="timeStamp" value="241" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Manifold.py</url>
+          <url>file://$PROJECT_DIR$/B01RQ2_a02Denoise_Manifold.py</url>
           <line>165</line>
           <option name="timeStamp" value="242" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Manifold.py</url>
+          <url>file://$PROJECT_DIR$/B01RQ2_a02Denoise_Manifold.py</url>
           <line>166</line>
           <option name="timeStamp" value="243" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Manifold.py</url>
+          <url>file://$PROJECT_DIR$/B01RQ2_a02Denoise_Manifold.py</url>
           <line>167</line>
           <option name="timeStamp" value="244" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Manifold.py</url>
+          <url>file://$PROJECT_DIR$/B01RQ2_a02Denoise_Manifold.py</url>
           <line>151</line>
           <option name="timeStamp" value="245" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Manifold.py</url>
+          <url>file://$PROJECT_DIR$/B01RQ2_a02Denoise_Manifold.py</url>
           <line>153</line>
           <option name="timeStamp" value="246" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Manifold.py</url>
+          <url>file://$PROJECT_DIR$/B01RQ2_a02Denoise_Manifold.py</url>
           <line>155</line>
           <option name="timeStamp" value="247" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Manifold.py</url>
+          <url>file://$PROJECT_DIR$/B01RQ2_a02Denoise_Manifold.py</url>
           <line>157</line>
           <option name="timeStamp" value="248" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/KNN.py</url>
+          <url>file://$PROJECT_DIR$/B01RQ2_a02Denoise_KNN.py</url>
           <line>162</line>
           <option name="timeStamp" value="249" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/KNN.py</url>
+          <url>file://$PROJECT_DIR$/B01RQ2_a02Denoise_KNN.py</url>
           <line>163</line>
           <option name="timeStamp" value="250" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/KNN.py</url>
+          <url>file://$PROJECT_DIR$/B01RQ2_a02Denoise_KNN.py</url>
           <line>164</line>
           <option name="timeStamp" value="251" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/PointNet.py</url>
+          <url>file://$PROJECT_DIR$/B01RQ2_a02Denoise_PointNet.py</url>
           <line>147</line>
           <option name="timeStamp" value="252" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/PointNet.py</url>
+          <url>file://$PROJECT_DIR$/B01RQ2_a02Denoise_PointNet.py</url>
           <line>151</line>
           <option name="timeStamp" value="254" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Normal.py</url>
+          <url>file://$PROJECT_DIR$/B01RQ2_a02Denoise_Normal.py</url>
           <line>204</line>
           <option name="timeStamp" value="257" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Normal.py</url>
+          <url>file://$PROJECT_DIR$/B01RQ2_a02Denoise_Normal.py</url>
           <line>205</line>
           <option name="timeStamp" value="258" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/PointNet.py</url>
+          <url>file://$PROJECT_DIR$/B01RQ2_a02Denoise_PointNet.py</url>
           <line>186</line>
           <option name="timeStamp" value="259" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Normal.py</url>
+          <url>file://$PROJECT_DIR$/B01RQ2_a02Denoise_Normal.py</url>
           <line>209</line>
           <option name="timeStamp" value="264" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Normal.py</url>
+          <url>file://$PROJECT_DIR$/B01RQ2_a02Denoise_Normal.py</url>
           <line>218</line>
           <option name="timeStamp" value="265" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Normal.py</url>
+          <url>file://$PROJECT_DIR$/B01RQ2_a02Denoise_Normal.py</url>
           <line>228</line>
           <option name="timeStamp" value="266" />
         </line-breakpoint>
@@ -568,32 +573,32 @@
           <option name="timeStamp" value="285" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/PointNet.py</url>
+          <url>file://$PROJECT_DIR$/B01RQ2_a02Denoise_PointNet.py</url>
           <line>154</line>
           <option name="timeStamp" value="286" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/PointNet.py</url>
+          <url>file://$PROJECT_DIR$/B01RQ2_a02Denoise_PointNet.py</url>
           <line>158</line>
           <option name="timeStamp" value="288" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/PointNet.py</url>
+          <url>file://$PROJECT_DIR$/B01RQ2_a02Denoise_PointNet.py</url>
           <line>162</line>
           <option name="timeStamp" value="289" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/PointNet.py</url>
+          <url>file://$PROJECT_DIR$/B01RQ2_a02Denoise_PointNet.py</url>
           <line>166</line>
           <option name="timeStamp" value="290" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/PointNet.py</url>
+          <url>file://$PROJECT_DIR$/B01RQ2_a02Denoise_PointNet.py</url>
           <line>199</line>
           <option name="timeStamp" value="292" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/PointNet.py</url>
+          <url>file://$PROJECT_DIR$/B01RQ2_a02Denoise_PointNet.py</url>
           <line>192</line>
           <option name="timeStamp" value="294" />
         </line-breakpoint>
@@ -630,13 +635,13 @@
     <SUITE FILE_PATH="coverage/PointCloud_Version2$M2.coverage" NAME="M2 Coverage Results" MODIFIED="1738238745828" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/PointCloud_Version2$Manifold.coverage" NAME="Manifold Coverage Results" MODIFIED="1737641160816" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/PointCloud$PointFilter.coverage" NAME="PointFilter Coverage Results" MODIFIED="1731785065455" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/PointCloud_Version2$Delaunay.coverage" NAME="Delaunay Coverage Results" MODIFIED="1738245832563" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/PointCloud_Version2$Delaunay.coverage" NAME="Delaunay Coverage Results" MODIFIED="1738325572702" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/PointCloud_Version2$3D_Ball_Pivoting.coverage" NAME="3D_Ball Pivoting Coverage Results" MODIFIED="1738231622272" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/PointCloud$Manifold.coverage" NAME="Manifold Coverage Results" MODIFIED="1731937338342" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/PointCloud$KNN.coverage" NAME="KNN Coverage Results" MODIFIED="1731770088509" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/PointCloud_Version2$HD.coverage" NAME="HD Coverage Results" MODIFIED="1738253261897" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/PointCloud_Version2$HD.coverage" NAME="HD Coverage Results" MODIFIED="1738325911594" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/PointCloud_Version2$KNN.coverage" NAME="KNN Coverage Results" MODIFIED="1737642558444" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/PointCloud_Version2$Score.coverage" NAME="Score Coverage Results" MODIFIED="1737840250094" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/PointCloud_Version2$Score.coverage" NAME="Score Coverage Results" MODIFIED="1738325814838" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/PointCloud_Version2$3D_HD.coverage" NAME="3D_HD Coverage Results" MODIFIED="1737813933250" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/PointCloud_Version2$ply.coverage" NAME="ply Coverage Results" MODIFIED="1736963334087" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/PointCloud_Version2$Random_Sampling.coverage" NAME="Random Sampling Coverage Results" MODIFIED="1738267472161" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
