@@ -97,8 +97,8 @@ def visualize_denoising_fast(pcd_original, pcd_denoised):
     o3d.visualization.draw_geometries([pcd_original], window_name="Denoising Visualization")
 
 # 加载 TLS 和 MLS 点云
-tls_pcd = load_las_as_o3d_point_cloud("D:/E_2024_Thesis/Data/Input/roof/Roof_TLS.las")
-mls_pcd = load_las_as_o3d_point_cloud("D:/E_2024_Thesis/Data/Input/roof/Roof_MLS.las")
+tls_pcd = load_las_as_o3d_point_cloud("D:/E_2024_Thesis/Data/Input/Street/TLS_Street.las")
+mls_pcd = load_las_as_o3d_point_cloud("D:/E_2024_Thesis/Data/Input/Street/MLS_Street.las")
 
 # 对 MLS 点云进行去噪
 mls_denoised_ransac = ransac_denoise(mls_pcd)
@@ -109,14 +109,14 @@ mls_denoised_density = density_denoise(mls_pcd)
 #visualize_denoising_fast(mls_pcd, mls_denoised_bayes)
 #visualize_denoising_fast(mls_pcd, mls_denoised_density)
 # 设置输出目录
-output_dir = "D:/E_2024_Thesis/Data/Output/Roof/PointCloud/"
+output_dir = "D:/E_2024_Thesis/Data/Output/Road/"
 #if not os.path.exists(output_dir):
 #    os.makedirs(output_dir)
 
 # 保存去噪后的点云
-o3d.io.write_point_cloud(output_dir + "mls_denoised_ransac.ply", mls_denoised_ransac)
-o3d.io.write_point_cloud(output_dir + "mls_denoised_bayes.ply", mls_denoised_bayes)
-o3d.io.write_point_cloud(output_dir + "mls_denoised_density.ply", mls_denoised_density)
+o3d.io.write_point_cloud(output_dir + "mls_ransac.ply", mls_denoised_ransac)
+o3d.io.write_point_cloud(output_dir + "mls_bayes.ply", mls_denoised_bayes)
+o3d.io.write_point_cloud(output_dir + "mls_density.ply", mls_denoised_density)
 
 print("Point clouds have been saved to the output directory.")
 

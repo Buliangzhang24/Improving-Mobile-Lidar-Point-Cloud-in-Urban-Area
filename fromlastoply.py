@@ -3,8 +3,8 @@ import open3d as o3d
 import numpy as np
 
 # 读取 .las 文件
-input_las = "D:/E_2024_Thesis/Data/Input/roof/Roof_TLS.las"
-output_ply = "D:/E_2024_Thesis/Data/Input/roof/Roof_TLS.ply"
+input_las = "D:/E_2024_Thesis/Data/Input/Street/TLS_Street.las"
+output_ply = "D:/E_2024_Thesis/Data/Input/Street/TLS_Street.ply"
 
 # 使用 laspy 读取点云数据
 las = laspy.read(input_las)
