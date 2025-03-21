@@ -63,13 +63,13 @@ def icp_registration(mls_pcd, tls_pcd, trans_init):
                                                                      relative_rmse=1e-6)
 
         # 使用PointToPlane ICP进行精细配准
-        print("Performing ICP registration (PointToPlane)...")
+        print("Performing ICP 2_registration (PointToPlane)...")
         reg_icp = o3d.pipelines.registration.registration_icp(
             mls_pcd, tls_pcd, threshold, trans_init,
             o3d.pipelines.registration.TransformationEstimationPointToPlane(), criteria)
         return reg_icp
     except Exception as e:
-        print(f"Error during ICP registration: {e}")
+        print(f"Error during ICP 2_registration: {e}")
         return None
 
 

@@ -162,8 +162,8 @@ def evaluate_point_cloud(tls_pcd_path, mls_pcd_path, voxel_size=0.01):
 
 
 # 路径
-tls_pcd_path = "D:/E_2024_Thesis/Data/Input/roof/Roof_TLS.ply"  # TLS点云路径
-mls_pcd_path = "D:/E_2024_Thesis/Data/Output/Roof/PointCloud/TOP5/pcd_denoised_patch.ply"    # 已去噪的MLS点云路径
+tls_pcd_path = "D:/E_2024_Thesis/Data/Input/Street/TLS_Block.ply"  # TLS点云路径
+mls_pcd_path = "D:/E_2024_Thesis/Data/Output/Road/CNN/Block_PointProNets.ply"    # 已去噪的MLS点云路径
 
 
 # 调用评估函数

@@ -77,7 +77,7 @@ def downsample_points(points, voxel_size):
 
 def calculate_noise_removal_rate(original_points, denoised_points):
     """
-    Calculate noise removal rate as the percentage of points removed during denoising.
+    Calculate noise removal rate as the percentage of points removed during 3_denoising.
 
     Parameters:
     original_points (np.ndarray): Original noisy point cloud points.
@@ -93,8 +93,8 @@ def calculate_noise_removal_rate(original_points, denoised_points):
     return noise_removal_rate
 # 加载点云数据
 print("Loading LAS point cloud data...")
-file_path_mls = "D:/E_2024_Thesis/Data/Input/roof/Roof_MLS.las"
-file_path_tls = "D:/E_2024_Thesis/Data/Input/roof/Roof_TLS.las"
+file_path_mls = "D:/E_2024_Thesis/Data/Input/Street/MLS_Block.las"
+file_path_tls = "D:/E_2024_Thesis/Data/Input/Street/TLS_Block.las"
 
 noisy_pcd = read_las_to_o3d(file_path_mls)
 ground_truth_pcd = read_las_to_o3d(file_path_tls)
@@ -107,14 +107,14 @@ print("Estimating ground truth normals...")
 ground_truth_normals = estimate_normals(ground_truth_points)
 
 # Step 2: 执行 PointFilter 算法
-print("Running PointFilter denoising...")
+print("Running PointFilter 3_denoising...")
 denoised_points = point_filter(noisy_points, ground_truth_normals)
 
 # Step 3: 保存去噪后的点云
 print("Saving denoised point cloud...")
 denoised_pcd = o3d.geometry.PointCloud()
 denoised_pcd.points = o3d.utility.Vector3dVector(denoised_points)
-o3d.io.write_point_cloud("D:/E_2024_Thesis/Data/Output/Roof/PointCloud/roof_PointFilter.ply", denoised_pcd)
+o3d.io.write_point_cloud("D:/E_2024_Thesis/Data/Output/Road/PointFilter.ply", denoised_pcd)
 #o3d.io.write_point_cloud("D:/E_2024_Thesis/Output/Roof_Denoised_HighRes.pcd", denoised_pcd)
 
 # Step 4: 计算 RMSE
@@ -135,8 +135,8 @@ o3d.io.write_point_cloud("D:/E_2024_Thesis/Data/Output/Roof/PointCloud/roof_Poin
 #ground_truth_pcd.paint_uniform_color([0, 0, 1])  # 蓝色表示 Ground Truth 点云
 #o3d.visualization.draw_geometries([noisy_pcd, denoised_pcd])
 
-# Step 6: Calculate and display denoising rate
-# Function to calculate denoising rate based on noise removal
+# Step 6: Calculate and display 3_denoising rate
+# Function to calculate 3_denoising rate based on noise removal
 
 # Step: Calculate and display noise removal rate
 print("Calculating noise removal rate...")

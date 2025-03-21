@@ -140,9 +140,9 @@ def visualize_denoising_fast(pcd_original, pcd_denoised):
 
 
 # 载入点云并运行去噪函数
-file_path = "D:/E_2024_Thesis/Data/Input/roof/Roof_MLS.las"
+file_path = "D:/E_2024_Thesis/Data/Input/Street/MLS_Block.las"
 pcd = read_las_to_o3d(file_path)
-file_path_1 = "D:/E_2024_Thesis/Data/Input/roof/Roof_TLS.las"
+file_path_1 = "D:/E_2024_Thesis/Data/Input/Street/TLS_Block.las"
 reference_pcd = read_las_to_o3d(file_path_1)
 
 # 这里使用前面的knn_denoise_patch函数
@@ -155,7 +155,7 @@ pcd_denoised_manifold = knn_denoise_manifold(pcd)
 pcd_denoised_voxel = knn_denoise_voxel(pcd)
 #o3d.visualization.draw_geometries([pcd_denoised_voxel])
 
-output_dir = "D:/E_2024_Thesis/Data/Output/Roof/PointCloud/"
+output_dir = "D:/E_2024_Thesis/Data/Output/Road/"
 #if not os.path.exists(output_dir):
 #    os.makedirs(output_dir)
 

@@ -145,8 +145,8 @@ def visualize_denoising_fast(pcd_original, pcd_denoised):
 
 
 # 载入数据
-tls_pcd = load_las_as_o3d_point_cloud("D:/E_2024_Thesis/Data/Input/roof/Roof_TLS.las")
-mls_pcd = load_las_as_o3d_point_cloud("D:/E_2024_Thesis/Data/Input/roof/Roof_MLS.las")
+tls_pcd = load_las_as_o3d_point_cloud("D:/E_2024_Thesis/Data/Input/Street/TLS_Block.las")
+mls_pcd = load_las_as_o3d_point_cloud("D:/E_2024_Thesis/Data/Input/Street/MLS_Block.las")
 
 # 选择去噪方法并应用
 denoised_mls_reconstruction = manifold_reconstruction_denoising(mls_pcd)
@@ -158,7 +158,7 @@ denoised_mls_truncation = manifold_distance_truncation_denoising(mls_pcd)
 denoised_mls_fluid = fluid_inspired_denoising(mls_pcd)
 #visualize_denoising_fast(mls_pcd, denoised_mls_fluid)
 
-output_dir = "D:/E_2024_Thesis/Data/Output/Roof/PointCloud/"
+output_dir = "D:/E_2024_Thesis/Data/Output/Road/"
 #if not os.path.exists(output_dir):
 #    os.makedirs(output_dir)
 # 保存去噪后的点云

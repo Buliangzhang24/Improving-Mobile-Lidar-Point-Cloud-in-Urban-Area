@@ -194,8 +194,8 @@ def visualize_denoising_fast(pcd_original, pcd_denoised):
 
 
 # 加载点云文件
-tls_pcd = load_las_as_o3d_point_cloud("D:/E_2024_Thesis/Data/Input/roof/Roof_TLS.las")
-mls_pcd = load_las_as_o3d_point_cloud("D:/E_2024_Thesis/Data/Input/roof/Roof_MLS.las")
+tls_pcd = load_las_as_o3d_point_cloud("D:/E_2024_Thesis/Data/Input/Street/TLS_Block.las")
+mls_pcd = load_las_as_o3d_point_cloud("D:/E_2024_Thesis/Data/Input/Street/MLS_Block.las")
 output_dir = "D:/E_2024_Thesis/Data/Output/Roof/"
 # 估算法向量
 tls_pcd.estimate_normals(search_param=o3d.geometry.KDTreeSearchParamKNN(knn=30))
@@ -209,28 +209,28 @@ print(f"Original RMSE: {original_rmse:.4f}")
 #denoised_pcd_guided = guided_filtering(mls_pcd)
 denoised_pcd_guided = guided_filtering_with_gaussian_pyramid(mls_pcd)
 #visualize_denoising_fast(mls_pcd, denoised_pcd_guided)
-#o3d.io.write_point_cloud(output_dir + "mls_guided.ply", denoised_pcd_guided)
+o3d.io.write_point_cloud(output_dir + "mls_guided.ply", denoised_pcd_guided)
 
-denoised_rmse_guided = compute_rmse(denoised_pcd_guided, tls_pcd)
-print(f"Guided Filtering RMSE: {denoised_rmse_guided:.4f}")
-print(f"Guided Filtering Denoising Rate: {compute_denoising_rate(mls_pcd, denoised_pcd_guided):.2f}%")
+#denoised_rmse_guided = compute_rmse(denoised_pcd_guided, tls_pcd)
+#print(f"Guided Filtering RMSE: {denoised_rmse_guided:.4f}")
+#print(f"Guided Filtering Denoising Rate: {compute_denoising_rate(mls_pcd, denoised_pcd_guided):.2f}%")
 
 # 使用双边滤波迭代方法
 denoised_pcd_bilateral = bilateral_filtering(mls_pcd)
 #visualize_denoising_fast(mls_pcd, denoised_pcd_bilateral)
-#o3d.io.write_point_cloud(output_dir + "mls_bilateral.ply", denoised_pcd_bilateral)
+o3d.io.write_point_cloud(output_dir + "mls_bilateral.ply", denoised_pcd_bilateral)
 
-denoised_rmse_bilateral = compute_rmse(denoised_pcd_bilateral, tls_pcd)
-print(f"Bilateral Filtering RMSE: {denoised_rmse_bilateral:.4f}")
-print(f"Bilateral Filtering Denoising Rate: {compute_denoising_rate(mls_pcd, denoised_pcd_bilateral):.2f}%")
+#denoised_rmse_bilateral = compute_rmse(denoised_pcd_bilateral, tls_pcd)
+#print(f"Bilateral Filtering RMSE: {denoised_rmse_bilateral:.4f}")
+#print(f"Bilateral Filtering Denoising Rate: {compute_denoising_rate(mls_pcd, denoised_pcd_bilateral):.2f}%")
 
 # 使用各向异性扩散方法
 #denoised_pcd_anisotropic = anisotropic_diffusion(mls_pcd)
 denoised_pcd_anisotropic = anisotropic_diffusion_with_curvature(mls_pcd)
 #visualize_denoising_fast(mls_pcd, denoised_pcd_anisotropic)
-#o3d.io.write_point_cloud(output_dir + "mls_anisotropic.ply", denoised_pcd_anisotropic)
+o3d.io.write_point_cloud(output_dir + "mls_anisotropic.ply", denoised_pcd_anisotropic)
 
 
-denoised_rmse_anisotropic = compute_rmse(denoised_pcd_anisotropic, tls_pcd)
-print(f"Anisotropic Diffusion RMSE: {denoised_rmse_anisotropic:.4f}")
-print(f"Anisotropic Diffusion Denoising Rate: {compute_denoising_rate(mls_pcd, denoised_pcd_anisotropic):.2f}%")
+#denoised_rmse_anisotropic = compute_rmse(denoised_pcd_anisotropic, tls_pcd)
+#print(f"Anisotropic Diffusion RMSE: {denoised_rmse_anisotropic:.4f}")
+#print(f"Anisotropic Diffusion Denoising Rate: {compute_denoising_rate(mls_pcd, denoised_pcd_anisotropic):.2f}%")

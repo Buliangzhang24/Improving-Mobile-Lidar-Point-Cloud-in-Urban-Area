@@ -97,8 +97,8 @@ def visualize_denoising_fast(pcd_original, pcd_denoised):
     o3d.visualization.draw_geometries([pcd_original], window_name="Denoising Visualization")
 
 # 加载 TLS 和 MLS 点云
-tls_pcd = load_las_as_o3d_point_cloud("D:/E_2024_Thesis/Data/Input/Street/TLS_Street.las")
-mls_pcd = load_las_as_o3d_point_cloud("D:/E_2024_Thesis/Data/Input/Street/MLS_Street.las")
+tls_pcd = load_las_as_o3d_point_cloud("D:/E_2024_Thesis/Data/Input/Street/TLS_Block.las")
+mls_pcd = load_las_as_o3d_point_cloud("D:/E_2024_Thesis/Data/Input/Street/MLS_Block.las")
 
 # 对 MLS 点云进行去噪
 mls_denoised_ransac = ransac_denoise(mls_pcd)

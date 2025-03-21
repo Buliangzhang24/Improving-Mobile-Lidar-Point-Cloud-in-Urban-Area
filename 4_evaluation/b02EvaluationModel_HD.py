@@ -19,7 +19,7 @@ def hausdorff_distance(mesh1, mesh2):
 
 # 加载点云或网格文件
 mesh_tls = o3d.io.read_triangle_mesh("D:/E_2024_Thesis/Data/Output/Roof/Mesh/3D_CloudCompare/Roof_TLS - Cloud.ply")
-mesh_mls = o3d.io.read_triangle_mesh("D:/E_2024_Thesis/Data/Output/Roof/Mesh/3D_Delaunay/Patch.ply")
+mesh_mls = o3d.io.read_triangle_mesh("D:/E_2024_Thesis/Data/Output/Roof/Mesh/3D/KNN_patch.ply")
 
 # 计算 Hausdorff 距离
 hd_value = hausdorff_distance(mesh_tls, mesh_mls)
