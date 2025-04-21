@@ -18,7 +18,7 @@ a01Registration_Align.py: Performs initial alignment of MLS (Mobile Laser Scanni
 a01Registration_ICP.py: Refines the alignment using Iterative Closest Point (ICP) algorithm.
 
 ### 3. Denoising
-02Denoise_PointNet.py: Denoising using PointNet architecture
+`02Denoise_PointNet.py`: Denoising using PointNet architecture
 
 a02Denoise_CNN.py: Denoising using CNN-based approach
 
