@@ -1,0 +1,26 @@
+name: my_lidar_env
+channels:
+  - defaults
+  - conda-forge
+  - pytorch
+  - anaconda
+  
+dependencies:
+  - python=3.9
+  - pip
+  - numpy
+  - scipy
+  - scikit-learn
+  - open3d
+  - laspy
+  - cupy
+  - pytorch
+  - torchvision
+  - torchaudio
+  - pip:
+      - torch
+      - torchtext
+      - torchdata
+      - torch.nn
+      - torch.optim
+      - torch.nn.functional
