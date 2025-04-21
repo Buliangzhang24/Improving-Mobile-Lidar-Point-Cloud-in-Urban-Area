@@ -2,11 +2,12 @@
 This repository contains code for processing point cloud data as part of a thesis project. The workflow follows these main steps: preprocessing, registration, denoising, evaluation, and reconstruction.
 
 ## Prerequisites
-First create the conda environment using the provided environment.yml file:
+First create the conda environment using the provided `environment.yml` file:
 
-bash
+```bash
 conda env create -f environment.yml
 conda activate pointcloud-env
+```
 ## Code Structure
 ### 1. Preprocessing
 a00Pre-Progress_From_las_to_ply.py: Converts LAS point cloud files to PLY format for easier processing.
