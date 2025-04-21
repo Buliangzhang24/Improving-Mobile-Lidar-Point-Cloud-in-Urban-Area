@@ -5,23 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="01586aa8-02d4-4ade-a432-b174f09da4ef" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/1_preprocessing/a00Pre-Progress_From_las_to_ply .py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Diagram.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/B01RQ2_a00Pre-Progress_From_las_to_ply .py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/B01RQ2_a00Registration_Align.py" beforeDir="false" afterPath="$PROJECT_DIR$/2_registration/a01Registration_Align.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/B01RQ2_a00Registration_ICP.py" beforeDir="false" afterPath="$PROJECT_DIR$/2_registration/a01Registration_ICP.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/B01RQ2_a02Denoise_CNN.py" beforeDir="false" afterPath="$PROJECT_DIR$/3_denoising/a02Denoise_CNN.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/B01RQ2_a02Denoise_KNN.py" beforeDir="false" afterPath="$PROJECT_DIR$/3_denoising/a02Denoise_KNN.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/B01RQ2_a02Denoise_Manifold.py" beforeDir="false" afterPath="$PROJECT_DIR$/3_denoising/a02Denoise_Manifold.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/B01RQ2_a02Denoise_Normal.py" beforeDir="false" afterPath="$PROJECT_DIR$/3_denoising/a02Denoise_Normal.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/B01RQ2_a02Denoise_PointFilter.py" beforeDir="false" afterPath="$PROJECT_DIR$/3_denoising/a02Denoise_PointFilter.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/B01RQ2_a02Denoise_PointNet.py" beforeDir="false" afterPath="$PROJECT_DIR$/3_denoising/02Denoise_PointNet.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/B01RQ2_a02Denoise_Random Sampling.py" beforeDir="false" afterPath="$PROJECT_DIR$/3_denoising/a02Denoise_Random Sampling.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/B01RQ2_a03Evaluation_Score.py" beforeDir="false" afterPath="$PROJECT_DIR$/4_evaluation/a03Evaluation_Score.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/B01RQ2_b013DReconstruction_Delaunay.py" beforeDir="false" afterPath="$PROJECT_DIR$/5_reconstruction/b013DReconstruction_Delaunay.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/B01RQ2_b02EvaluationModel_HD.py" beforeDir="false" afterPath="$PROJECT_DIR$/4_evaluation/b02EvaluationModel_HD.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tyr.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/1_preprocessing/a00Pre-Progress_From_las_to_ply .py" beforeDir="false" afterPath="$PROJECT_DIR$/1_preprocessing/a00Pre-Progress_From_las_to_ply .py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/2_registration/a01Registration_Align.py" beforeDir="false" afterPath="$PROJECT_DIR$/2_registration/a01Registration_Align.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/2_registration/a01Registration_ICP.py" beforeDir="false" afterPath="$PROJECT_DIR$/2_registration/a01Registration_ICP.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/3_denoising/02Denoise_PointNet.py" beforeDir="false" afterPath="$PROJECT_DIR$/3_denoising/02Denoise_PointNet.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/3_denoising/a02Denoise_CNN.py" beforeDir="false" afterPath="$PROJECT_DIR$/3_denoising/a02Denoise_CNN.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/3_denoising/a02Denoise_KNN.py" beforeDir="false" afterPath="$PROJECT_DIR$/3_denoising/a02Denoise_KNN.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/3_denoising/a02Denoise_Manifold.py" beforeDir="false" afterPath="$PROJECT_DIR$/3_denoising/a02Denoise_Manifold.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/3_denoising/a02Denoise_Normal.py" beforeDir="false" afterPath="$PROJECT_DIR$/3_denoising/a02Denoise_Normal.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/3_denoising/a02Denoise_PointFilter.py" beforeDir="false" afterPath="$PROJECT_DIR$/3_denoising/a02Denoise_PointFilter.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/3_denoising/a02Denoise_Random Sampling.py" beforeDir="false" afterPath="$PROJECT_DIR$/3_denoising/a02Denoise_Random Sampling.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/4_evaluation/a03Evaluation_Score.py" beforeDir="false" afterPath="$PROJECT_DIR$/4_evaluation/a03Evaluation_Score.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/4_evaluation/b02EvaluationModel_HD.py" beforeDir="false" afterPath="$PROJECT_DIR$/4_evaluation/b02EvaluationModel_HD.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/5_reconstruction/b013DReconstruction_Delaunay.py" beforeDir="false" afterPath="$PROJECT_DIR$/5_reconstruction/b013DReconstruction_Delaunay.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Diagram.py" beforeDir="false" afterPath="$PROJECT_DIR$/Diagram.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -86,6 +84,7 @@
     &quot;Python.Clip.executor&quot;: &quot;Debug&quot;,
     &quot;Python.Clip_Overlap.executor&quot;: &quot;Debug&quot;,
     &quot;Python.Delaunay.executor&quot;: &quot;Run&quot;,
+    &quot;Python.Diagram.executor&quot;: &quot;Run&quot;,
     &quot;Python.HD.executor&quot;: &quot;Run&quot;,
     &quot;Python.IterativePFN.executor&quot;: &quot;Debug&quot;,
     &quot;Python.KNN.executor&quot;: &quot;Debug&quot;,
@@ -128,7 +127,7 @@
       <recent name="D:\E_2024_Thesis\Code\PointCloud_Version2\1_preprocessing" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.B01RQ2_a02Denoise_Random Sampling">
+  <component name="RunManager" selected="Python.a02Denoise_Random Sampling">
     <configuration name="a02Denoise_Random Sampling" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -272,7 +271,14 @@
       <workItem from="1741731064354" duration="175000" />
       <workItem from="1741797728078" duration="3913000" />
       <workItem from="1741863659316" duration="1503000" />
-      <workItem from="1742582056657" duration="1898000" />
+      <workItem from="1742582056657" duration="2703000" />
+      <workItem from="1742847154549" duration="800000" />
+      <workItem from="1743363737755" duration="660000" />
+      <workItem from="1743626698420" duration="614000" />
+      <workItem from="1743993849456" duration="1534000" />
+      <workItem from="1744450355576" duration="684000" />
+      <workItem from="1744740462594" duration="270000" />
+      <workItem from="1745237571492" duration="2553000" />
     </task>
     <servers />
   </component>
@@ -315,7 +321,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/2_registration/a01Registration_ICP.py</url>
-          <line>127</line>
+          <line>126</line>
           <option name="timeStamp" value="13" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -325,12 +331,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/2_registration/a01Registration_ICP.py</url>
-          <line>115</line>
+          <line>114</line>
           <option name="timeStamp" value="30" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/2_registration/a01Registration_ICP.py</url>
-          <line>119</line>
+          <line>118</line>
           <option name="timeStamp" value="31" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -519,11 +525,6 @@
           <option name="timeStamp" value="252" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/3_denoising/02Denoise_PointNet.py</url>
-          <line>149</line>
-          <option name="timeStamp" value="254" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/3_denoising/a02Denoise_Normal.py</url>
           <line>204</line>
           <option name="timeStamp" value="257" />
@@ -652,12 +653,13 @@
     <SUITE FILE_PATH="coverage/PointCloud$CNN.coverage" NAME="CNN Coverage Results" MODIFIED="1731779644992" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/PointCloud_Version2$Poisson.coverage" NAME="Poisson Coverage Results" MODIFIED="1737979101264" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/PointCloud_Version2$B01RQ2_a02Denoise_Manifold.coverage" NAME="B01RQ2_a02Denoise_Manifold Coverage Results" MODIFIED="1738422187674" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/PointCloud_Version2$Diagram.coverage" NAME="Diagram Coverage Results" MODIFIED="1742847340343" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/PointCloud$Registration_FPFH.coverage" NAME="Registration_FPFH Coverage Results" MODIFIED="1731594411093" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/PointCloud$Registration_ICP.coverage" NAME="Registration_ICP Coverage Results" MODIFIED="1731708418936" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/PointCloud$Random_Sampling.coverage" NAME="Random Sampling Coverage Results" MODIFIED="1731786179904" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/PointCloud_Version2$Align.coverage" NAME="Align Coverage Results" MODIFIED="1737832727324" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/PointCloud$PointFilter.coverage" NAME="PointFilter Coverage Results" MODIFIED="1731785065455" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/PointCloud$Random_Sampling.coverage" NAME="Random Sampling Coverage Results" MODIFIED="1731786179904" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/PointCloud_Version2$.coverage" NAME="干摩洛哥 Coverage Results" MODIFIED="1741731203628" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/PointCloud$PointFilter.coverage" NAME="PointFilter Coverage Results" MODIFIED="1731785065455" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/PointCloud_Version2$3D_Ball_Pivoting.coverage" NAME="3D_Ball Pivoting Coverage Results" MODIFIED="1738231622272" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/PointCloud_Version2$B01RQ2_a02Denoise_Normal.coverage" NAME="B01RQ2_a02Denoise_Normal Coverage Results" MODIFIED="1738332711878" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/PointCloud$KNN.coverage" NAME="KNN Coverage Results" MODIFIED="1731770088509" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
@@ -668,8 +670,8 @@
     <SUITE FILE_PATH="coverage/PointCloud_Version2$B01RQ2_a02Denoise_PointFilter.coverage" NAME="B01RQ2_a02Denoise_PointFilter Coverage Results" MODIFIED="1738333560127" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/PointCloud_Version2$3D_Reconstruction_Smooth.coverage" NAME="3D_Reconstruction_Smooth Coverage Results" MODIFIED="1737993734566" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/PointCloud$Registration.coverage" NAME="Registration Coverage Results" MODIFIED="1731534865795" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/PointCloud_Version2$fromlastoply.coverage" NAME="fromlastoply Coverage Results" MODIFIED="1738265844002" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/PointCloud_Version2$3D_Reconstruction.coverage" NAME="3D_Reconstruction Coverage Results" MODIFIED="1737574176237" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/PointCloud_Version2$fromlastoply.coverage" NAME="fromlastoply Coverage Results" MODIFIED="1738265844002" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/PointCloud_Version2$Try.coverage" NAME="Try Coverage Results" MODIFIED="1738012207951" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/PointCloud$Normal.coverage" NAME="Normal Coverage Results" MODIFIED="1731766712079" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/PointCloud_Version2$3D_Parametric_Representation_Modeling.coverage" NAME="3D_Parametric Representation Modeling Coverage Results" MODIFIED="1737383581415" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />

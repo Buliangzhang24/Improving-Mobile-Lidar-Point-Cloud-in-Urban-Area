@@ -7,22 +7,22 @@ from sklearn.neighbors import NearestNeighbors
 from scipy.spatial.transform import Rotation as R
 from scipy.spatial import KDTree
 
-# 加载LAS文件为Open3D点云对象
+# Load LAS file as Open3D point cloud object
 def load_las_as_o3d_point_cloud(file_path):
-    # 使用 laspy 加载 .las 文件
+    # Use laspy to load .las file
     las_data = laspy.read(file_path)
     points = np.vstack((las_data.x, las_data.y, las_data.z)).transpose()
 
-    # 创建 Open3D 点云对象
+    # Create Open3D point cloud object
     pcd = o3d.geometry.PointCloud()
     pcd.points = o3d.utility.Vector3dVector(points)
 
     print(f"Loaded {len(pcd.points)} points from {file_path}")
     return pcd
 
-# 统计流形去噪 (通过流形重建)
+# Manifold reconstruction denoising (based on KNN and average)
 def manifold_reconstruction_denoising(pcd, num_neighbors=20):
-    # 基于KNN计算流形特征
+    # Compute manifold features using KNN
     pcd_points = np.asarray(pcd.points)
     tree = scipy.spatial.KDTree(pcd_points)
 
@@ -36,13 +36,12 @@ def manifold_reconstruction_denoising(pcd, num_neighbors=20):
     pcd.points = o3d.utility.Vector3dVector(np.array(denoised_points))
     return pcd
 
-
-# K均值聚类与统计流形结合去噪
+# K-means clustering + manifold denoising
 def kmeans_statistical_manifold_denoising(pcd, num_clusters=5):
     pcd_points = np.asarray(pcd.points)
     kmeans = KMeans(n_clusters=num_clusters, random_state=0).fit(pcd_points)
 
-    # 根据簇分配去噪
+    # Denoise based on cluster assignment
     denoised_points = []
     for i in range(num_clusters):
         cluster_points = pcd_points[kmeans.labels_ == i]
@@ -52,8 +51,7 @@ def kmeans_statistical_manifold_denoising(pcd, num_clusters=5):
     pcd.points = o3d.utility.Vector3dVector(np.array(denoised_points))
     return pcd
 
-
-# 流体几何特征截断去噪
+# Manifold-based distance truncation denoising
 def manifold_distance_truncation_denoising(pcd, distance_threshold=0.05):
     pcd_points = np.asarray(pcd.points)
     tree = scipy.spatial.KDTree(pcd_points)
@@ -66,89 +64,89 @@ def manifold_distance_truncation_denoising(pcd, distance_threshold=0.05):
         distances = np.linalg.norm(neighbor_points - point, axis=1)
         close_neighbors = neighbor_points[distances < distance_threshold]
 
-        # 使用较近邻点的平均值
+        # Use mean of nearby points
         denoised_point = np.mean(close_neighbors, axis=0)
         denoised_points.append(denoised_point)
 
     pcd.points = o3d.utility.Vector3dVector(np.array(denoised_points))
     return pcd
 
-
-# 流体启发式去噪（通过概率分布去噪）
+# Fluid-inspired denoising (smooth using neighborhood mean)
 def fluid_inspired_denoising(pcd):
     pcd_points = np.asarray(pcd.points)
 
-    # 对点云进行一定的平滑操作，这里假设流体分布可以通过均值平滑近邻点来表示
+    # Smooth points based on neighbor mean (fluid-like)
     tree = scipy.spatial.KDTree(pcd_points)
     denoised_points = []
     for point in pcd_points:
         neighbors = tree.query(point, k=20)
         neighbor_points = pcd_points[neighbors[1], :]
 
-        # 使用均值平滑
+        # Use average of neighbors
         denoised_point = np.mean(neighbor_points, axis=0)
         denoised_points.append(denoised_point)
 
     pcd.points = o3d.utility.Vector3dVector(np.array(denoised_points))
     return pcd
 
+# Compute RMSE between denoised point cloud and reference
 def compute_rmse(denoised_pcd, reference_pcd):
-    # 可选：对点云进行轻微的随机旋转和/或平移，避免完全匹配
-    random_rotation = R.random().as_matrix()  # 随机旋转矩阵
+    # Optional: apply slight random rotation/translation
+    random_rotation = R.random().as_matrix()
     denoised_points = np.asarray(denoised_pcd.points)
     denoised_points = np.dot(denoised_points - np.mean(denoised_points, axis=0), random_rotation) + np.mean(
         denoised_points, axis=0)
 
     reference_points = np.asarray(reference_pcd.points)
 
-    # 使用最近邻算法找到每个去噪点云点的最近参考点云点
+    # Find nearest point in reference for each denoised point
     nbrs = NearestNeighbors(n_neighbors=1).fit(reference_points)
     distances, indices = nbrs.kneighbors(denoised_points)
 
-    # 计算每个去噪点与参考点云中最接近点之间的距离的平方
+    # Compute RMSE
     rmse = np.sqrt(np.mean(distances ** 2))
     return rmse
 
+# Compute denoising rate (how many points removed)
 def compute_denoising_rate(original_pcd, denoised_pcd):
     original_points = np.asarray(original_pcd.points)
     denoised_points = np.asarray(denoised_pcd.points)
     removal_rate = (len(original_points) - len(denoised_points)) / len(original_points) * 100
     return removal_rate
 
+# Fast visualization of denoising results (red = removed, blue = kept)
 def visualize_denoising_fast(pcd_original, pcd_denoised):
-    # 获取原始点云和去噪后点云的点
+    # Get points from original and denoised point clouds
     original_points = np.asarray(pcd_original.points)
     denoised_points = np.asarray(pcd_denoised.points)
 
-    # 构建去噪点云的 k-d 树以加速查找
+    # Build k-d tree for denoised point cloud
     kdtree = o3d.geometry.KDTreeFlann(pcd_denoised)
 
-    # 初始化保留的掩码
+    # Mask to check which points are retained
     retained_mask = np.zeros(len(original_points), dtype=bool)
 
-    # 在 k-d 树中查找每个点是否存在
+    # Check each point if it's in the denoised version
     for i, point in enumerate(original_points):
-        [_, idx, _] = kdtree.search_knn_vector_3d(point, 1)  # 查找最近邻点
+        [_, idx, _] = kdtree.search_knn_vector_3d(point, 1)
         if len(idx) > 0 and np.linalg.norm(denoised_points[idx[0]] - point) <= 1e-6:
             retained_mask[i] = True
 
-    # 创建一个颜色数组
+    # Assign colors: red = removed, blue = retained
     colors = np.zeros_like(original_points)
-    colors[~retained_mask] = [1, 0, 0]  # 去掉的点为红色
-    colors[retained_mask] = [0, 0, 1]  # 保留的点为蓝色
+    colors[~retained_mask] = [1, 0, 0]  # removed
+    colors[retained_mask] = [0, 0, 1]   # retained
 
-    # 将颜色添加到点云
     pcd_original.colors = o3d.utility.Vector3dVector(colors)
 
-    # 显示结果
+    # Show result
     o3d.visualization.draw_geometries([pcd_original], window_name="Denoising Visualization")
 
-
-# 载入数据
+# Load data
 tls_pcd = load_las_as_o3d_point_cloud("D:/E_2024_Thesis/Data/Input/Street/TLS_Block.las")
 mls_pcd = load_las_as_o3d_point_cloud("D:/E_2024_Thesis/Data/Input/Street/MLS_Block.las")
 
-# 选择去噪方法并应用
+# Select denoising method and apply
 denoised_mls_reconstruction = manifold_reconstruction_denoising(mls_pcd)
 #visualize_denoising_fast(mls_pcd, denoised_mls_reconstruction)
 denoised_mls_statistical = kmeans_statistical_manifold_denoising(mls_pcd)
@@ -158,30 +156,14 @@ denoised_mls_truncation = manifold_distance_truncation_denoising(mls_pcd)
 denoised_mls_fluid = fluid_inspired_denoising(mls_pcd)
 #visualize_denoising_fast(mls_pcd, denoised_mls_fluid)
 
+# Save denoised point clouds
 output_dir = "D:/E_2024_Thesis/Data/Output/Road/"
-#if not os.path.exists(output_dir):
-#    os.makedirs(output_dir)
-# 保存去噪后的点云
+# if not os.path.exists(output_dir):
+#     os.makedirs(output_dir)
+
 o3d.io.write_point_cloud(output_dir + "mls_reconstruction.ply", denoised_mls_reconstruction)
 o3d.io.write_point_cloud(output_dir + "mls_statistical.ply", denoised_mls_statistical)
 o3d.io.write_point_cloud(output_dir + "mls_truncation.ply", denoised_mls_truncation)
 o3d.io.write_point_cloud(output_dir + "mls_fluid.ply", denoised_mls_fluid)
 
 
-
-#denoised_rmse_reconstruction = compute_rmse(denoised_mls_reconstruction, tls_pcd)
-#denoised_rmse_statistical = compute_rmse(denoised_mls_statistical, tls_pcd)
-#denoised_rmse_truncation = compute_rmse(denoised_mls_truncation, tls_pcd)
-#denoised_rmse_fluid = compute_rmse(denoised_mls_fluid, tls_pcd)
-
-#print(f"Reconstruction RMSE: {denoised_rmse_reconstruction:.4f}")
-#print(f"Reconstruction Denoising Rate: {compute_denoising_rate(mls_pcd, denoised_mls_reconstruction):.2f}%")
-
-#print(f"Statisical RMSE: {denoised_rmse_statistical:.4f}")
-#print(f"Statisical Denoising Rate: {compute_denoising_rate(mls_pcd, denoised_mls_statistical):.2f}%")
-
-#print(f"Truncation RMSE: {denoised_rmse_truncation:.4f}")
-#print(f"Truncation Denoising Rate: {compute_denoising_rate(mls_pcd, denoised_mls_truncation):.2f}%")
-
-#print(f"Fluid RMSE: {denoised_rmse_fluid:.4f}")
-#print(f"Fluid Denoising Rate: {compute_denoising_rate(mls_pcd, denoised_mls_fluid):.2f}%")

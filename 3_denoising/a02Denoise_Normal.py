@@ -5,13 +5,13 @@ from sklearn.neighbors import NearestNeighbors
 from scipy.spatial.transform import Rotation as R
 
 
-# 加载 LAS 文件为 Open3D 格式的点云
+# Load LAS file as Open3D format point cloud
 def load_las_as_o3d_point_cloud(file_path):
-    # 使用 laspy 加载 .las 文件
+    # Use laspy to read .las file
     las_data = laspy.read(file_path)
     points = np.vstack((las_data.x, las_data.y, las_data.z)).transpose()
 
-    # 创建 Open3D 点云对象
+    # Create Open3D point cloud object
     pcd = o3d.geometry.PointCloud()
     pcd.points = o3d.utility.Vector3dVector(points)
 
@@ -19,16 +19,17 @@ def load_las_as_o3d_point_cloud(file_path):
     return pcd
 
 
-# 基于导向滤波的去噪 (Zhou et al., 2022)
+# Guided filtering for denoising (Zhou et al., 2022)
 def guided_filtering(pcd, iterations=5, filter_strength=0.1):
-    # 创建 KDTree 用于邻域搜索
+    # Create KDTree for neighborhood search
     pcd_tree = o3d.geometry.KDTreeFlann(pcd)
     normals = np.asarray(pcd.normals)
 
     for _ in range(iterations):
         filtered_normals = normals.copy()
         for i in range(len(normals)):
-            [_, neighbors, _] = pcd_tree.search_knn_vector_3d(pcd.points[i], 10)  # 搜索10个最近邻
+            # Search for 10 nearest neighbors
+            [_, neighbors, _] = pcd_tree.search_knn_vector_3d(pcd.points[i], 10)
             avg_normal = np.mean(normals[neighbors], axis=0)
             filtered_normals[i] = (1 - filter_strength) * normals[i] + filter_strength * avg_normal
         normals = filtered_normals
@@ -36,34 +37,31 @@ def guided_filtering(pcd, iterations=5, filter_strength=0.1):
     return pcd
 
 
+# Guided filtering with Gaussian pyramid
 def guided_filtering_with_gaussian_pyramid(pcd, iterations=5, filter_strength=0.1, num_levels=3):
-    # 创建 KDTree 用于邻域搜索
+    # Create KDTree for neighborhood search
     pcd_tree = o3d.geometry.KDTreeFlann(pcd)
     normals = np.asarray(pcd.normals)
 
-    # 高斯金字塔处理
     for level in range(num_levels):
         scale_factor = 2 ** level
         for _ in range(iterations):
             filtered_normals = normals.copy()
             for i in range(len(normals)):
-                # 按比例缩小邻域大小
+                # Reduce neighborhood size based on scale
                 neighbor_count = int(10 / scale_factor) + 1
                 [_, neighbors, _] = pcd_tree.search_knn_vector_3d(pcd.points[i], neighbor_count)
 
-                # 计算邻域平均法向量
                 avg_normal = np.mean(normals[neighbors], axis=0)
-
-                # 根据滤波强度进行调整
                 filtered_normals[i] = (1 - filter_strength) * normals[i] + filter_strength * avg_normal
             normals = filtered_normals
     pcd.normals = o3d.utility.Vector3dVector(normals)
     return pcd
 
 
-# 双边滤波迭代方法 (Hurtado et al., 2023)
+# Iterative bilateral filtering (Hurtado et al., 2023)
 def bilateral_filtering(pcd, iterations=5, spatial_sigma=0.5, normal_sigma=0.1):
-    # 创建 KDTree 用于邻域搜索
+    # Create KDTree for neighborhood search
     pcd_tree = o3d.geometry.KDTreeFlann(pcd)
     normals = np.asarray(pcd.normals)
     points = np.asarray(pcd.points)
@@ -71,22 +69,24 @@ def bilateral_filtering(pcd, iterations=5, spatial_sigma=0.5, normal_sigma=0.1):
     for _ in range(iterations):
         filtered_normals = normals.copy()
         for i in range(len(normals)):
-            [_, neighbors, _] = pcd_tree.search_knn_vector_3d(points[i], 10)  # 搜索10个最近邻
+            # Search for 10 nearest neighbors
+            [_, neighbors, _] = pcd_tree.search_knn_vector_3d(points[i], 10)
             neighbor_normals = normals[neighbors]
             neighbor_points = points[neighbors]
-            weights_spatial = np.exp(
-                -np.linalg.norm(neighbor_points - points[i], axis=1) ** 2 / (2 * spatial_sigma ** 2))
-            weights_normal = np.exp(
-                -np.linalg.norm(neighbor_normals - normals[i], axis=1) ** 2 / (2 * normal_sigma ** 2))
+
+            weights_spatial = np.exp(-np.linalg.norm(neighbor_points - points[i], axis=1) ** 2 / (2 * spatial_sigma ** 2))
+            weights_normal = np.exp(-np.linalg.norm(neighbor_normals - normals[i], axis=1) ** 2 / (2 * normal_sigma ** 2))
             weights = weights_spatial * weights_normal
+
             filtered_normals[i] = np.sum(weights[:, None] * neighbor_normals, axis=0) / np.sum(weights)
         normals = filtered_normals
     pcd.normals = o3d.utility.Vector3dVector(normals)
     return pcd
 
 
+# Anisotropic diffusion with curvature
 def anisotropic_diffusion_with_curvature(pcd, iterations=5, diffusion_factor=0.1):
-    # 创建 KDTree 用于邻域搜索
+    # Create KDTree for neighborhood search
     pcd_tree = o3d.geometry.KDTreeFlann(pcd)
     normals = np.asarray(pcd.normals)
     points = np.asarray(pcd.points)
@@ -94,29 +94,29 @@ def anisotropic_diffusion_with_curvature(pcd, iterations=5, diffusion_factor=0.1
     for _ in range(iterations):
         updated_normals = normals.copy()
         for i in range(len(normals)):
-            [_, neighbors, _] = pcd_tree.search_knn_vector_3d(points[i], 10)  # 搜索10个最近邻
+            # Search for 10 nearest neighbors
+            [_, neighbors, _] = pcd_tree.search_knn_vector_3d(points[i], 10)
 
-            # 计算曲率驱动扩散因子
             neighbor_points = points[neighbors]
             diff_vectors = neighbor_points - points[i]
-            curvatures = np.linalg.norm(diff_vectors, axis=1)  # 局部曲率估计
-            curvature_factor = np.exp(-curvatures ** 2)  # 基于曲率的权重
+            curvatures = np.linalg.norm(diff_vectors, axis=1)  # Local curvature estimation
+            curvature_factor = np.exp(-curvatures ** 2)  # Weight based on curvature
 
             for j, neighbor_idx in enumerate(neighbors):
                 diff = normals[neighbor_idx] - normals[i]
                 weight = curvature_factor[j] * np.exp(-np.linalg.norm(points[neighbor_idx] - points[i]) ** 2)
                 updated_normals[i] += diffusion_factor * weight * diff
 
-            # 单位化法向量
+            # Normalize normal vector
             updated_normals[i] = updated_normals[i] / np.linalg.norm(updated_normals[i])
         normals = updated_normals
     pcd.normals = o3d.utility.Vector3dVector(normals)
     return pcd
 
 
-# 各向异性扩散方法 (扩展法向量去噪)
+# Anisotropic diffusion (normal smoothing)
 def anisotropic_diffusion(pcd, iterations=5, diffusion_factor=0.1):
-    # 创建 KDTree 用于邻域搜索
+    # Create KDTree for neighborhood search
     pcd_tree = o3d.geometry.KDTreeFlann(pcd)
     normals = np.asarray(pcd.normals)
     points = np.asarray(pcd.points)
@@ -124,39 +124,40 @@ def anisotropic_diffusion(pcd, iterations=5, diffusion_factor=0.1):
     for _ in range(iterations):
         updated_normals = normals.copy()
         for i in range(len(normals)):
-            [_, neighbors, _] = pcd_tree.search_knn_vector_3d(points[i], 10)  # 搜索10个最近邻
+            # Search for 10 nearest neighbors
+            [_, neighbors, _] = pcd_tree.search_knn_vector_3d(points[i], 10)
             for neighbor_idx in neighbors:
                 diff = normals[neighbor_idx] - normals[i]
                 weight = np.exp(-np.linalg.norm(points[neighbor_idx] - points[i]) ** 2)
                 updated_normals[i] += diffusion_factor * weight * diff
-            updated_normals[i] = updated_normals[i] / np.linalg.norm(updated_normals[i])  # 单位化
+            updated_normals[i] = updated_normals[i] / np.linalg.norm(updated_normals[i])  # Normalize
         normals = updated_normals
     pcd.normals = o3d.utility.Vector3dVector(normals)
     return pcd
 
 
-# 计算 RMSE
+# Compute RMSE
 def compute_rmse(denoised_pcd, reference_pcd, random_seed=42):
-    # 固定随机种子
+    # Fix random seed
     np.random.seed(random_seed)
 
-    # 可选：对点云进行轻微的随机旋转和/或平移，避免完全匹配
-    random_rotation = R.random().as_matrix()  # 随机旋转矩阵
+    # Optional: apply small random rotation/translation to avoid perfect alignment
+    random_rotation = R.random().as_matrix()
     denoised_points = np.asarray(denoised_pcd.points)
-    denoised_points = np.dot(denoised_points - np.mean(denoised_points, axis=0), random_rotation) + np.mean(
-        denoised_points, axis=0)
+    denoised_points = np.dot(denoised_points - np.mean(denoised_points, axis=0), random_rotation) + np.mean(denoised_points, axis=0)
 
     reference_points = np.asarray(reference_pcd.points)
 
-    # 使用最近邻算法找到每个去噪点云点的最近参考点云点
+    # Find nearest point in reference for each denoised point
     nbrs = NearestNeighbors(n_neighbors=1).fit(reference_points)
     distances, indices = nbrs.kneighbors(denoised_points)
 
-    # 计算每个去噪点与参考点云中最接近点之间的距离的平方
+    # Compute RMSE
     rmse = np.sqrt(np.mean(distances ** 2))
     return rmse
 
-# 计算去噪率
+
+# Compute denoising rate
 def compute_denoising_rate(original_pcd, denoised_pcd):
     original_points = np.asarray(original_pcd.points)
     denoised_points = np.asarray(denoised_pcd.points)
@@ -164,73 +165,56 @@ def compute_denoising_rate(original_pcd, denoised_pcd):
     return removal_rate
 
 
+# Visualize denoising effect (highlight removed points)
 def visualize_denoising_fast(pcd_original, pcd_denoised):
-    # 获取原始点云和去噪后点云的点
     original_points = np.asarray(pcd_original.points)
     denoised_points = np.asarray(pcd_denoised.points)
 
-    # 构建去噪点云的 k-d 树以加速查找
+    # Build k-d tree for fast lookup
     kdtree = o3d.geometry.KDTreeFlann(pcd_denoised)
 
-    # 初始化保留的掩码
+    # Initialize mask for retained points
     retained_mask = np.zeros(len(original_points), dtype=bool)
 
-    # 在 k-d 树中查找每个点是否存在
+    # Check if each original point exists in denoised version
     for i, point in enumerate(original_points):
-        [_, idx, _] = kdtree.search_knn_vector_3d(point, 1)  # 查找最近邻点
+        [_, idx, _] = kdtree.search_knn_vector_3d(point, 1)
         if len(idx) > 0 and np.linalg.norm(denoised_points[idx[0]] - point) <= 1e-6:
             retained_mask[i] = True
 
-    # 创建一个颜色数组
+    # Create color array
     colors = np.zeros_like(original_points)
-    colors[~retained_mask] = [1, 0, 0]  # 去掉的点为红色
-    colors[retained_mask] = [0, 0, 1]  # 保留的点为蓝色
+    colors[~retained_mask] = [1, 0, 0]  # Red for removed points
+    colors[retained_mask] = [0, 0, 1]   # Blue for retained points
 
-    # 将颜色添加到点云
+    # Assign colors to point cloud
     pcd_original.colors = o3d.utility.Vector3dVector(colors)
 
-    # 显示结果
+    # Show result
     o3d.visualization.draw_geometries([pcd_original], window_name="Denoising Visualization")
 
 
-# 加载点云文件
+# Load point clouds
 tls_pcd = load_las_as_o3d_point_cloud("D:/E_2024_Thesis/Data/Input/Street/TLS_Block.las")
 mls_pcd = load_las_as_o3d_point_cloud("D:/E_2024_Thesis/Data/Input/Street/MLS_Block.las")
 output_dir = "D:/E_2024_Thesis/Data/Output/Roof/"
-# 估算法向量
+
+# Estimate normals
 tls_pcd.estimate_normals(search_param=o3d.geometry.KDTreeSearchParamKNN(knn=30))
 mls_pcd.estimate_normals(search_param=o3d.geometry.KDTreeSearchParamKNN(knn=30))
 
-# 计算原始 RMSE
+
+
+# Calculate RMSE
 original_rmse = compute_rmse(mls_pcd, tls_pcd)
 print(f"Original RMSE: {original_rmse:.4f}")
 
-# 使用基于导向滤波的去噪方法
-#denoised_pcd_guided = guided_filtering(mls_pcd)
 denoised_pcd_guided = guided_filtering_with_gaussian_pyramid(mls_pcd)
-#visualize_denoising_fast(mls_pcd, denoised_pcd_guided)
 o3d.io.write_point_cloud(output_dir + "mls_guided.ply", denoised_pcd_guided)
 
-#denoised_rmse_guided = compute_rmse(denoised_pcd_guided, tls_pcd)
-#print(f"Guided Filtering RMSE: {denoised_rmse_guided:.4f}")
-#print(f"Guided Filtering Denoising Rate: {compute_denoising_rate(mls_pcd, denoised_pcd_guided):.2f}%")
-
-# 使用双边滤波迭代方法
 denoised_pcd_bilateral = bilateral_filtering(mls_pcd)
-#visualize_denoising_fast(mls_pcd, denoised_pcd_bilateral)
 o3d.io.write_point_cloud(output_dir + "mls_bilateral.ply", denoised_pcd_bilateral)
 
-#denoised_rmse_bilateral = compute_rmse(denoised_pcd_bilateral, tls_pcd)
-#print(f"Bilateral Filtering RMSE: {denoised_rmse_bilateral:.4f}")
-#print(f"Bilateral Filtering Denoising Rate: {compute_denoising_rate(mls_pcd, denoised_pcd_bilateral):.2f}%")
-
-# 使用各向异性扩散方法
-#denoised_pcd_anisotropic = anisotropic_diffusion(mls_pcd)
 denoised_pcd_anisotropic = anisotropic_diffusion_with_curvature(mls_pcd)
-#visualize_denoising_fast(mls_pcd, denoised_pcd_anisotropic)
 o3d.io.write_point_cloud(output_dir + "mls_anisotropic.ply", denoised_pcd_anisotropic)
 
-
-#denoised_rmse_anisotropic = compute_rmse(denoised_pcd_anisotropic, tls_pcd)
-#print(f"Anisotropic Diffusion RMSE: {denoised_rmse_anisotropic:.4f}")
-#print(f"Anisotropic Diffusion Denoising Rate: {compute_denoising_rate(mls_pcd, denoised_pcd_anisotropic):.2f}%")

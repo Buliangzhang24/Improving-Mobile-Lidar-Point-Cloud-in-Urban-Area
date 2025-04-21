@@ -6,37 +6,37 @@ import numpy as np
 import torch.nn.functional as F
 import laspy
 
-# 加载 LAS 点云为 Open3D PointCloud 对象
+# Load LAS file as Open3D PointCloud
 def load_las_as_o3d_point_cloud(las_file_path):
-    las = laspy.read(las_file_path)  # 读取 las 文件
-    points = np.vstack((las.x, las.y, las.z)).transpose()  # 组合点云的 x, y, z 坐标
+    las = laspy.read(las_file_path)  # Read LAS file
+    points = np.vstack((las.x, las.y, las.z)).transpose()  # Combine x,y,z coordinates
     pcd = o3d.geometry.PointCloud()
     pcd.points = o3d.utility.Vector3dVector(points)
     return pcd
 
-# 标准化和归一化函数
+# Normalize point cloud (center and scale)
 def normalize_point_cloud(pcd):
     points = np.asarray(pcd.points)
-    centroid = np.mean(points, axis=0)  # 计算点云的中心点
-    points = points - centroid  # 中心化
-    scale = np.max(np.linalg.norm(points, axis=1))  # 计算缩放因子
-    points = points / scale  # 缩放
+    centroid = np.mean(points, axis=0)  # Calculate center point
+    points = points - centroid  # Center points
+    scale = np.max(np.linalg.norm(points, axis=1))  # Calculate scale factor
+    points = points / scale  # Scale points
     pcd.points = o3d.utility.Vector3dVector(points)
-    return pcd, centroid, scale  # 返回标准化后的点云、中心点和缩放因子
+    return pcd, centroid, scale  # Return normalized pcd, center, and scale
 
-# 反向标准化函数
+# Reverse normalization
 def denormalize_point_cloud(pcd, centroid, scale):
     points = np.asarray(pcd.points)
-    points = points * scale  # 反向缩放
-    points = points + centroid  # 反向中心化
+    points = points * scale  # Reverse scaling
+    points = points + centroid  # Reverse centering
     pcd.points = o3d.utility.Vector3dVector(points)
     return pcd
 
-# 体素下采样函数
+# Voxel downsampling
 def downsample_point_cloud(pcd, voxel_size=0.05):
     return pcd.voxel_down_sample(voxel_size)
 
-# 将点云下采样到相同大小
+# Downsample two point clouds to same size
 def downsample_to_same_size(pcd1, pcd2, voxel_size=0.05):
     pcd1_downsampled = downsample_point_cloud(pcd1, voxel_size)
     pcd2_downsampled = downsample_point_cloud(pcd2, voxel_size)
@@ -46,7 +46,7 @@ def downsample_to_same_size(pcd1, pcd2, voxel_size=0.05):
 
     return pcd1_downsampled, pcd2_downsampled
 
-# 定义 PointNet 模型
+# PointNet model definition
 class PointNet(nn.Module):
     def __init__(self):
         super(PointNet, self).__init__()
@@ -54,17 +54,17 @@ class PointNet(nn.Module):
         self.fc2 = nn.Linear(64, 128)
         self.fc3 = nn.Linear(128, 256)
         self.fc4 = nn.Linear(256, 512)
-        self.fc5 = nn.Linear(512, 3)  # 输出去噪后的点云
+        self.fc5 = nn.Linear(512, 3)  # Output denoised points
 
     def forward(self, x):
         x = F.relu(self.fc1(x))
         x = F.relu(self.fc2(x))
         x = F.relu(self.fc3(x))
         x = F.relu(self.fc4(x))
-        x = self.fc5(x)  # 最后通过线性层将每个点的坐标输出
+        x = self.fc5(x)  # Final linear layer outputs point coordinates
         return x
 
-# Chamfer 距离损失函数（批处理版本）
+# Chamfer distance (batch version)
 def chamfer_distance_batch(pcd1, pcd2, batch_size=1024):
     total_dist = 0
     num_points = pcd1.shape[0]
@@ -76,12 +76,12 @@ def chamfer_distance_batch(pcd1, pcd2, batch_size=1024):
         total_dist += torch.sum(dist1) + torch.sum(dist2)
     return total_dist / num_points
 
-# 将 Open3D 点云转换为 PyTorch Tensor
+# Convert Open3D point cloud to PyTorch tensor
 def point_cloud_to_tensor(pcd):
     points = np.asarray(pcd.points)
     return torch.tensor(points, dtype=torch.float32)
 
-# 计算 RMSE
+# Calculate RMSE between point clouds
 def calculate_rmse(pcd1, pcd2):
     num_points = min(len(pcd1), len(pcd2))
 
@@ -95,20 +95,21 @@ def calculate_rmse(pcd1, pcd2):
     rmse = torch.sqrt(torch.mean(dist ** 2))
     return rmse
 
-# 调整点云数量
+# Adjust point cloud sizes to match
 def adjust_point_cloud_size(pcd1, pcd2):
-    num_points = min(len(pcd1), len(pcd2))  # 保证两点云大小相同
+    num_points = min(len(pcd1), len(pcd2))  # Make both same size
     pcd1_downsampled = pcd1[torch.randperm(len(pcd1))[:num_points]]
     pcd2_downsampled = pcd2[torch.randperm(len(pcd2))[:num_points]]
     return pcd1_downsampled, pcd2_downsampled
 
-# 将 PyTorch 张量转换为 Open3D 点云
+# Convert PyTorch tensor to Open3D point cloud
 def tensor_to_o3d_point_cloud(tensor):
     points = tensor.detach().cpu().numpy()
     pcd = o3d.geometry.PointCloud()
     pcd.points = o3d.utility.Vector3dVector(points)
     return pcd
 
+# Visualize denoising results
 def visualize_denoising_fast(pcd_original, pcd_denoised):
     original_points = np.asarray(pcd_original.points)
     denoised_points = np.asarray(pcd_denoised.points)
@@ -122,12 +123,13 @@ def visualize_denoising_fast(pcd_original, pcd_denoised):
             retained_mask[i] = True
 
     colors = np.zeros_like(original_points)
-    colors[~retained_mask] = [0, 0, 1]  # 去掉的点为红色
-    colors[retained_mask] = [1, 0, 0]  # 保留的点为蓝色
+    colors[~retained_mask] = [0, 0, 1]  # Removed points (blue)
+    colors[retained_mask] = [1, 0, 0]  # Kept points (red)
 
     pcd_original.colors = o3d.utility.Vector3dVector(colors)
     o3d.visualization.draw_geometries([pcd_original], window_name="Denoising Visualization")
 
+# Tensor to point cloud conversion
 def tensor_to_pointcloud(tensor):
     if not isinstance(tensor, np.ndarray):
         tensor = tensor.numpy()
@@ -135,6 +137,7 @@ def tensor_to_pointcloud(tensor):
     pointcloud.points = o3d.utility.Vector3dVector(tensor)
     return pointcloud
 
+# Calculate denoising rate
 def compute_denoising_rate(original_pcd, denoised_pcd):
     if isinstance(original_pcd, o3d.geometry.PointCloud) and isinstance(denoised_pcd, o3d.geometry.PointCloud):
         original_points = np.asarray(original_pcd.points)
@@ -144,65 +147,60 @@ def compute_denoising_rate(original_pcd, denoised_pcd):
     else:
         raise TypeError("Both inputs must be Open3D PointCloud objects.")
 
-# 加载点云文件
 tls_pcd = load_las_as_o3d_point_cloud("D:/E_2024_Thesis/Data/Input/Street/TLS_Street.las")
 mls_pcd = load_las_as_o3d_point_cloud("D:/E_2024_Thesis/Data/Input/Street/MLS_Street.las")
 
-# 对点云进行下采样并标准化
+# Downsample point clouds to same size
 tls_pcd_downsampled, mls_pcd_downsampled = downsample_to_same_size(tls_pcd, mls_pcd, voxel_size=0.05)
 
-# 对点云进行标准化
+# Normalize point clouds
 tls_pcd_downsampled, centroid_tls, scale_tls = normalize_point_cloud(tls_pcd_downsampled)
 mls_pcd_downsampled, centroid_mls, scale_mls = normalize_point_cloud(mls_pcd_downsampled)
 
-# 转换点云为 PyTorch Tensor
+# Convert to PyTorch tensors
 tls_tensor_downsampled = point_cloud_to_tensor(tls_pcd_downsampled)
 mls_tensor_downsampled = point_cloud_to_tensor(mls_pcd_downsampled)
 
-# 初始化 PointNet 模型和优化器
+# Initialize PointNet model and optimizer
 model = PointNet()
 optimizer = optim.Adam(model.parameters(), lr=0.001)
 
-# 训练模型
+# Train model
 epochs = 200
 for epoch in range(epochs):
     model.train()
     optimizer.zero_grad()
 
-    # 输入 MLS 点云，输出去噪后的点云
+    # Forward pass: MLS point cloud in, denoised point cloud out
     output = model(mls_tensor_downsampled)
 
-    # 计算损失：Chamfer 距离
+    # Calculate Chamfer distance loss
     loss = chamfer_distance_batch(output, tls_tensor_downsampled)
 
-    # 反向传播和优化
+    # Backpropagation and optimize
     loss.backward()
     optimizer.step()
 
-    # 每100次打印一次损失值
+    # Print loss every 100 epochs
     if epoch % 100 == 0:
         print(f"Epoch [{epoch}/{epochs}], Loss: {loss.item():.6f}")
 
-# 使用训练好的模型进行点云去噪
+# Denoise point cloud using trained model
 model.eval()
 denoised_mls_tensor = model(mls_tensor_downsampled)
 
-
-# 将去噪后的点云转换为 Open3D 点云
+# Convert tensors back to Open3D point clouds
 denoised_mls_pcd = tensor_to_o3d_point_cloud(denoised_mls_tensor)
 denoised_tls_pcd = tensor_to_o3d_point_cloud(tls_tensor_downsampled)
 
-# 将点云反向标准化
+# Denormalize point cloud
 denoised_mls_pcd1 = denormalize_point_cloud(denoised_mls_pcd, centroid_mls, scale_mls)
 
-# 保存去噪后的点云
-output_dir= "D:/E_2024_Thesis/Data/Output/Road/"
+# Save denoised point clouds
+output_dir = "D:/E_2024_Thesis/Data/Output/Road/"
 o3d.io.write_point_cloud(output_dir + "mls_PointNet_Block.ply", denoised_mls_pcd)
-#o3d.io.write_point_cloud(output_dir + "mls_pointnet_afterdenormal.ply", denoised_mls_pcd1)
-#o3d.io.write_point_cloud(output_dir + "tls_pcd_pointnet.ply", denoised_tls_pcd)
+# o3d.io.write_point_cloud(output_dir + "mls_pointnet_afterdenormal.ply", denoised_mls_pcd1)
+# o3d.io.write_point_cloud(output_dir + "tls_pcd_pointnet.ply", denoised_tls_pcd)
 
-
-# 可视化去噪效果
+# Visualize denoising results
 visualize_denoising_fast(mls_pcd_downsampled, denoised_mls_pcd)
-
-# 保存去噪后的点云

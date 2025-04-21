@@ -33,7 +33,7 @@ def convert_las_to_ply(input_las, output_ply):
     # Step 3: Visualize the point cloud
     o3d.visualization.draw_geometries([point_cloud])
 
-# Example usage
+
 input_las = "D:/E_2024_Thesis/Data/Input/Street/TLS_Street.las"
 output_ply = "D:/E_2024_Thesis/Data/Input/Street/TLS_Street.ply"
 convert_las_to_ply(input_las, output_ply)

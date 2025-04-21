@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
+from matplotlib.patches import Patch
 
 # 数据
 methods = ['Initial MLS','KNN on Voxel',
@@ -51,11 +52,12 @@ for bar, score in zip(right_bars, roof_scores):
     ax.text(bar.get_width() + 0.02, bar.get_y() + bar.get_height() / 2, f'{score:.3f}',
             va='center', ha='left', color='black', fontsize=9)
 
-# 显示图例
-ax.legend()
+# 创建自定义图例
+legend_elements = [Patch(facecolor='blue', label='Road Score'),
+                   Patch(facecolor='red', alpha=0.5, label='Roof Score')]
+ax.legend(handles=legend_elements)
 
 plt.savefig('D:/E_2024_Thesis/Paper/Final Paper/LaTex/Score_Com.png', dpi=300, bbox_inches='tight')
-
 
 plt.tight_layout()
 plt.show()
